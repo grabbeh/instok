@@ -1,0 +1,29 @@
+<!doctype html>
+<html ng-app='thingModule'>
+  <head>
+  <meta charset="utf-8"/>
+
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+  <script type="text/javascript" src="/controllers/controllers.js"></script>
+  <link rel="stylesheet" href="/css/base.css">
+
+  <title>Restock</title>
+  </head>
+  <body>
+
+        <div ng-controller="authController" class="header">
+          <span id="headerlogo"><a href="/">Restock</a></span>                                   
+          <span ng-hide="Authentication.isSignedIn()" id="loginbox"><a href="#/login"> login | signup </a></span>
+          <span ng-show="Authentication.isSignedIn()" id="loginbox">{{ Authentication.currentUser()._id }}<a href="/logout"> | logout</a></span>
+        </div>
+        <div id="container">
+        <div ng-view>
+        </div>
+      </div>
+  </body>
+  </html>
+  <script>
+    window.user = <%- user %>
+  </script>

@@ -1,0 +1,33 @@
+<div ng-controller="thingController">
+ 
+        <div class="header">
+          <h2>
+            Restock y'all
+          </h2>
+          <form ng-submit="addThing()">
+            <div>
+              <input class="edit" placeholder="New thing" name="name" ng-model="newthing">
+            </div>
+            
+          </form>
+        </div>
+        
+        <ul id="todo-list">
+          <li ng-repeat="thing in things" ng-class="{editing: thing == editThingy}">
+            <div class="view">
+              <label ng-dblclick="editThing(thing)">
+                {{thing.name}}
+              </label>
+              <span>
+                <button ng-click="removeThing(thing)">
+                  [x]
+                </button>
+              </span>
+            </div>
+            
+            <form ng-submit="doneEditing(thing)">
+              <input class="edit" ng-model="thing.name">
+      </form>
+      </li>
+  </ul>
+  </div>

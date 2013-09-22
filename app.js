@@ -1,0 +1,111 @@
+
+var express = require('express')
+, bcrypt = require("bcrypt")
+, MongoStore = require("connect-mongo")(express)
+, passport = require('passport')
+, flash = require('connect-flash')
+, LocalStrategy = require('passport-local').Strategy
+, mongoose = require('mongoose')
+, app = express()
+, Thing = require('./models/thing.js')
+, route = require('./routes/routes.js')
+, User = require('./models/user.js')
+, db = require('./config/db.js')
+, user = require('./routes/user')
+, login = require('connect-ensure-login')
+
+mongoose.connect('mongodb://' + db.details.user + ':' + db.details.pass + '@' + db.details.host + ':' + db.details.port + '/' + db.details.name );
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { 
+    return next(); 
+  }
+  res.redirect('/login')
+}
+
+passport.serializeUser(function(user, done) {
+  done(null, user._id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findOne({_id: id}, function (err, user) {
+    done(err, user);
+  });
+});
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    process.nextTick(function () {
+      User.findOne({_id: username}, function(err, user) {
+        if (err) { return done(err); }
+        if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
+          bcrypt.compare(password, user.hash, function(err, res) {
+          if (err) { return done(null, false, { message: 'Invalid password' }); }
+              return done(null, user);
+            });
+        })
+    });
+  }
+));
+
+app.locals.user = false;
+
+
+
+
+app.configure(function(){
+app.set('views', __dirname + '/views');
+app.engine('html', require('ejs').renderFile);
+  app.use(express.bodyParser());
+  app.use(express.cookieParser());
+  app.use(express.methodOverride());
+  app.use(express.session({ secret: 'keyboard cat'}));		
+  app.use(flash());          
+  app.use(passport.initialize());
+  app.use(passport.session({ secret: 'keyboard cat', 
+	store: new MongoStore({url: 'mongodb://' + db.details.user + ':' + db.details.pass + '@' + db.details.host + ':' + db.details.port + '/' + db.details.name
+	})
+	}));  
+  app.use(express.static(__dirname + '/public'));
+  app.use(app.router);
+
+});
+
+// middleware
+function removeUser(req, res, next) {
+    app.locals.user = false;
+    next();
+}
+
+// Routes
+
+app.get('/', function(req, res){
+  res.render('index.html')
+});
+
+app.get('/things', route.getThings);
+
+app.get('/things/:id', route.getThing);
+
+app.post('/things/:id', route.postThing);
+
+app.delete('/things/:id', route.deleteThing);
+
+app.put('/things/:id', route.editThing);
+
+// Authentication
+
+app.post('/signup', user.createaccount);
+
+app.get('/login', user.getlogin);
+
+app.post('/login', 
+  passport.authenticate('local'), 
+    function(req, res){
+      app.locals.user = req.user;
+      res.redirect('/');
+})
+
+app.get('/logout', removeUser, user.logout);
+
+app.listen(3000);
