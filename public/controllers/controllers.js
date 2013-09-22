@@ -3,8 +3,19 @@ var thingModule = angular.module('thingModule', []);
 thingModule.config(['$routeProvider', function($routeProvider){
     $routeProvider.
         when('/', {
-            controller: 'thingController',
-            templateUrl: '/partials/main.html'
+            templateUrl: '/partials/home.html'
+        }).
+        when('/account', {
+            controller: 'listController',
+            templateUrl: '/partials/account.html'
+        }).
+        when('/account/add', {
+            controller: 'addController',
+            templateUrl: '/partials/add.html'
+        }).
+        when('/account/reminder', {
+            controller: 'viewController',
+            templateUrl: '/partials/view.html'
         }).
         when('/login/', {
             controller: 'loginController',
@@ -39,31 +50,67 @@ thingModule.factory('ThingGetter', ['$http',
         }
     }
 ])
-thingModule.controller('authController', ['$scope', '$http', 'Authentication',
-    function($scope, $http, Authentication){
-        $scope.Authentication = Authentication;
-    }])
+thingModule
+    .controller('authController', ['$scope', '$http', 'Authentication',
+        function($scope, $http, Authentication){
+            $scope.Authentication = Authentication;
+        }])
 
 thingModule
-    .controller('thingController', ['$scope', '$http', 'ThingGetter',
+    .controller('listController', ['$scope', '$http', 'ThingGetter',
         function ($scope, $http, ThingGetter) {
+            $scope.things = [];
+            ThingGetter.get(function (data){
+                things = $scope.things = data;
+            })
+        
+
+        $scope.removeThing = function(thing){
+
+        }
+
+        $scope.sendAlert = function(thing){
+
+        }
+        }])
+
+thingModule
+    .controller('addController', ['$scope', '$http', 
+        function($scope, $http){
+
+            $scope.message = "";
+            
+            $scope.addReminder = function () {
+                
+                var postData = {
+                    item: $scope.item,
+                    location: $scope.location,
+                    number: $scope.number,
+                    id: Math.guid()
+                }
+                $http.post('/things/' + postData.id, postData)
+                $scope.message = "Item added"
+            }
+
+        }])
+
+
+thingModule
+    .controller('viewController', ['$scope', '$http', '$routeParams', 'ThingGetter',
+        function ($scope, $http, $routeParams, ThingGetter) {
             $scope.things = [];
             $scope.message = "";
             $scope.newthing = "";
-            ThingGetter.get(function (data) {
-                things = $scope.things = data;
-            });
+             $http.get('/things/' + $routeParams.id).success(function(data, status, headers, config){
+                $scope.thing = data;
+            })
 
             $scope.removeThing = function(thing) {
+                $http.delete('/things/' + item.id).success(function () {});
 
-                $scope.things.forEach(function (item, i) {
-                    if (thing.id === item.id && item) {
-                        $http.delete('/things/' + item.id).success(function () {});
-
-                        $scope.things.splice(i, 1);
-                        $scope.message = item.name + " removed";
-                    }
-                })
+                $scope.thing = [];
+                $scope.message = item.name + " removed";
+                
             }
 
             $scope.addThing = function () {

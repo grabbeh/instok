@@ -1,0 +1,33 @@
+<div ng-controller="listController">
+ 
+        <div>
+          <h2>Alerts</h2>
+        </div>
+        <div>
+          <form>
+            <div>
+              <input class="alert-input" placeholder="Search" ng-model="name">
+            </div>
+          
+          </form>
+        </div>
+
+
+        <div>
+        <ul id="alert-list">
+          <li class="alert" ng-repeat="thing in things | filter:name">
+            <div>
+              <label ng-click="sendAlert(thing)">
+                {{thing.name}}
+              </label>
+              <span class="remove-alert">
+                <button ng-click="removeThing(thing)">
+                  x
+                </button>
+              </span>
+            </div>
+          </div>
+            
+      </li>
+  </ul>
+  </div>

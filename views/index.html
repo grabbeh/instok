@@ -12,12 +12,11 @@
   <title>Restock</title>
   </head>
   <body>
-
-        <div ng-controller="authController" class="header">
+      <div ng-controller="authController" class="header">
           <span id="headerlogo"><a href="/">Restock</a></span>                                   
           <span ng-hide="Authentication.isSignedIn()" id="loginbox"><a href="#/login"> login | signup </a></span>
           <span ng-show="Authentication.isSignedIn()" id="loginbox">{{ Authentication.currentUser()._id }}<a href="/logout"> | logout</a></span>
-        </div>
+      </div>
         <div id="container">
         <div ng-view>
         </div>
