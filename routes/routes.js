@@ -26,14 +26,7 @@ exports.postAlert = function (req, res) {
         location: req.body.location,
         number: req.body.number,
         id: req.params.id
-    }).save(function (err, alert) {
-        if (err) {console.log(err)}
-        else {
-            var data = {};
-            data['message'] = "Alert saved - thank you";
-            res.json(data);
-        }
-    });
+    }).save();
 };
 
 exports.editAlert = function (req, res) {
