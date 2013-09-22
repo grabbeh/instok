@@ -15,13 +15,13 @@
 
         <div>
         <ul id="alert-list">
-          <li class="alert" ng-repeat="thing in things | filter:name">
+          <li class="alert" ng-repeat="alert in alerts | filter:name">
             <div>
-              <label ng-click="sendAlert(thing)">
-                {{thing.name}}
+              <label ng-click="sendAlert(alert)">
+                {{alert.item}}
               </label>
               <span class="remove-alert">
-                <button ng-click="removeThing(thing)">
+                <button ng-click="removeThing(alert)">
                   x
                 </button>
               </span>

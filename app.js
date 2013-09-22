@@ -7,7 +7,7 @@ var express = require('express')
 , LocalStrategy = require('passport-local').Strategy
 , mongoose = require('mongoose')
 , app = express()
-, Thing = require('./models/thing.js')
+, Alert = require('./models/alert.js')
 , route = require('./routes/routes.js')
 , User = require('./models/user.js')
 , db = require('./config/db.js')
@@ -83,15 +83,15 @@ app.get('/', function(req, res){
   res.render('index.html')
 });
 
-app.get('/things', route.getThings);
+app.get('/alerts', route.getAlerts);
 
-app.get('/things/:id', route.getThing);
+app.get('/alerts/:id', route.getAlert);
 
-app.post('/things/:id', route.postThing);
+app.post('/alerts/:id', route.postAlert);
 
-app.delete('/things/:id', route.deleteThing);
+app.delete('/alerts/:id', route.deleteAlert);
 
-app.put('/things/:id', route.editThing);
+app.put('/alerts/:id', route.editAlert);
 
 // Authentication
 

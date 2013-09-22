@@ -1,6 +1,6 @@
-var thingModule = angular.module('thingModule', []);
+var alertModule = angular.module('alertModule', []);
 
-thingModule.config(['$routeProvider', function($routeProvider){
+alertModule.config(['$routeProvider', function($routeProvider){
     $routeProvider.
         when('/', {
             templateUrl: '/partials/home.html'
@@ -26,7 +26,7 @@ thingModule.config(['$routeProvider', function($routeProvider){
     });
 }]);
 
-thingModule.factory('Authentication', function(){
+alertModule.factory('Authentication', function(){
     var current_user = window.user;
     return {
       currentUser: function() {
@@ -39,48 +39,48 @@ thingModule.factory('Authentication', function(){
   });
 
 
-thingModule.factory('ThingGetter', ['$http',
+alertModule.factory('AlertGetter', ['$http',
     function ($http) {
         return {
             get: function (callback) {
-                $http.get('/things').success(function (data, status, headers, config) {
+                $http.get('/alerts').success(function (data, status, headers, config) {
                     callback(data)
                 })
             }
         }
     }
 ])
-thingModule
+alertModule
     .controller('authController', ['$scope', '$http', 'Authentication',
         function($scope, $http, Authentication){
             $scope.Authentication = Authentication;
         }])
 
-thingModule
-    .controller('listController', ['$scope', '$http', 'ThingGetter',
-        function ($scope, $http, ThingGetter) {
-            $scope.things = [];
-            ThingGetter.get(function (data){
-                things = $scope.things = data;
+alertModule
+    .controller('listController', ['$scope', '$http', 'AlertGetter',
+        function ($scope, $http, AlertGetter) {
+            $scope.alerts = [];
+            AlertGetter.get(function (data){
+                alerts = $scope.alerts = data;
             })
         
 
-        $scope.removeThing = function(thing){
+        $scope.removeAlert = function(alert){
 
         }
 
-        $scope.sendAlert = function(thing){
+        $scope.sendAlert = function(alert){
 
         }
         }])
 
-thingModule
+alertModule
     .controller('addController', ['$scope', '$http', 
         function($scope, $http){
 
             $scope.message = "";
             
-            $scope.addReminder = function () {
+            $scope.addAlert = function () {
                 
                 var postData = {
                     item: $scope.item,
@@ -88,54 +88,54 @@ thingModule
                     number: $scope.number,
                     id: Math.guid()
                 }
-                $http.post('/things/' + postData.id, postData)
+                $http.post('/alerts/' + postData.id, postData)
                 $scope.message = "Item added"
             }
 
         }])
 
 
-thingModule
-    .controller('viewController', ['$scope', '$http', '$routeParams', 'ThingGetter',
-        function ($scope, $http, $routeParams, ThingGetter) {
-            $scope.things = [];
+alertModule
+    .controller('viewController', ['$scope', '$http', '$routeParams', 'AlertGetter',
+        function ($scope, $http, $routeParams, AlertGetter) {
+            $scope.alerts = [];
             $scope.message = "";
-            $scope.newthing = "";
-             $http.get('/things/' + $routeParams.id).success(function(data, status, headers, config){
-                $scope.thing = data;
+            $scope.newalert = "";
+             $http.get('/alerts/' + $routeParams.id).success(function(data){
+                $scope.alert = data;
             })
 
-            $scope.removeThing = function(thing) {
-                $http.delete('/things/' + item.id).success(function () {});
+            $scope.removeAlert = function(alert) {
+                $http.delete('/alerts/' + item.id).success(function () {});
 
-                $scope.thing = [];
+                $scope.alert = [];
                 $scope.message = item.name + " removed";
                 
             }
 
-            $scope.addThing = function () {
+            $scope.addAlert = function () {
                 var id = Math.guid();
-                var name = $scope.newthing;
+                var name = $scope.newalert;
                 var postData = {
                     name: name,
                     id: id
                 }
-                $scope.things.push(postData);
-                $http.post('/things/' + postData.id, postData)
-                $scope.newthing = "";
+                $scope.alerts.push(postData);
+                $http.post('/alerts/' + postData.id, postData)
+                $scope.newalert = "";
             }
 
-            $scope.editThing = function (thing) {
-                $scope.editThingy = thing;
+            $scope.editAlert = function (alert) {
+                $scope.editAlerty = alert;
             }
 
-            $scope.doneEditing = function (thing) {
-                $scope.editThingy = null;
+            $scope.doneEditing = function (alert) {
+                $scope.editAlerty = null;
                 var putData = {
-                    name: thing.name,
-                    id: thing.id
+                    name: alert.name,
+                    id: alert.id
                 }
-                $http.put('/things/' + thing.id, putData).success(function () {})
+                $http.put('/alerts/' + alert.id, putData).success(function () {})
             }
 
         }
