@@ -7,7 +7,7 @@ var userSchema = new Schema({
     email: String,
     username: String,
     hash: String,
-    items: [{ type: Schema.Types.ObjectId, ref: 'Alert' }],
+    alerts: [{ type: Schema.Types.ObjectId, ref: 'Alert' }],
 
 });
 

@@ -5,23 +5,6 @@ var bcrypt = require("bcrypt");
 
 // passport introduction
 
-exports.account = function(req, res){
-    Map.find({author: req.user._id})
-      .select('_id title')
-      .exec(function(error, maps) {
-          User.findOne({_id: req.user._id})
-            .select('_id email favourites info')
-            .populate('favourites')
-            .exec(function(error, user) {    
-                res.render('account', { maps: maps, usr: user});
-      })
-  })
-};
-
-exports.getlogin =  function(req, res){
-  res.render('login', { message: req.flash('error') });
-};
-
 exports.logout = function(req, res){
   req.logout();
   res.redirect('/');
@@ -47,7 +30,7 @@ User.findOne({username: newuser.toUpperCase()}, function(err, user) {
                 new User({_id: req.body.username,
                           username: req.body.username.toUpperCase(),
                           hash: hash,
-                          favourites: []
+                          alerts: []
                         }).save(function(err) {
                         res.redirect("/");
                     })

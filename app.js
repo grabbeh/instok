@@ -50,9 +50,6 @@ passport.use(new LocalStrategy(
 
 app.locals.user = false;
 
-
-
-
 app.configure(function(){
 app.set('views', __dirname + '/views');
 app.engine('html', require('ejs').renderFile);
@@ -83,27 +80,29 @@ app.get('/', function(req, res){
   res.render('index.html')
 });
 
-app.get('/alerts', route.getAlerts);
+app.get('/alerts', ensureAuthenticated, route.getAlerts);
 
-app.get('/alerts/:id', route.getAlert);
+app.get('/alerts/:id', ensureAuthenticated, route.getAlert);
 
-app.post('/alerts/:id', route.postAlert);
+app.post('/alerts/:id', ensureAuthenticated, route.postAlert);
 
-app.delete('/alerts/:id', route.deleteAlert);
+app.delete('/alerts/:id', ensureAuthenticated, route.deleteAlert);
 
-app.put('/alerts/:id', route.editAlert);
+app.put('/alerts/:id', ensureAuthenticated, route.editAlert);
+
+app.post('/sendalert/:id', ensureAuthenticated, route.sendAlert);
 
 // Authentication
 
 app.post('/signup', user.createaccount);
 
-app.get('/login', user.getlogin);
-
 app.post('/login', 
   passport.authenticate('local'), 
     function(req, res){
-      app.locals.user = req.user;
-      res.redirect('/');
+      app.locals.user = JSON.stringify({ 
+        _id: req.user._id
+      });
+      res.redirect('/#/account');
 })
 
 app.get('/logout', removeUser, user.logout);

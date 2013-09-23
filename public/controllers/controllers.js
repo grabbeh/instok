@@ -13,7 +13,7 @@ alertModule.config(['$routeProvider', function($routeProvider){
             controller: 'addController',
             templateUrl: '/partials/add.html'
         }).
-        when('/account/reminder', {
+        when('/account/alert', {
             controller: 'viewController',
             templateUrl: '/partials/view.html'
         }).
@@ -43,7 +43,7 @@ alertModule.factory('AlertGetter', ['$http',
     function ($http) {
         return {
             get: function (callback) {
-                $http.get('/alerts').success(function (data, status, headers, config) {
+                $http.get('/alerts').success(function (data) {
                     callback(data)
                 })
             }
@@ -67,11 +67,20 @@ alertModule
 
         $scope.removeAlert = function(alert){
 
+            $scope.alerts.forEach(function (item, i) {
+                    if (alert.id === item.id && alerts.length > 0) {
+                        $http.delete('/alerts/' + item.id);
+                        $scope.alerts.splice(i, 1);
+                    }
+                })
         }
 
         $scope.sendAlert = function(alert){
-
-        }
+            var postData = {}
+            postData.id = alert.id;
+            $http.post('sendalert/' + alert.id)
+            $scope.alerts.splice(i, 1);
+            }
         }])
 
 alertModule
@@ -89,7 +98,10 @@ alertModule
                     id: Math.guid()
                 }
                 $http.post('/alerts/' + postData.id, postData)
-                $scope.message = "Item added"
+                $scope.message = "Alert added"
+                $scope.item = "";
+                $scope.location = "";
+                $scope.number = "";
             }
 
         }])
@@ -107,10 +119,6 @@ alertModule
 
             $scope.removeAlert = function(alert) {
                 $http.delete('/alerts/' + item.id).success(function () {});
-
-                $scope.alert = [];
-                $scope.message = item.name + " removed";
-                
             }
 
             $scope.addAlert = function () {

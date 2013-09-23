@@ -9,11 +9,11 @@
     "passport-local": "0.1.6",
     "bcrypt": "~0.7.3",
     "connect-ensure-login": "~0.1.0",
-    "connect-mongo": "0.2.0"
+    "connect-mongo": "0.2.0",
+    "twilio": "~1.2.0"
   },
   "engines": {
     "node": "v0.8.x"
   },
   "version": "0.0.1"
 }
-
