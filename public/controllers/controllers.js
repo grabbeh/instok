@@ -39,17 +39,20 @@ alertModule.factory('Authentication', function(){
   });
 
 
-alertModule.factory('AlertGetter', ['$http',
-    function ($http) {
-        return {
-            get: function (callback) {
-                $http.get('/alerts').success(function (data) {
-                    callback(data)
-                })
-            }
+alertModule.factory('AlertGetter', ['$http', function ($http) {
+    var AlertGetter = {
+        get: function(){
+            var promise = $http.get('/alerts').then(function(response) {
+                console.log(response.data)
+                return response.data;
+            });
+            return promise;
         }
-    }
-])
+    };
+    return AlertGetter
+}]);
+
+
 alertModule
     .controller('authController', ['$scope', '$http', 'Authentication',
         function($scope, $http, Authentication){
@@ -57,14 +60,15 @@ alertModule
         }])
 
 alertModule
-    .controller('listController', ['$scope', '$http', 'AlertGetter',
-        function ($scope, $http, AlertGetter) {
-            $scope.alerts = [];
-            AlertGetter.get(function (data){
-                alerts = $scope.alerts = data;
-            })
-        
-
+    .controller('listController', ['$scope', '$http', '$location', 'Authentication', 'AlertGetter',
+        function ($scope, $http, $location, Authentication, AlertGetter) {
+            if (Authentication.isSignedIn()){
+                AlertGetter.get().then(function(alerts){
+                $scope.alerts = alerts;
+                })
+            }
+            else { $location.path('/login') }
+            
         $scope.removeAlert = function(alert){
 
             $scope.alerts.forEach(function (item, i) {
