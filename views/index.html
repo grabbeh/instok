@@ -12,12 +12,13 @@
   <title>Instok</title>
   </head>
   <body>
-      <div ng-controller="authController" class="header">
-          <span id="headerlogo"><a href="/">Instok</a></span>                                   
-          <span ng-hide="Authentication.isSignedIn()" id="loginbox"><a href="#/login"> login | signup </a></span>
-          <span ng-show="Authentication.isSignedIn()" id="loginbox">{{ Authentication.currentUser()._id }}<a href="/logout"> | logout</a></span>
+
+      <div ng-controller="authController" id="header">
+          <span id="header-text"><a href="/#/">Instok</a></span>                                   
+          <span ng-hide="Authentication.isSignedIn()" id="loginbox"><a ng-href="#/login"> login | signup </a></span>
+          <span ng-show="Authentication.isSignedIn()" id="loginbox"><a ng-href="#/account">{{ Authentication.currentUser()._id }}</a><a ng-href="/logout"> | logout</a></span>
       </div>
-        <div id="container">
+        <div id="body">
         <div ng-view>
         </div>
       </div>

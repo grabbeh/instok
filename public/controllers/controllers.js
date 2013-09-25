@@ -18,8 +18,7 @@ alertModule.config(['$routeProvider', function($routeProvider){
             templateUrl: '/partials/view.html'
         }).
         when('/login/', {
-            controller: 'loginController',
-            templateUrl:'/partials/login.html'
+             templateUrl:'/partials/login.html'
         }).
         otherwise({
             redirectTo: '/'

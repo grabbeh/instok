@@ -1,22 +1,18 @@
-<div id="container">
 
+    <div id="login-body">
            <div class="logincontainer">
                     <div class="form"><b>Login</b></div>
-                    <form class="loginform" method=post action="/login"><table border=0><tr><td>
-                      Username</td>
-                      <td><input class="alert-input" type=text name="username" size=20 autocorrect="off" autocapitalise="off" </td></tr><tr><td>
-                      Password</td>
-                      <td><input class="alert-input" type=password name="password" size=20></td></tr>
-                      </table>
-                      <input class="add-button" type=submit value="login">
+                    <form class="loginform" method=post action="/login">
+                      <div><input class="form-input" type=text name="username" size=20 placeholder="Username"></div>
+                      <div><input class="form-input" type=password name="password" placeholder="Password" ></div>
+                      <div><input class="add-button" type=submit value="Submit"></div>
                     </form>
 
                     <div class="form"><b>Create Account</b></div>
-                    <form class="loginform" method=post action="/signup"><table border=0><tr><td>
-                      Username</td><td><input class="alert-input" type=text name="username" size=20></td></tr><tr><td>
-                      Password</td><td><input class="alert-input" type=password name="password" size=20></td></tr></table>
-                      <input class="add-button" type=submit value="create account">
+                    <form class="loginform" method=post action="/signup"><div><input class="form-input" type=text name="username" placeholder="Username" size=20></div><input class="form-input" type=password name="password" placeholder="Password" size=20>
+                      <div><input class="add-button" type=submit value="Submit"></div>
                       <br><br>
                     </form>
           </div> 
-      </div>
+        </div>
+     

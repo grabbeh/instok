@@ -1,58 +1,117 @@
-html,
-body {
-	margin: 0;
-	padding: 0;
-	font-family: Arial;
-	line-height: 1.4em;
+
+@import url(http://fonts.googleapis.com/css?family=Montserrat);
+@import url(http://fonts.googleapis.com/css?family=Libre+Baskerville);
+html, body {
+    padding: 0;
+    margin: 0;
+    font-family:'Montserrat', Arial;
+    height: 100%;
 }
 
-.header {
-	
-	background: #7781d7;
+.home-container {
+	margin: 0 auto;
+	width: 70%;
+	color: white;
 }
 
-#headerlogo {
+#header a {
+    text-decoration: none;
+    color: black;
+}
+
+#body a {
+    color: white;
+    text-decoration: none;
+}
+#header {
+    height: 40px;
+    border-bottom-style: solid;
+    border-width: 2px;
+    border-color: black;
+}
+#header-text {
+    font-size: 15px;
+    padding: 10px;
     float: left;
-    text-align: left;
-    padding: 15px 0 0px 20px;
-    margin: 0;
 }
-
-#headerlogo a {
-  text-decoration: none; 
-  font-size: 22px;
-  font-weight: normal;  
-  color:white;
-}
-
 #loginbox {
+    font-size: 15px;
+    padding: 10px;
     float: right;
-    text-align: right;
-    margin: 0;
-    margin: 0;
-    padding: 15px 20px 0px 0px;
+}
+#box-one {
+    background: #4679bd;
+}
+#main-text {
+	
+    font-size: 35px;
+    padding: 25px 25px 0px 25px;
+    color: white;
+}
+#subtitle {
+	
+    font-size: 25px;
+    color: white;
+    padding: 25px 25px 35px 25px;
+}
+#box-two {
+    background: #06406C;
+}
+
+.body-text {
+    font-size: 25px;
+    padding: 25px 25px 0 25px;
     color: white;
 }
 
-#loginbox a {
-  text-decoration: none; 
-  font-size: 16px;
-  font-weight: normal;
-  color: white;
+.body-text-bottom {
+	font-size: 25px;
+	color: white;
+	padding: 50px 25px 25px 25px;
 }
 
-.right-header{
-	float: right;
-	padding: 10px;
+.first-ten-free {
+	color: white;
+	padding: 0 25px 25px 25px;
+	font-size: 25px;
+}
+
+#box-three {
+    background: #FF6161;
+}
+#box-four {
+    background: #E10000;
+    height: 70px;
+}
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.homelist {
+    color: white;
+    padding: 0px 25px 25px 25px;
+}
+.homelist li {
+    padding: 10px 10px 10px 10px;
+    color: white;
+    font-size: 25px;
+}
+
+#login-body {
+	background: #4679bd;
+	margin: 0;
+	padding: 0;
+	color: white;
 }
 
 .logincontainer {
     margin: 0 auto;
-    background: #F0F0F0;
+    
     padding: 10px 15px 15px 30px;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    
     font-size: 24px;
+    max-width: 400px;
 }
 
 .form {
@@ -70,7 +129,6 @@ body {
 }
 
 button {
-
 	padding: 0;
 	border: 0;
 	background: none;
@@ -124,7 +182,7 @@ button {
 }
 
 #alert-list {
-	margin: 0;
+	margin: 0 15px 0 0;
 	padding: 0;
 	list-style: none;
 }
@@ -136,12 +194,26 @@ button {
 	line-height: 1.2;
 	color: white;
 	margin: 15px 0 15px 0;
-	background: #81d777;
-	width: 400px;
+	background: #06406C;
+	width:100%;
+}
+
+#alert-link {
+	float: right;
+}
+
+#alert-header {
+	color:white;
+	padding: 0 0 25px 0;
+	font-size: 25px;
 }
 
 .remove-alert {
+	background-image: url('../images/cross.png');
 	float: right;
+	cursor: pointer;
+	width: 30px;
+	height: 30px;
 }
 
 .alert-input {
@@ -152,7 +224,7 @@ button {
 	border: 0;
 	padding: 10px;
 	border: 1px solid #999;
-	width: 400px;
+	width: 96%;
 }
 
 .clear-input {
@@ -172,14 +244,34 @@ button {
 
 .add-button {
     height: 40px;
-    font-size: 16px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding-right: 10px;
-    padding-left: 10px;
+    font-size: 24px;
+    margin: 10px 0 10px 0;
+    padding: 0 10px 0 10px;
+
 }
 
+.form-input {
+	position: relative;
+	margin: 10px 10px 10px 0;
+	font-size: 24px;
+	line-height: 1.2em;
+	border: 0;
+	padding: 10px;
+	border: 1px solid #999;
+	width: 80%;
+}
 
+#account-container {
+ 	margin: 0 auto;
+ 	padding: 25px;
+ 	max-width: 500px;
+}
+
+#account-body {
+	background: #4679bd;
+
+	margin: 0 auto;
+}
 
 
 

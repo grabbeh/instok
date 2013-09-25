@@ -1,13 +1,13 @@
 <div ng-controller="addController">
- 
+    <div id="account-container">
         <div>
           <p> <h2>Add alert </h2></p>
           <p>
 
           <form ng-submit="addAlert()">
             <div class="add-reminder">
-              Hello there, <input class="clear-input" name="item" placeholder="Item"  ng-model="item"> is now 
-              available at <input class="clear-input" name="location" placeholder="Location" ng-model="location">
+              Send: "Hello there, <input class="clear-input" name="item" placeholder="Item"  ng-model="item"> is now 
+              available at <input class="clear-input" name="location" placeholder="Location" ng-model="location">"
               to <input class="clear-input" placeholder="Number" name="number" ng-model="number">
               <div><input type="submit" class="add-button" value="Submit"></div>
             </div>
@@ -17,4 +17,5 @@
         </div>
         
         <div><p><h2>{{ message }} </h2></p></div>
-  </div>
+        </div>
+      </div>
