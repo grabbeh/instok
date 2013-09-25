@@ -31,20 +31,20 @@ body a {
 }
 
 #header {
-    height: 40px;
+    height: 45px;
     border-bottom-style: solid;
     border-width: 2px;
     border-color: black;
 }
 
 #header-text {
-    font-size: 15px;
+    font-size: 20px;
     padding: 10px;
     float: left;
 }
 
 #loginbox {
-    font-size: 15px;
+    font-size: 20px;
     padding: 10px;
     float: right;
 }
@@ -55,7 +55,7 @@ body a {
 
 #main-text {
 	
-    font-size: 35px;
+    font-size: 40px;
     padding: 25px 25px 0px 25px;
     color: white;
 }
@@ -80,13 +80,17 @@ body a {
 .body-text-bottom {
 	font-size: 25px;
 	color: white;
-	padding: 50px 25px 25px 25px;
+	padding: 50px 25px 50px 25px;
 }
 
-.first-ten-free {
-	color: white;
-	padding: 0 25px 25px 25px;
-	font-size: 25px;
+.large-body-text {
+	font-size: 35px;
+	padding: 50px 25px 0 25px;
+}
+
+.box-four-text {
+	font-size: 35px;
+	padding: 50px 25px 50px 25px;
 }
 
 #box-three {
@@ -95,7 +99,7 @@ body a {
 
 #box-four {
     background: #E10000;
-    height: 70px;
+    
 }
 
 ul {
@@ -106,7 +110,7 @@ ul {
 
 .homelist {
     color: white;
-    padding: 0px 25px 25px 25px;
+    padding: 15px 25px 50px 25px;
 }
 
 .homelist li {
@@ -125,7 +129,7 @@ ul {
 .logincontainer {
     margin: 0 auto;
     padding: 10px 15px 15px 30px;
-    font-size: 24px;
+    font-size: 25px;
     max-width: 400px;
 }
 
