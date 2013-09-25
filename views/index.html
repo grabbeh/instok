@@ -12,18 +12,14 @@
   <title>Instok</title>
   </head>
   <body>
-
       <div ng-controller="authController" id="header">
           <span id="header-text"><a href="/#/">Instok</a></span>                                   
           <span ng-hide="Authentication.isSignedIn()" id="loginbox"><a ng-href="#/login"> login | signup </a></span>
           <span ng-show="Authentication.isSignedIn()" id="loginbox"><a ng-href="#/account">{{ Authentication.currentUser()._id }}</a><a ng-href="/logout"> | logout</a></span>
       </div>
-        <div id="body">
-        <div ng-view>
-        </div>
-      </div>
+      <div class="view-container" ng-view></div>
   </body>
-  </html>
+</html>
   <script>
     window.user = <%- user %>
   </script>

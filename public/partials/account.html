@@ -1,18 +1,12 @@
 
 <div id="account-body" ng-controller="listController">
-  
     <div id="account-container">
         <div id="alert-header">
           <span>Alerts</span><span id="alert-link"><a ng-href="/#/account/add">Add alert</a></span>
         </div>
-        <div>
-          <form>
             <div>
               <input class="alert-input" placeholder="Search" ng-model="name">
             </div>
-          </form>
-        </div>
-
         <div>
         <ul id="alert-list">
           <li class="alert" ng-repeat="alert in alerts | filter:name">
@@ -23,10 +17,8 @@
               <span ng-click="removeAlert(alert)" class="remove-alert" title="Remove alert">
               </span>
             </div>
-      </li>
-  </ul>
-
-  </div>
-</div>
-
+          </li>
+        </ul>
+      </div>
+    </div>
 </div>

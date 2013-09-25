@@ -1,11 +1,22 @@
 
 @import url(http://fonts.googleapis.com/css?family=Montserrat);
-@import url(http://fonts.googleapis.com/css?family=Libre+Baskerville);
+
 html, body {
     padding: 0;
     margin: 0;
     font-family:'Montserrat', Arial;
     height: 100%;
+}
+
+.view-container {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+body a {
+	color: white;
+    text-decoration: none;
 }
 
 .home-container {
@@ -19,41 +30,43 @@ html, body {
     color: black;
 }
 
-#body a {
-    color: white;
-    text-decoration: none;
-}
 #header {
     height: 40px;
     border-bottom-style: solid;
     border-width: 2px;
     border-color: black;
 }
+
 #header-text {
     font-size: 15px;
     padding: 10px;
     float: left;
 }
+
 #loginbox {
     font-size: 15px;
     padding: 10px;
     float: right;
 }
+
 #box-one {
     background: #4679bd;
 }
+
 #main-text {
 	
     font-size: 35px;
     padding: 25px 25px 0px 25px;
     color: white;
 }
+
 #subtitle {
 	
     font-size: 25px;
     color: white;
     padding: 25px 25px 35px 25px;
 }
+
 #box-two {
     background: #06406C;
 }
@@ -79,19 +92,23 @@ html, body {
 #box-three {
     background: #FF6161;
 }
+
 #box-four {
     background: #E10000;
     height: 70px;
 }
+
 ul {
     padding: 0;
     margin: 0;
     list-style: none;
 }
+
 .homelist {
     color: white;
     padding: 0px 25px 25px 25px;
 }
+
 .homelist li {
     padding: 10px 10px 10px 10px;
     color: white;
@@ -107,9 +124,7 @@ ul {
 
 .logincontainer {
     margin: 0 auto;
-    
     padding: 10px 15px 15px 30px;
-    
     font-size: 24px;
     max-width: 400px;
 }
@@ -126,59 +141,6 @@ ul {
 .header {
     width:100%;
     height: 50px;
-}
-
-button {
-	padding: 0;
-	border: 0;
-	background: none;
-	font-size: 100%;
-	vertical-align: baseline;
-	font-family: inherit;
-	color: inherit;
-}
-
-#new-todo,
-.edit {
-	position: relative;
-	margin: 0;
-	font-size: 24px;
-	line-height: 1.4em;
-	border: 0;
-	padding: 0;
-	border: 1px solid #999;
-	box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2);
-}
-
-#todo-list {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-#todo-list li {
-	position: relative;
-	font-size: 24px;
-	padding: 6px;
-}
-
-#todo-list li.editing .edit {
-	display: block;
-	width: 300px;
-	padding: 0;
-	margin: 0;
-}
-
-#todo-list li.editing .view {
-	display: none;
-}
-
-#todo-list li label {
-	line-height: 1.2;
-}
-
-#todo-list li .edit {
-	display: none;
 }
 
 #alert-list {
@@ -269,9 +231,6 @@ button {
 
 #account-body {
 	background: #4679bd;
-
-	margin: 0 auto;
+	min-height: 100%;
+	height: auto !important;
 }
-
-
-
