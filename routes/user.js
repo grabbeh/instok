@@ -28,6 +28,7 @@ User.findOne({username: newuser.toUpperCase()}, function(err, user) {
             bcrypt.hash(req.body.password, salt, function(err, hash) {
         // Store hash in your password DB
                 new User({_id: req.body.username,
+                          location: req.body.location,
                           username: req.body.username.toUpperCase(),
                           hash: hash,
                           alerts: []

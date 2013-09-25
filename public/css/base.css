@@ -8,6 +8,10 @@ html, body {
     height: 100%;
 }
 
+input {
+	font-family: 'Montserrat';
+}
+
 .view-container {
 	margin: 0;
 	padding: 0;
@@ -124,6 +128,8 @@ ul {
 	margin: 0;
 	padding: 0;
 	color: white;
+	min-height: 100%;
+	height: auto !important;
 }
 
 .logincontainer {
@@ -187,10 +193,9 @@ ul {
 	margin: 0;
 	font-size: 24px;
 	line-height: 1.2em;
+	padding: 10px 0 10px 10px;
 	border: 0;
-	padding: 10px;
-	border: 1px solid #999;
-	width: 96%;
+	min-width: 99%;
 }
 
 .clear-input {
@@ -199,13 +204,34 @@ ul {
     position: relative;
 	margin: 0;
 	font-size: 24px;
-	line-height: 1.2em;
-	padding: 10px;
-	width: 100px;
+	padding: 10px 0 10px 0;
+	width: 250px;
 }
 
-.add-reminder {
-	font-size: 24px;
+.add-title {
+	font-size: 25px;
+	
+}
+
+.add-alert {
+	font-size: 25px;
+}
+
+#add-container {
+	background: white;
+ 	margin: 0 auto;
+ 	padding: 25px;
+ 	width: 50%;
+}
+
+#add-body {
+	background: #FF6161;
+	min-height: 100%;
+	height: auto !important;
+}
+
+.add-space {
+	padding: 15px 0 15px 0;
 }
 
 .add-button {
@@ -230,7 +256,7 @@ ul {
 #account-container {
  	margin: 0 auto;
  	padding: 25px;
- 	max-width: 500px;
+ 	width: 50%;
 }
 
 #account-body {

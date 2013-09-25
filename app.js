@@ -100,7 +100,8 @@ app.post('/login',
   passport.authenticate('local'), 
     function(req, res){
       app.locals.user = JSON.stringify({ 
-        _id: req.user._id
+        _id: req.user._id,
+        location: req.user.location
       });
       res.redirect('/#/account');
 })

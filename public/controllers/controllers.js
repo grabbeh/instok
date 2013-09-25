@@ -87,10 +87,11 @@ alertModule
         }])
 
 alertModule
-    .controller('addController', ['$scope', '$http', 
-        function($scope, $http){
+    .controller('addController', ['$scope', 'Authentication', '$http', 
+        function($scope, Authentication, $http){
 
             $scope.message = "";
+            $scope.location = Authentication.currentUser().location;
             
             $scope.addAlert = function () {
                 
@@ -103,7 +104,7 @@ alertModule
                 $http.post('/alerts/' + postData.id, postData)
                 $scope.message = "Alert added"
                 $scope.item = "";
-                $scope.location = "";
+                
                 $scope.number = "";
             }
 

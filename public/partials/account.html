@@ -9,7 +9,7 @@
             </div>
         <div>
         <ul id="alert-list">
-          <li class="alert" ng-repeat="alert in alerts | filter:name">
+          <li ng-repeat="alert in alerts | filter:name">
             <div>
               <label ng-click="sendAlert(alert)">
                 {{alert.item}}

@@ -6,6 +6,7 @@ var userSchema = new Schema({
     _id: String,
     email: String,
     username: String,
+    location: String,
     hash: String,
     alerts: [{ type: Schema.Types.ObjectId, ref: 'Alert' }],
 
