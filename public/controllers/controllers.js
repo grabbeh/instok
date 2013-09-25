@@ -71,7 +71,7 @@ alertModule
         $scope.removeAlert = function(alert){
 
             $scope.alerts.forEach(function (item, i) {
-                    if (alert.id === item.id && alerts.length > 0) {
+                    if (alert.id === item.id && $scope.alerts.length > 0) {
                         $http.delete('/alerts/' + item.id);
                         $scope.alerts.splice(i, 1);
                     }
