@@ -52,8 +52,8 @@ passport.use(new LocalStrategy(
 ));
 
 var options = {
-  key: fs.readFileSync('./config/privatekey.pem'),
-  cert: fs.readFileSync('./config/certificate.pem')
+  key: fs.readFileSync('./config/domain.key'),
+  cert: fs.readFileSync('./config/SSL.crt')
 };
 
 app.locals.user = false;
