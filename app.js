@@ -13,6 +13,9 @@ var express = require('express')
 , db = require('./config/db.js')
 , user = require('./routes/user')
 , login = require('connect-ensure-login')
+, https = require('https')
+, http = require('http')
+, fs = require('fs')
 
 mongoose.connect('mongodb://' + db.details.user + ':' + db.details.pass + '@' + db.details.host + ':' + db.details.port + '/' + db.details.name );
 
@@ -47,6 +50,11 @@ passport.use(new LocalStrategy(
     });
   }
 ));
+
+var options = {
+  key: fs.readFileSync('./config/privatekey.pem'),
+  cert: fs.readFileSync('./config/certificate.pem')
+};
 
 app.locals.user = false;
 
@@ -108,4 +116,8 @@ app.post('/login',
 
 app.get('/logout', removeUser, user.logout);
 
-app.listen(3000);
+// Create an HTTP service.
+http.createServer(app).listen(3000);
+// Create an HTTPS service identical to the HTTP service.
+https.createServer(options, app).listen(443);
+
