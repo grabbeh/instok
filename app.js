@@ -118,7 +118,7 @@ app.post('/login',
 app.get('/logout', removeUser, user.logout);
 
 // Create an HTTP service.
-http.createServer(app).listen(3000);
+http.createServer(app).listen(5000);
 // Create an HTTPS service identical to the HTTP service.
 https.createServer(options, app).listen(443);
 
