@@ -53,7 +53,8 @@ passport.use(new LocalStrategy(
 
 var options = {
   key: fs.readFileSync('./config/domain.pem'),
-  cert: fs.readFileSync('./config/SSL.pem')
+  cert: fs.readFileSync('./config/main.pem'),
+  ca: [fs.readFileSync('./config/intermediate.pem')]
 };
 
 app.locals.user = false;
