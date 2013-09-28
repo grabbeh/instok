@@ -37,25 +37,33 @@ passport.deserializeUser(function(id, done) {
 });
 
 passport.use(new LocalStrategy(
+  
   function(username, password, done) {
+    console.log("User supplied details " + username + " " + password)
     process.nextTick(function () {
       User.findOne({_id: username}, function(err, user) {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
-          bcrypt.compare(password, user.hash, function(err, res) {
-          if (err) { return done(null, false, { message: 'Invalid password' }); }
-              return done(null, user);
-            });
+
+       if (!user) { 
+          return done(null, false); 
+          console.log("No user")
+      }
+
+      bcrypt.compare(password, user.hash, function(err, res){
+         if (res){ return done(null, user)}
+         else return done(null, false)
+            })
         })
-    });
+    })
   }
 ));
 
-var options = {
-  key: fs.readFileSync('./config/domain.pem'),
-  cert: fs.readFileSync('./config/main.pem'),
-  ca: [fs.readFileSync('./config/intermediate.pem')]
-};
+
+
+//var options = {
+//  key: fs.readFileSync('./config/domain.pem'),
+//  cert: fs.readFileSync('./config/main.pem'),
+//  ca: [fs.readFileSync('./config/intermediate.pem')]
+//};
 
 app.locals.user = false;
 
@@ -79,7 +87,7 @@ app.engine('html', require('ejs').renderFile);
 
 // middleware
 function removeUser(req, res, next) {
-    app.locals.user = false;
+    app.locals.user = null;
     next();
 }
 
@@ -108,11 +116,15 @@ app.post('/signup', user.createaccount);
 app.post('/login', 
   passport.authenticate('local'), 
     function(req, res){
+      if (req.user){
       app.locals.user = JSON.stringify({ 
         _id: req.user._id,
         location: req.user.location
       });
       res.redirect('/#/account');
+    }
+    else (console.log("No user at callback stage"
+  ))
 })
 
 app.get('/logout', removeUser, user.logout);
@@ -120,5 +132,5 @@ app.get('/logout', removeUser, user.logout);
 // Create an HTTP service.
 http.createServer(app).listen(5000);
 // Create an HTTPS service identical to the HTTP service.
-https.createServer(options, app).listen(443);
+//https.createServer(options, app).listen(5001);
 

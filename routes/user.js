@@ -26,7 +26,7 @@ User.findOne({username: newuser.toUpperCase()}, function(err, user) {
 
         bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(req.body.password, salt, function(err, hash) {
-        // Store hash in your password DB
+            // Store hash in your password DB
                 new User({_id: req.body.username,
                           location: req.body.location,
                           username: req.body.username.toUpperCase(),
