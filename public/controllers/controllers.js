@@ -42,7 +42,7 @@ alertModule.factory('AlertGetter', ['$http', function ($http) {
     var AlertGetter = {
         get: function(){
             var promise = $http.get('/alerts').then(function(response) {
-                console.log(response.data)
+                
                 return response.data;
             });
             return promise;
