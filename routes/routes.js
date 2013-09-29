@@ -39,11 +39,12 @@ exports.postAlert = function (req, res) {
 };
 
 exports.editAlert = function (req, res) {
-    Alert.findOne({
-        id: req.params.id
-    }, function (err, alert) {
-        alert.update({$addToSet: {key: value}}, {upsert: true}, function(err){
-        })
+    Alert.update({id: req.params.id}, { 
+        location: req.body.location, 
+        number: req.body.number,
+        item: req.body.item
+    }, function(err, user){
+          res.json("Alert updated");
     })
 }
 

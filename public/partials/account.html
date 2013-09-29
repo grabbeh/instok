@@ -14,8 +14,9 @@
               <label ng-click="sendAlert(alert)">
                 {{alert.item}}
               </label>
-              <span ng-click="removeAlert(alert)" class="remove-alert" title="Remove alert">
-              </span>
+              <span ng-click="removeAlert(alert)" class="remove-alert" title="Remove alert"></span>
+              <span title="View alert" class="info-alert"><a ng-href='/#/account/{{alert.id}}'><img src="../images/info.png"</a></span>
+              
             </div>
           </li>
         </ul>

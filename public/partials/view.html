@@ -1,14 +1,19 @@
-
-      <div class="box">
-        <div class="title">Book</div>
-        <ul class="list">
+<div id="add-body" ng-controller="viewController">
+    <div id="add-container">
+        <div>
+          <div class="add-title">Edit alert </div>
           
-          <li>
-            <div class="view">
-              <label>{{thing.name}}</label>
-              
+          <form ng-submit="editAlert(alert)">
+            <div class="add-alert">
+              <div class="add-space">Send:</div>
+              <div>Hello there, <input class="clear-input" name="item" placeholder="Item" ng-model="alert.item" value="{{alert.item}}"> is now 
+              available at 
+              <input class="clear-input" name="location" placeholder="Location" ng-model="alert.location" value="{{alert.location"}}></div>
+              <div>to <input class="clear-input" name="number" placeholder="Number" ng-model="alert.number" value="{{alert.number}}"></div>
+              <div><input type="submit" class="add-button" value="Submit"></div>
             </div>
-            
-           </li>
-        </ul>
-      </div>
+          </form>
+         </div>
+       <div><p>{{ message }} </p></div>
+    </div>
+</div>

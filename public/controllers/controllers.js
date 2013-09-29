@@ -13,7 +13,7 @@ alertModule.config(['$routeProvider', function($routeProvider){
             controller: 'addController',
             templateUrl: '/partials/add.html'
         }).
-        when('/account/alert', {
+        when('/account/:id', {
             controller: 'viewController',
             templateUrl: '/partials/view.html'
         }).
@@ -115,44 +115,26 @@ alertModule
 
 
 alertModule
-    .controller('viewController', ['$scope', '$http', '$routeParams', 'AlertGetter',
-        function ($scope, $http, $routeParams, AlertGetter) {
-            $scope.alerts = [];
+    .controller('viewController', ['$scope', '$http', '$routeParams', 
+        function ($scope, $http, $routeParams) {
+            
             $scope.message = "";
-            $scope.newalert = "";
-             $http.get('/alerts/' + $routeParams.id).success(function(data){
+            $http.get('/alerts/' + $routeParams.id).success(function(data){
+                console.log(data);
                 $scope.alert = data;
             })
 
-            $scope.removeAlert = function(alert) {
-                $http.delete('/alerts/' + item.id).success(function () {});
-            }
-
-            $scope.addAlert = function () {
-                var id = Math.guid();
-                var name = $scope.newalert;
-                var postData = {
-                    name: name,
-                    id: id
-                }
-                $scope.alerts.push(postData);
-                $http.post('/alerts/' + postData.id, postData)
-                $scope.newalert = "";
-            }
-
             $scope.editAlert = function (alert) {
-                $scope.editAlerty = alert;
-            }
-
-            $scope.doneEditing = function (alert) {
-                $scope.editAlerty = null;
                 var putData = {
-                    name: alert.name,
-                    id: alert.id
+                    item: alert.item,
+                    location: alert.location,
+                    number: alert.number
                 }
-                $http.put('/alerts/' + alert.id, putData).success(function () {})
+                $http.put('/alerts/' + alert.id, putData).then(function() {
+                    
+                })
+                $scope.message ="Alert updated";
             }
-
         }
     ])
 

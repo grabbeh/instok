@@ -12,6 +12,10 @@ input {
 	font-family: 'Montserrat';
 }
 
+p {
+	font-size: 25px;
+}
+
 .view-container {
 	margin: 0;
 	padding: 0;
@@ -182,6 +186,14 @@ ul {
 
 .remove-alert {
 	background-image: url('../images/cross.png');
+	float: right;
+	cursor: pointer;
+	width: 30px;
+	height: 30px;
+}
+
+.info-alert {
+	margin-right: 5px;
 	float: right;
 	cursor: pointer;
 	width: 30px;
