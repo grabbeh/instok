@@ -61,14 +61,13 @@ alertModule
 alertModule
     .controller('listController', ['$scope', '$http', '$location', 'Authentication', 'AlertGetter',
         function ($scope, $http, $location, Authentication, AlertGetter) {
-            if (!Authentication.isSignedIn()){
-                $location.path('/#/login')
+            if (Authentication.isSignedIn()){
+                AlertGetter.get().then(function(alerts){
+                $scope.alerts = alerts;
+                })
             }
-                       
-        AlertGetter.get().then(function(alerts){
-            $scope.alerts = alerts;
-        })
-
+            else { $location.path('/login') }
+            
         $scope.removeAlert = function(alert){
 
             $scope.alerts.forEach(function (item, i) {
