@@ -42,7 +42,6 @@ alertModule.factory('AlertGetter', ['$http', function ($http) {
     var AlertGetter = {
         get: function(){
             var promise = $http.get('/alerts').then(function(response) {
-                
                 return response.data;
             });
             return promise;
@@ -87,12 +86,16 @@ alertModule
         }])
 
 alertModule
-    .controller('addController', ['$scope', 'Authentication', '$http', 
-        function($scope, Authentication, $http){
+    .controller('addController', ['$scope', 'Authentication', '$http', '$location',
+        function($scope, Authentication, $http, $location){
 
             $scope.message = "";
-            $scope.location = Authentication.currentUser().location;
+
+            if (!Authentication.isSignedIn()){
+                $location.path('/login') 
+            }
             
+            $scope.location = Authentication.currentUser().location;
             $scope.addAlert = function () {
                 
                 var postData = {
