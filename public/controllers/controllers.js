@@ -119,6 +119,11 @@ alertModule
         function ($scope, $http, $routeParams) {
             
             $scope.message = "";
+
+             if (!Authentication.isSignedIn()){
+                $location.path('/login') 
+            }
+            
             $http.get('/alerts/' + $routeParams.id).success(function(data){
                 console.log(data);
                 $scope.alert = data;
