@@ -11,7 +11,7 @@
         <ul id="alert-list">
           <li ng-repeat="alert in alerts | filter:name">
             <div>
-              <label ng-click="sendAlert(alert)">
+              <label class="alert-name" title="Send alert" ng-click="sendAlert(alert)">
                 {{alert.item}}
               </label>
               <span ng-click="removeAlert(alert)" class="remove-alert" title="Remove alert"></span>

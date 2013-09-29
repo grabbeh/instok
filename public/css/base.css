@@ -33,6 +33,25 @@ body a {
 	color: white;
 }
 
+.home-image {
+	margin: 50px 0 50px 75px;
+	width: 100%;
+	max-width: 550px;
+}
+
+.image-text {
+	font-size: 25px;
+	padding: 0 0 50px 50px;
+}
+
+.home-left {
+     padding-right: 100px;
+}
+
+.home-centre {
+	padding-right: 100px;
+}
+
 #header a {
     text-decoration: none;
     color: black;
@@ -62,14 +81,12 @@ body a {
 }
 
 #main-text {
-	
     font-size: 40px;
     padding: 25px 25px 0px 25px;
     color: white;
 }
 
 #subtitle {
-	
     font-size: 25px;
     color: white;
     padding: 25px 25px 35px 25px;
@@ -96,7 +113,7 @@ body a {
 	padding: 50px 25px 0 25px;
 }
 
-.box-four-text {
+.box-five-text {
 	font-size: 35px;
 	padding: 50px 25px 50px 25px;
 }
@@ -107,8 +124,11 @@ body a {
 
 #box-four {
     background: #E10000;
-    
 }
+
+#box-five { 
+ 	background: #7e00fb;
+ }
 
 ul {
     padding: 0;
@@ -172,6 +192,9 @@ ul {
 	margin: 15px 0 15px 0;
 	background: #06406C;
 	width:100%;
+}
+
+.alert-name:hover {
 	cursor: pointer;
 }
 
@@ -235,6 +258,7 @@ ul {
  	margin: 0 auto;
  	padding: 25px;
  	width: 50%;
+
 }
 
 #add-body {
