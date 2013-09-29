@@ -115,8 +115,8 @@ alertModule
 
 
 alertModule
-    .controller('viewController', ['$scope', '$http', '$routeParams', 
-        function ($scope, $http, $routeParams) {
+    .controller('viewController', ['$scope', '$http', 'Authentication', '$routeParams', 
+        function ($scope, $http, Authentication, $routeParams) {
             
             $scope.message = "";
 
