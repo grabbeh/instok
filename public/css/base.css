@@ -172,6 +172,7 @@ ul {
 	margin: 15px 0 15px 0;
 	background: #06406C;
 	width:100%;
+	cursor: pointer;
 }
 
 #alert-link {
@@ -238,6 +239,12 @@ ul {
 
 #add-body {
 	background: #FF6161;
+	min-height: 100%;
+	height: auto !important;
+}
+
+#edit-body {
+	background: #61ffb0;
 	min-height: 100%;
 	height: auto !important;
 }
