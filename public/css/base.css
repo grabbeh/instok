@@ -211,6 +211,7 @@ ul {
 	margin: 0 auto;
 	border-style: none solid solid solid;
 	border-width: 2px;
+	border-color: black;
 }
 
 #edit-account-button a {
