@@ -116,6 +116,9 @@ app.post('/login',
 
 app.get('/logout', removeUser, user.logout);
 
+app.put('/user', user.updateaccount);
+
+
 //var options = {
   //key: fs.readFileSync('./config/domain.pem'),
   //cert: fs.readFileSync('./config/main.pem'),

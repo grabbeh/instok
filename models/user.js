@@ -5,11 +5,12 @@ var mongoose = require('mongoose')
 var userSchema = new Schema({
     _id: String,
     email: String,
-    pword: String,
     username: String,
     location: String,
     hash: String,
     alerts: [{ type: Schema.Types.ObjectId, ref: 'Alert' }],
+    sentalerts: [{ type: Schema.Types.ObjectId, ref: 'Alert' }],
+    abortedalerts: [{ type: Schema.Types.ObjectId, ref: 'Alert' }]
 
 });
 

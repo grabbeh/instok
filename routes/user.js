@@ -10,6 +10,15 @@ exports.logout = function(req, res){
   res.redirect('/');
 };
 
+
+exports.updateaccount = function(req, res){
+  console.log(req.body.location);
+   User.findOneAndUpdate({_id: req.user._id}, {location: req.body.location}, function(err){
+    if (err) { console.log(err) }
+      console.log("User updated");
+   })
+}
+
 exports.createaccount = function(req, res) {
 
 var newuser = req.body.username;
@@ -19,23 +28,23 @@ if (newuser.length < 2 || newpw.length < 7 ) {
 }
 else {
 User.findOne({username: newuser.toUpperCase()}, function(err, user) {
-      if (user) {
-            res.send('Username already taken - please choose another one')
-                }
-      else   {
-
+    if (user) {
+        res.send('Username already taken - please choose another one')
+            }
+    else  {
         bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(req.body.password, salt, function(err, hash) {
-            // Store hash in your password DB
                 new User({_id: req.body.username,
-                          location: req.body.location,
-                          username: req.body.username.toUpperCase(),
-                          hash: hash,
-                          alerts: []
-                        }).save(function(err) {
+                    location: req.body.location,
+                    username: req.body.username.toUpperCase(),
+                    hash: hash,
+                    alerts: [],
+                    sentalerts: [],
+                    abortedalerts: []
+                    }).save(function(err) {
                         res.redirect("/");
                     })
-              });
+               });
             });
         }
     })

@@ -23,7 +23,6 @@ exports.getAlert = function (req, res) {
 };
 
 exports.postAlert = function (req, res) {
-    
     new Alert({
         user: req.user._id,
         item: req.body.item,
@@ -32,11 +31,13 @@ exports.postAlert = function (req, res) {
         id: req.params.id
     }).save(function(err, alert){
         User.findOne({_id: req.user._id}, function(err, user){
-            user.update({$addToSet: {alerts: alert._id}}, {upsert: true}, function(err) {
+            user.update({$addToSet: {alerts: alert._id}}, function(err, number, raw) {
+                if (err) { console.log(err)}
+                    console.log("Alert added for " + alert.item + " " + number + raw)
+                })
             })
         })
-    });
-};
+    };
 
 exports.editAlert = function (req, res) {
     Alert.update({id: req.params.id}, { 
@@ -50,24 +51,43 @@ exports.editAlert = function (req, res) {
 
 exports.deleteAlert = function (req, res) {
     Alert.findOne({ id: req.params.id }, function (err, alert) {
-            User.update({_id: req.user._id}, {$pull: {alerts: alert._id}}, function(err, user){
-                alert.remove(); 
+        User.update({_id: req.user._id}, {$addToSet: {abortedalerts: alert._id}}, function(err, numberAffected, raw){
+            if (err){ console.log(err)}
+            console.log("Alert added to aborted alerts array " + alert.item + " " + "Number affected = " + numberAffected + "  " + "Raw = " + raw)
+            User.update({_id: req.user._id}, {$pull: {alerts: alert._id}}, function(err, numberAffected, raw){
+                if (err) { console.log(err) }
+                console.log("Alert removed from live array " + alert.item + " " + "Number affected = " + numberAffected + "  " + "Raw = " + raw);
         })
+      })
     })
 };
 
 exports.sendAlert = function(req, res){
     Alert.findOne({id: req.params.id}, function(err, alert){      
         twilio.sendSms({
-            to: alert.number, 
+            // test
+            to: '+447842768246',
+            //to: alert.number, 
+            // test
+            //from: '+15005550006',
             from: '+442033221672', 
             body: 'Hello there, ' + alert.item + ' is now available at ' + alert.location + ". Feel free to stop by!"
-            }, function(err, responseData) { 
-                if (err) {console.log(err)}
-                console.log(responseData.body); 
-                User.update({_id: req.user._id}, {$pull: {alerts: alert._id}}, function(err, user){
-                alert.remove(); 
-            })
+            }, function(err, message) { 
+                if (!err) {
+                    console.log(message.dateCreated)
+                    User.update({_id: req.user._id}, {$addToSet: {sentalerts: alert._id}}, function(err, user){
+
+                        console.log("Alert added to sentalerts " + alert.item)
+                        if (err) { console.log(err) }
+                        User.update({_id: req.user._id}, {$pull: {alerts: alert._id}}, function(err, user) {
+                            if (err) { console.log(err) }
+                            console.log("Alert removed " + alert.item)
+                        })
+                    })
+                }
+                else {
+                    console.log(err)
+                }
         });
     })
 }

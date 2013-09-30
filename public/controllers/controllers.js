@@ -13,6 +13,10 @@ alertModule.config(['$routeProvider', function($routeProvider){
             controller: 'addController',
             templateUrl: '/partials/add.html'
         }).
+        when('/account/edit', {
+            controller: 'editAccountController',
+            templateUrl: '/partials/edit.html'
+        }).
         when('/account/:id', {
             controller: 'viewController',
             templateUrl: '/partials/view.html'
@@ -33,6 +37,9 @@ alertModule.factory('Authentication', function(){
       },
       isSignedIn: function() {
         return !!current_user;
+      },
+      updateCurrentUserLocation: function(location){
+        current_user.location = location;
       }
     };
   });
@@ -78,10 +85,13 @@ alertModule
         }
 
         $scope.sendAlert = function(alert){
-            var postData = {}
-            postData.id = alert.id;
-            $http.post('sendalert/' + alert.id)
-            $scope.alerts.splice(i, 1);
+
+            $scope.alerts.forEach(function (item, i) {
+                    if (alert.id === item.id && $scope.alerts.length > 0) {
+                        $http.post('sendalert/' + alert.id)
+                        $scope.alerts.splice(i, 1);
+                    }
+                })
             }
         }])
 
@@ -140,8 +150,27 @@ alertModule
                 })
                 $scope.message ="Alert updated";
             }
-        }
-    ])
+        }])
+
+alertModule
+    .controller('editAccountController', ['$scope', '$http', 'Authentication', 
+        function ($scope, $http, Authentication) {
+      
+            $scope.message = "";
+
+            $scope.location = Authentication.currentUser().location;
+
+            $scope.editAccount = function(){
+                var putData = {
+                    location: $scope.location
+                };
+                Authentication.updateCurrentUserLocation($scope.location)
+                $http.put('/user', putData).then(function(){
+                    
+                });
+              $scope.message = "Account updated";  
+            }
+}])
 
 Math.guid = function () {
     return 'xxxxxxxx-xxxx-4xxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {

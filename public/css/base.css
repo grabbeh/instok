@@ -27,6 +27,8 @@ body a {
     text-decoration: none;
 }
 
+/* HOME PAGE */
+
 .home-container {
 	margin: 0 auto;
 	width: 70%;
@@ -34,22 +36,15 @@ body a {
 }
 
 .home-image {
-	margin: 50px 0 50px 75px;
-	width: 100%;
+	margin: 0 auto;
+	padding: 25px 0 25px 0;
 	max-width: 550px;
+
 }
 
 .image-text {
 	font-size: 25px;
 	padding: 0 0 50px 50px;
-}
-
-.home-left {
-     padding-right: 100px;
-}
-
-.home-centre {
-	padding-right: 100px;
 }
 
 #header a {
@@ -177,6 +172,8 @@ ul {
     height: 50px;
 }
 
+/* ACCOUNT PAGE */
+
 #alert-list {
 	margin: 0 15px 0 0;
 	padding: 0;
@@ -203,9 +200,19 @@ ul {
 }
 
 #alert-header {
-	color:white;
 	padding: 0 0 25px 0;
-	font-size: 25px;
+	
+}
+
+#edit-account-button {
+	background: white;
+	padding: 10px;
+	width: 160px;
+	margin: 0 auto;
+}
+
+#edit-account-button a {
+	color: black ;
 }
 
 .remove-alert {
@@ -306,4 +313,6 @@ ul {
 	background: #4679bd;
 	min-height: 100%;
 	height: auto !important;
+	font-size: 25px;
+	color: white;
 }
