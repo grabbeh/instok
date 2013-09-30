@@ -119,14 +119,14 @@ app.get('/logout', removeUser, user.logout);
 app.put('/user', user.updateaccount);
 
 
-//var options = {
-  //key: fs.readFileSync('./config/domain.pem'),
-  //cert: fs.readFileSync('./config/main.pem'),
-  //ca: [fs.readFileSync('./config/intermediate.pem')]
-//};
+var options = {
+  key: fs.readFileSync('./config/domain.pem'),
+  cert: fs.readFileSync('./config/main.pem'),
+  ca: [fs.readFileSync('./config/intermediate.pem')]
+};
 
 // Create an HTTP service.
 http.createServer(app).listen(5000);
 // Create an HTTPS service identical to the HTTP service.
-//https.createServer(options, app).listen(5001);
+https.createServer(options, app).listen(5001);
 
