@@ -87,6 +87,8 @@ app.get('/', function(req, res){
 
 app.get('/alerts', ensureAuthenticated, route.getAlerts);
 
+app.get('/sentalerts', ensureAuthenticated, route.getSentAlerts);
+
 app.get('/alerts/:id', ensureAuthenticated, route.getAlert);
 
 app.post('/alerts/:id', ensureAuthenticated, route.postAlert);
@@ -124,6 +126,7 @@ var options = {
   cert: fs.readFileSync('./config/main.pem'),
   ca: [fs.readFileSync('./config/intermediate.pem')]
 };
+
 
 // Create an HTTP service.
 http.createServer(app).listen(5000);

@@ -1,0 +1,15 @@
+<div id="sent-body" ng-controller="viewController">
+    <div id="add-container">
+        <div>
+          <div class="add-title">Sent alerts </div>
+          <div>
+              <input class="clear-input" placeholder="Search" ng-model="name">
+          </div>
+            <li class="sent-alerts-list" ng-repeat="alert in alerts | filter:name">
+              <div class="sent-alerts-text"> {{ alert.item }}</div>
+              <div class="sent-alerts-number"> to: {{ alert.number }}</div>
+            </li>
+         </div>
+       <div><p>{{ message }} </p></div>
+    </div>
+</div>

@@ -195,28 +195,44 @@ ul {
 	cursor: pointer;
 }
 
-#alert-link {
-	float: right;
-}
 
 #alert-header {
 	padding: 0 0 25px 0;
+}
+
+#account-buttons-list {
+	list-style: none;
+}
+
+#account-buttons-list a {
+	color: black;
+}
+
+#account-buttons-list li {
+	float: left;
+	color: black;
+	border-style: none solid solid solid;
+	border-width: 2px;
 	
+	margin-left: 15px;
+	padding: 10px;
+	font-size: 20px;
 }
 
 #edit-account-button {
-	background: white;
-	padding: 10px;
-	width: 160px;
-	margin: 0 auto;
-	border-style: none solid solid solid;
-	border-width: 2px;
-	border-color: black;
+	background: #7bffbd;
 }
 
-#edit-account-button a {
-	color: black ;
+#add-alert-button {
+	background: #FF6161;
 }
+
+
+
+#view-sent-alerts-button {
+	background: #FFA500;
+}
+
 
 .remove-alert {
 	background-image: url('../images/cross.png');
@@ -325,4 +341,30 @@ ul {
 	height: auto !important;
 	font-size: 25px;
 	color: white;
+}
+
+/* SENT ALERTS */
+
+#sent-body {
+	background: #FFA500;
+	min-height: 100%;
+	height: auto !important;
+}
+
+.sent-alerts-list {
+	list-style: none;
+}
+
+.sent-alerts-list li {
+	
+}
+
+.sent-alerts-text {
+	font-size: 25px;
+	padding: 10px 0 5px 0;
+}
+
+.sent-alerts-number {
+	font-size: 20px;
+	padding: 5px 0 10px 0;
 }

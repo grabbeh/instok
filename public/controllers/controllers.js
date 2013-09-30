@@ -17,6 +17,10 @@ alertModule.config(['$routeProvider', function($routeProvider){
             controller: 'editAccountController',
             templateUrl: '/partials/edit.html'
         }).
+        when('/account/sent', {
+            controller: 'sentAlertsController',
+            templateUrl: '/partials/sent.html'
+        }).
         when('/account/:id', {
             controller: 'viewController',
             templateUrl: '/partials/view.html'
@@ -47,8 +51,14 @@ alertModule.factory('Authentication', function(){
 
 alertModule.factory('AlertGetter', ['$http', function ($http) {
     var AlertGetter = {
-        get: function(){
+        getActiveAlerts: function(){
             var promise = $http.get('/alerts').then(function(response) {
+                return response.data;
+            });
+            return promise;
+        },
+        getSentAlerts: function(){
+            var promise = $http.get('/sentalerts').then(function(response){
                 return response.data;
             });
             return promise;
@@ -68,7 +78,7 @@ alertModule
     .controller('listController', ['$scope', '$http', '$location', 'Authentication', 'AlertGetter',
         function ($scope, $http, $location, Authentication, AlertGetter) {
             if (Authentication.isSignedIn()){
-                AlertGetter.get().then(function(alerts){
+                AlertGetter.getActiveAlerts().then(function(alerts){
                 $scope.alerts = alerts;
                 })
             }
@@ -94,6 +104,19 @@ alertModule
                 })
             }
         }])
+
+alertModule
+    .controller('sentAlertsController', ['$scope', 'Authentication', 'AlertGetter', '$location',
+        function ($scope, Authentication, AlertGetter, $location) {
+        if (Authentication.isSignedIn()){
+             AlertGetter.getSentAlerts().then(function(alerts){
+                $scope.alerts = alerts;
+             })
+        }
+        else { $location.path('/login') }
+
+    }])
+
 
 alertModule
     .controller('addController', ['$scope', 'Authentication', '$http', '$location',
@@ -157,6 +180,10 @@ alertModule
         function ($scope, $http, Authentication) {
       
             $scope.message = "";
+
+            if (!Authentication.isSignedIn()){
+                $location.path('/login') 
+            }
 
             $scope.location = Authentication.currentUser().location;
 

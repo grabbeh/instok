@@ -1,9 +1,17 @@
 
 <div id="account-body" ng-controller="listController">
-   <div id="edit-account-button"><a ng-href="/#/account/edit">Edit account</a></div>
+<div>
+  <ul id="account-buttons-list">
+   <li id="edit-account-button"><a ng-href="/#/account/edit">Edit account</a></li>
+   <li id="add-alert-button"><a ng-href="/#/account/add">Add alert</a></li>
+   <li id="view-sent-alerts-button"><a ng-href="/#/account/sent">Sent alerts</a></li>
+  </ul>
+</div>
+
+<div style="clear: both"></div>
     <div id="account-container">
         <div id="alert-header">
-          <span>Alerts</span><span id="alert-link"><a ng-href="/#/account/add">Add alert</a></span>
+          <span>Active alerts</span>
         </div>
             <div>
               <input class="alert-input" placeholder="Search" ng-model="name">

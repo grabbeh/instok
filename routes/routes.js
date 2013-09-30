@@ -12,6 +12,15 @@ exports.getAlerts = function (req, res) {
     })
 }
 
+exports.getSentAlerts = function(req, res){
+    User.findOne({_id: req.user._id})
+        .select('sentalerts')
+        .populate('sentalerts')
+        .exec(function(err, user){
+            res.json(user.sentalerts)
+    })
+}
+
 exports.getAlert = function (req, res) {
     Alert.findOne({
         id: req.params.id
