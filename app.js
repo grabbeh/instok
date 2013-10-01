@@ -108,10 +108,7 @@ app.post('/login',
   passport.authenticate('local'), 
     function(req, res){
       if (req.user){
-      app.locals.user = JSON.stringify({ 
-        _id: req.user._id,
-        location: req.user.location
-      });
+      console.log("Authenticated")
       res.redirect('/#/account');
     }
     else { res.redirect('/#/login')}
@@ -124,6 +121,7 @@ app.put('/user', user.updateaccount);
 app.get('/currentuser', function(req, res){
   if (req.user) {
      res.json(req.user)
+     console.log(req.user)
   }
   else {
      res.redirect('/#/login')
@@ -135,6 +133,7 @@ var options = {
   cert: fs.readFileSync('./config/main.pem'),
   ca: [fs.readFileSync('./config/intermediate.pem')]
 };
+
 
 // Create an HTTP service.
 http.createServer(app).listen(5000);

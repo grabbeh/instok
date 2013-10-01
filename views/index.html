@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app='alertModule'>
+<html ng-app='alertModule' ng-controller='authController'>
   <head>
   <meta charset="utf-8"/>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
@@ -9,14 +9,11 @@
   <title>Instok</title>
   </head>
   <body>
-      <div ng-controller="authController" id="header">
+      <div id="header">
           <span id="header-text"><a href="/#/">Instok</a></span>                                   
-          <span ng-hide="Authentication.isSignedIn()" id="loginbox"><a ng-href="#/login"> login | signup </a></span>
-          <span ng-show="Authentication.isSignedIn()" id="loginbox"><a ng-href="#/account">{{ Authentication.currentUser()._id }}</a><a ng-href="/logout"> | logout</a></span>
+          <span ng-hide="isSignedIn()" id="loginbox"><a ng-href="#/login"> login | signup </a></span>
+          <span ng-show="isSignedIn()" id="loginbox"><a ng-href="#/account">{{ user._id }}</a><a ng-href="/logout"> | logout</a></span>
       </div>
       <div class="view-container" ng-view></div>
   </body>
 </html>
-  <script>
-    window.user = <%- user %>
-  </script>

@@ -62,10 +62,8 @@ exports.deleteAlert = function (req, res) {
     Alert.findOne({ id: req.params.id }, function (err, alert) {
         User.update({_id: req.user._id}, {$addToSet: {abortedalerts: alert._id}}, function(err, numberAffected, raw){
             if (err){ console.log(err)}
-            console.log("Alert added to aborted alerts array " + alert.item + " " + "Number affected = " + numberAffected + "  " + "Raw = " + raw)
             User.update({_id: req.user._id}, {$pull: {alerts: alert._id}}, function(err, numberAffected, raw){
                 if (err) { console.log(err) }
-                console.log("Alert removed from live array " + alert.item + " " + "Number affected = " + numberAffected + "  " + "Raw = " + raw);
         })
       })
     })
@@ -83,19 +81,10 @@ exports.sendAlert = function(req, res){
             body: 'Hello there, ' + alert.item + ' is now available at ' + alert.location + ". Feel free to stop by!"
             }, function(err, message) { 
                 if (!err) {
-                    console.log(message.dateCreated)
                     User.update({_id: req.user._id}, {$addToSet: {sentalerts: alert._id}}, function(err, user){
-
-                        console.log("Alert added to sentalerts " + alert.item)
-                        if (err) { console.log(err) }
-                        User.update({_id: req.user._id}, {$pull: {alerts: alert._id}}, function(err, user) {
-                            if (err) { console.log(err) }
-                            console.log("Alert removed " + alert.item)
+                        User.update({_id: req.user._id}, {$pull: {alerts: alert._id}}, function(err, user) {                        
                         })
                     })
-                }
-                else {
-                    console.log(err)
                 }
         });
     })

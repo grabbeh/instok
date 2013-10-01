@@ -37,67 +37,49 @@ alertModule.config(['$routeProvider', function($routeProvider){
     });
 }]);
 
-alertModule.factory('Authentication', ['$http', function($http){
-    current_user = window.user;
-    
-    return {
-      currentUser: function(){
-        return current_user;
-      },
-      getCurrentUser: function() {
-        $http.get('/currentuser').success(function(response){
-            current_user = response.data;
-            return current_user;
-        })
-      },
-      isSignedIn: function() {
-        return !!current_user;
-      },
-      updateCurrentUserLocation: function(location){
-        current_user.location = location;
-      }
-    };
-  }]);
-
-
-alertModule.factory('AlertGetter', ['$http', 'Authentication', '$location', function ($http, Authentication, $location) {
+alertModule.factory('AlertGetter', ['$http', '$location', function ($http, $location) {
     var AlertGetter = {
         getActiveAlerts: function(){
-            if (Authentication.isSignedIn()){
-                var promise = $http.get('/alerts').then(function(response) {
-                    return response.data;
-                });
-                return promise;
-            }
-            else { $location.path('/login')}
+            var promise = $http.get('/alerts').then(function(response) {
+                return response.data;
+            });
+            return promise;
         },
         getSentAlerts: function(){
-            if (Authentication.isSignedIn()) {
-                var promise = $http.get('/sentalerts').then(function(response){
-                    return response.data;
-                });
-                return promise;
-            }
-            else { $location.path('/login')} 
+            var promise = $http.get('/sentalerts').then(function(response){
+                return response.data;
+            });
+            return promise;
             }
         }
     return AlertGetter
 }]);
 
+alertModule
+    .controller('authController', ['$http', '$rootScope', '$location',
+            function($http, $rootScope, $location){
+                if (!$rootScope.user) {
+                $http.get('/currentuser').success(function(response){
+                        $rootScope.user = response;
+                    })
+                }
+
+                $rootScope.isSignedIn = function(){
+                    return !!$rootScope.user;
+                }
+            }])
 
 alertModule
-    .controller('authController', ['$scope', '$http', 'Authentication',
-        function($scope, $http, Authentication){
-            $scope.Authentication = Authentication;
-        }])
+    .controller('listController', ['$scope', '$http', '$location', 'AlertGetter', '$rootScope',
+        function ($scope, $http, $location, AlertGetter, $rootScope) {
 
-alertModule
-    .controller('listController', ['$scope', '$http', '$location', 'Authentication', 'AlertGetter',
-        function ($scope, $http, $location, Authentication, AlertGetter) {
-            
-            AlertGetter.getActiveAlerts().then(function(alerts){
-                $scope.alerts = alerts;
-            })
+        if (!$rootScope.isSignedIn()){
+            $location.path('/login')
+        }
+
+        AlertGetter.getActiveAlerts().then(function(alerts){
+            $scope.alerts = alerts;
+        })
   
         $scope.removeAlert = function(alert){
 
@@ -121,27 +103,31 @@ alertModule
         }])
 
 alertModule
-    .controller('sentAlertsController', ['$scope', 'Authentication', 'AlertGetter', '$location',
-        function ($scope, Authentication, AlertGetter, $location) {
+    .controller('sentAlertsController', ['$scope', 'AlertGetter', '$location', '$rootScope',
+        function ($scope, AlertGetter, $location, $rootScope) {
         
-             AlertGetter.getSentAlerts().then(function(alerts){
+            if (!$rootScope.isSignedIn()){
+            $location.path('/login')
+            }
+
+
+            AlertGetter.getSentAlerts().then(function(alerts){
                 $scope.alerts = alerts;
-             })
-        
-    }])
+            })
+        }])
 
 
 alertModule
-    .controller('addController', ['$scope', 'Authentication', '$http', '$location',
-        function($scope, Authentication, $http, $location){
+    .controller('addController', ['$scope', '$http', '$rootScope',
+        function($scope, $http, $rootScope){
 
             $scope.message = "";
 
-            if (!Authentication.isSignedIn()){
-                $location.path('/login') 
+            if (!$rootScope.isSignedIn()){
+                $location.path('/login')
             }
-            
-            $scope.location = Authentication.currentUser().location;
+
+            $scope.location = $rootScope.user.location;
             $scope.addAlert = function () {
                 
                 var postData = {
@@ -161,13 +147,13 @@ alertModule
 
 
 alertModule
-    .controller('viewController', ['$scope', '$http', 'Authentication', '$routeParams', 
-        function ($scope, $http, Authentication, $routeParams) {
+    .controller('viewController', ['$scope', '$http', '$routeParams', '$rootScope',
+        function ($scope, $http, $routeParams, $rootScope) {
             
             $scope.message = "";
 
-             if (!Authentication.isSignedIn()){
-                $location.path('/login') 
+            if (!$rootScope.isSignedIn()){
+                $location.path('/login')
             }
             
             $http.get('/alerts/' + $routeParams.id).success(function(data){
@@ -188,22 +174,23 @@ alertModule
         }])
 
 alertModule
-    .controller('editAccountController', ['$scope', '$http', 'Authentication', 
-        function ($scope, $http, Authentication) {
+    .controller('editAccountController', ['$scope', '$http', '$rootScope',
+        function ($scope, $http, $rootScope) {
       
             $scope.message = "";
 
-            if (!Authentication.isSignedIn()){
-                $location.path('/login') 
+            if (!$rootScope.isSignedIn()){
+                 $location.path('/login')
             }
 
-            $scope.location = Authentication.currentUser().location;
+            $scope.location = $rootScope.user.location;
 
             $scope.editAccount = function(){
                 var putData = {
                     location: $scope.location
                 };
-                Authentication.updateCurrentUserLocation($scope.location)
+                $rootScope.user.location = $scope.location;
+                
                 $http.put('/user', putData).then(function(){
                     
                 });
@@ -213,13 +200,13 @@ alertModule
 
 
     alertModule
-    .controller('sentAlertController', ['$scope', '$http', 'Authentication', '$routeParams', 
-        function ($scope, $http, Authentication, $routeParams) {
+    .controller('sentAlertController', ['$scope', '$http', '$routeParams', '$rootScope',
+        function ($scope, $http, $routeParams, $rootScope) {
             
             $scope.message = "";
 
-             if (!Authentication.isSignedIn()){
-                $location.path('/login') 
+            if (!$rootScope.isSignedIn()){
+                $location.path('/login')
             }
             
             $http.get('/alerts/' + $routeParams.id).success(function(data){
@@ -227,7 +214,6 @@ alertModule
             })
 
             $scope.addAlert = function (alert) {
-
                 
                 var postData = {
                     item: alert.item,
