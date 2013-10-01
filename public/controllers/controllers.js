@@ -57,13 +57,16 @@ alertModule.factory('AlertGetter', ['$http', '$location', function ($http, $loca
 
 alertModule
     .controller('authController', ['$http', '$rootScope', '$location',
-            function($http, $rootScope, $location){
-                if (!$rootScope.user) {
-                $http.get('/currentuser').success(function(response){
+        function($http, $rootScope, $location){
+            
+                $http.get('/currentuser').
+                    success(function(response){
                         $rootScope.user = response;
-                    })
-                }
-
+                        }).
+                        error(function(){
+                            $rootScope.user = undefined;
+                        })
+                    
                 $rootScope.isSignedIn = function(){
                     return !!$rootScope.user;
                 }
@@ -74,7 +77,7 @@ alertModule
         function ($scope, $http, $location, AlertGetter, $rootScope) {
 
         if (!$rootScope.isSignedIn()){
-            $location.path('/login')
+            $location.path('/login');
         }
 
         AlertGetter.getActiveAlerts().then(function(alerts){

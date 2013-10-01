@@ -15,7 +15,7 @@ exports.updateaccount = function(req, res){
   console.log(req.body.location);
    User.findOneAndUpdate({_id: req.user._id}, {location: req.body.location}, function(err){
     if (err) { console.log(err) }
-      console.log("User updated");
+      
    })
 }
 

@@ -53,8 +53,6 @@ passport.use(new LocalStrategy(
   }
 ));
 
-app.locals.user = false;
-
 app.configure(function(){
   app.enable('trust proxy')
   app.set('views', __dirname + '/views');
@@ -73,12 +71,6 @@ app.configure(function(){
   app.use(app.router);
 
 });
-
-// middleware
-function removeUser(req, res, next) {
-    app.locals.user = null;
-    next();
-}
 
 // Routes
 
@@ -108,35 +100,31 @@ app.post('/login',
   passport.authenticate('local'), 
     function(req, res){
       if (req.user){
-      console.log("Authenticated")
       res.redirect('/#/account');
     }
     else { res.redirect('/#/login')}
   })
 
-app.get('/logout', removeUser, user.logout);
+app.get('/logout', user.logout);
 
 app.put('/user', user.updateaccount);
 
 app.get('/currentuser', function(req, res){
   if (req.user) {
-     res.json(req.user)
-     console.log(req.user)
-  }
-  else {
-     res.redirect('/#/login')
+     res.json(req.user);
   }
 })
-
+/*
 var options = {
   key: fs.readFileSync('./config/domain.pem'),
   cert: fs.readFileSync('./config/main.pem'),
   ca: [fs.readFileSync('./config/intermediate.pem')]
 };
+*/
 
 
 // Create an HTTP service.
 http.createServer(app).listen(5000);
 // Create an HTTPS service identical to the HTTP service.
-https.createServer(options, app).listen(5001);
+//https.createServer(options, app).listen(5001);
 
