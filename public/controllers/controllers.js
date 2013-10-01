@@ -49,21 +49,27 @@ alertModule.factory('Authentication', function(){
   });
 
 
-alertModule.factory('AlertGetter', ['$http', function ($http) {
+alertModule.factory('AlertGetter', ['$http', 'Authentication', '$location', function ($http, Authentication, $location) {
     var AlertGetter = {
         getActiveAlerts: function(){
-            var promise = $http.get('/alerts').then(function(response) {
-                return response.data;
-            });
-            return promise;
+            if (Authentication.isSignedIn()){
+                var promise = $http.get('/alerts').then(function(response) {
+                    return response.data;
+                });
+                return promise;
+            }
+            else { $location.path('/login')}
         },
         getSentAlerts: function(){
-            var promise = $http.get('/sentalerts').then(function(response){
-                return response.data;
-            });
-            return promise;
+            if (Authentication.isSignedIn()) {
+                var promise = $http.get('/sentalerts').then(function(response){
+                    return response.data;
+                });
+                return promise;
+            }
+            else { $location.path('/login')} 
+            }
         }
-    };
     return AlertGetter
 }]);
 
@@ -77,12 +83,11 @@ alertModule
 alertModule
     .controller('listController', ['$scope', '$http', '$location', 'Authentication', 'AlertGetter',
         function ($scope, $http, $location, Authentication, AlertGetter) {
-            if (Authentication.isSignedIn()){
-                AlertGetter.getActiveAlerts().then(function(alerts){
+            
+            AlertGetter.getActiveAlerts().then(function(alerts){
                 $scope.alerts = alerts;
-                })
-            }
-            else { $location.path('/login') }
+            })
+  
             
         $scope.removeAlert = function(alert){
 
@@ -108,13 +113,11 @@ alertModule
 alertModule
     .controller('sentAlertsController', ['$scope', 'Authentication', 'AlertGetter', '$location',
         function ($scope, Authentication, AlertGetter, $location) {
-        if (Authentication.isSignedIn()){
+        
              AlertGetter.getSentAlerts().then(function(alerts){
                 $scope.alerts = alerts;
              })
-        }
-        else { $location.path('/login') }
-
+        
     }])
 
 
@@ -157,7 +160,7 @@ alertModule
                 $location.path('/login') 
             }
             
-            $http.get('/alerts/' + $routeParams.id).success(function(data){
+            $http.get('/alerts/' + $routeParams.id).then(function(data){
                 console.log(data);
                 $scope.alert = data;
             })

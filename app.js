@@ -56,8 +56,9 @@ passport.use(new LocalStrategy(
 app.locals.user = false;
 
 app.configure(function(){
-app.set('views', __dirname + '/views');
-app.engine('html', require('ejs').renderFile);
+  app.enable('trust proxy')
+  app.set('views', __dirname + '/views');
+  app.engine('html', require('ejs').renderFile);
   app.use(express.bodyParser());
   app.use(express.cookieParser());
   app.use(express.methodOverride());
@@ -85,19 +86,19 @@ app.get('/', function(req, res){
   res.render('index.html')
 });
 
-app.get('/alerts', ensureAuthenticated, route.getAlerts);
+app.get('/alerts', route.getAlerts);
 
-app.get('/sentalerts', ensureAuthenticated, route.getSentAlerts);
+app.get('/sentalerts', route.getSentAlerts);
 
-app.get('/alerts/:id', ensureAuthenticated, route.getAlert);
+app.get('/alerts/:id', route.getAlert);
 
-app.post('/alerts/:id', ensureAuthenticated, route.postAlert);
+app.post('/alerts/:id', route.postAlert);
 
-app.delete('/alerts/:id', ensureAuthenticated, route.deleteAlert);
+app.delete('/alerts/:id', route.deleteAlert);
 
-app.put('/alerts/:id', ensureAuthenticated, route.editAlert);
+app.put('/alerts/:id', route.editAlert);
 
-app.post('/sendalert/:id', ensureAuthenticated, route.sendAlert);
+app.post('/sendalert/:id', route.sendAlert);
 
 // Authentication
 
@@ -120,16 +121,17 @@ app.get('/logout', removeUser, user.logout);
 
 app.put('/user', user.updateaccount);
 
-
+/*
 var options = {
   key: fs.readFileSync('./config/domain.pem'),
   cert: fs.readFileSync('./config/main.pem'),
   ca: [fs.readFileSync('./config/intermediate.pem')]
 };
+*/
 
 
 // Create an HTTP service.
 http.createServer(app).listen(5000);
 // Create an HTTPS service identical to the HTTP service.
-https.createServer(options, app).listen(5001);
+//https.createServer(options, app).listen(5001);
 
