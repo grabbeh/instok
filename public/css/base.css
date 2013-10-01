@@ -368,3 +368,20 @@ ul {
 	font-size: 20px;
 	padding: 5px 0 10px 0;
 }
+
+.sent-alerts-new-button {
+	font-size: 20px;
+	padding: 5px 0 10px 0;
+	
+}
+
+.sent-alerts-new-button a {
+	color: black;
+}
+
+#sent-alert-container {
+	 border-style: none none solid none;
+	 border-width: 2px;
+	 margin-bottom: 10px;
+	 padding: 10px 10px 10px 0;
+}

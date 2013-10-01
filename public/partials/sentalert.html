@@ -1,0 +1,19 @@
+<div id="add-body" ng-controller="sentAlertController">
+    <div id="add-container">
+        <div>
+          <div class="add-title">Send new alert to old number </div>
+          
+          <form ng-submit="addAlert(alert)">
+            <div class="add-alert">
+              <div class="add-space">Send:</div>
+              <div>Hello there, <input class="clear-input" name="item" placeholder="Item" ng-model="alert.item" value="{{alert.item}}"> is now 
+              available at 
+              <input class="clear-input" name="location" placeholder="Location" ng-model="alert.location" value="{{alert.location"}}></div>
+              <div>to <input class="clear-input" name="number" placeholder="Number" ng-model="alert.number" value="{{alert.number}}"></div>
+              <div><input type="submit" class="add-button" value="Submit"></div>
+            </div>
+          </form>
+         </div>
+       <div><p>{{ message }} </p></div>
+    </div>
+</div>

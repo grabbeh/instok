@@ -121,6 +121,14 @@ app.get('/logout', removeUser, user.logout);
 
 app.put('/user', user.updateaccount);
 
+app.get('/currentuser', function(req, res){
+  if (req.user) {
+     res.json(req.user)
+  }
+  else {
+     res.redirect('/#/login')
+  }
+})
 
 var options = {
   key: fs.readFileSync('./config/domain.pem'),

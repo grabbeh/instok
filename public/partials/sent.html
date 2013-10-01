@@ -6,8 +6,11 @@
               <input class="clear-input" placeholder="Search" ng-model="name">
           </div>
             <li class="sent-alerts-list" ng-repeat="alert in alerts | filter:name">
+              <div id="sent-alert-container">
               <div class="sent-alerts-text"> {{ alert.item }}</div>
               <div class="sent-alerts-number"> to: {{ alert.number }}</div>
+              <div class="sent-alerts-new-button"><a href='/#/account/sent/{{ alert.id }}'> New alert</a></div>
+            </div>
             </li>
          </div>
        <div><p>{{ message }} </p></div>

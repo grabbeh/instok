@@ -21,6 +21,10 @@ alertModule.config(['$routeProvider', function($routeProvider){
             controller: 'sentAlertsController',
             templateUrl: '/partials/sent.html'
         }).
+        when('/account/sent/:id',{
+            controller: 'sentAlertController',
+            templateUrl: '/partials/sentalert.html'
+        }).
         when('/account/:id', {
             controller: 'viewController',
             templateUrl: '/partials/view.html'
@@ -33,11 +37,18 @@ alertModule.config(['$routeProvider', function($routeProvider){
     });
 }]);
 
-alertModule.factory('Authentication', function(){
-    var current_user = window.user;
+alertModule.factory('Authentication', ['$http', function($http){
+    current_user = window.user;
+    
     return {
-      currentUser: function() {
+      currentUser: function(){
         return current_user;
+      },
+      getCurrentUser: function() {
+        $http.get('/currentuser').success(function(response){
+            current_user = response.data;
+            return current_user;
+        })
       },
       isSignedIn: function() {
         return !!current_user;
@@ -46,7 +57,7 @@ alertModule.factory('Authentication', function(){
         current_user.location = location;
       }
     };
-  });
+  }]);
 
 
 alertModule.factory('AlertGetter', ['$http', 'Authentication', '$location', function ($http, Authentication, $location) {
@@ -88,7 +99,6 @@ alertModule
                 $scope.alerts = alerts;
             })
   
-            
         $scope.removeAlert = function(alert){
 
             $scope.alerts.forEach(function (item, i) {
@@ -161,7 +171,6 @@ alertModule
             }
             
             $http.get('/alerts/' + $routeParams.id).success(function(data){
-
                 $scope.alert = data;
             })
 
@@ -201,6 +210,37 @@ alertModule
               $scope.message = "Account updated";  
             }
 }])
+
+
+    alertModule
+    .controller('sentAlertController', ['$scope', '$http', 'Authentication', '$routeParams', 
+        function ($scope, $http, Authentication, $routeParams) {
+            
+            $scope.message = "";
+
+             if (!Authentication.isSignedIn()){
+                $location.path('/login') 
+            }
+            
+            $http.get('/alerts/' + $routeParams.id).success(function(data){
+                $scope.alert = data;
+            })
+
+            $scope.addAlert = function (alert) {
+
+                
+                var postData = {
+                    item: alert.item,
+                    location: alert.location,
+                    number: alert.number,
+                    id: Math.guid()
+                }
+                $http.post('/alerts/' + postData.id, postData).then(function() {
+                    
+                })
+                $scope.message ="Alert saved";
+            }
+        }])
 
 Math.guid = function () {
     return 'xxxxxxxx-xxxx-4xxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {

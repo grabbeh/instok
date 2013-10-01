@@ -42,7 +42,7 @@ exports.postAlert = function (req, res) {
         User.findOne({_id: req.user._id}, function(err, user){
             user.update({$addToSet: {alerts: alert._id}}, function(err, number, raw) {
                 if (err) { console.log(err)}
-                    console.log("Alert added for " + alert.item + " " + number + raw)
+            
                 })
             })
         })
