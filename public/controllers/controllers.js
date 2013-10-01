@@ -160,8 +160,8 @@ alertModule
                 $location.path('/login') 
             }
             
-            $http.get('/alerts/' + $routeParams.id).then(function(data){
-                console.log(data);
+            $http.get('/alerts/' + $routeParams.id).success(function(data){
+
                 $scope.alert = data;
             })
 

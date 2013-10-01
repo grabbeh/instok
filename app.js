@@ -128,8 +128,6 @@ var options = {
   ca: [fs.readFileSync('./config/intermediate.pem')]
 };
 
-
-
 // Create an HTTP service.
 http.createServer(app).listen(5000);
 // Create an HTTPS service identical to the HTTP service.
