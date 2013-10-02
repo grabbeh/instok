@@ -11,45 +11,47 @@ alertModule.config(['$routeProvider', function($routeProvider){
             resolve: {
                 user: function(userGetter){
                     return userGetter.currentUser();
-            },
-                alerts: function(alertsGetter){
-                    return alertsGetter.getActiveAlerts();
                 }
             }
         }).
         when('/account/add', {
             controller: 'addController',
             templateUrl: '/partials/add.html',
-            resolve: {user: function(userGetter){
-                return userGetter.currentUser();
+            resolve: {
+                user: function(userGetter){
+                    return userGetter.currentUser();
             }}
         }).
         when('/account/edit', {
             controller: 'editAccountController',
             templateUrl: '/partials/edit.html',
-            resolve: {user: function(userGetter){
-                return userGetter.currentUser();
+            resolve: {
+                user: function(userGetter){
+                    return userGetter.currentUser();
             }}
         }).
         when('/account/sent', {
             controller: 'sentAlertsController',
             templateUrl: '/partials/sent.html',
-            resolve: {user: function(userGetter){
-                return userGetter.currentUser();
+            resolve: {
+                user: function(userGetter){
+                    return userGetter.currentUser();
             }}
         }).
         when('/account/sent/:id',{
             controller: 'sentAlertController',
             templateUrl: '/partials/sentalert.html',
-            resolve: {user: function(userGetter){
-                return userGetter.currentUser();
+            resolve: {
+                user: function(userGetter){
+                    return userGetter.currentUser();
             }}
         }).
         when('/account/:id', {
             controller: 'viewController',
             templateUrl: '/partials/view.html',
-            resolve: {user: function(userGetter){
-                return userGetter.currentUser();
+            resolve: {
+                user: function(userGetter){
+                    return userGetter.currentUser();
             }}
         }).
         when('/login/', {
@@ -63,40 +65,29 @@ alertModule.config(['$routeProvider', function($routeProvider){
 alertModule.factory('userGetter', ['$http', '$location', function ($http, $location) {
     var userGetter = {
         currentUser: function(){
-            var promise = $http.get('/currentuser').then(function(user) {
-                console.log(user);
-                return user.data;
-            });
-            return promise;
+            return $http.get('/currentuser');
         }
-        }
+    }
     return userGetter
 }]);
 
-alertModule.factory('alertsGetter', ['$http', '$location', function ($http, $location) {
+alertModule.factory('alertsGetter', ['$http', function ($http) {
     var alertsGetter = {
         getActiveAlerts: function(){
-            var promise = $http.get('/alerts').then(function(response) {
-                return response.data;
-            });
-            return promise;
+            return $http.get('/alerts');
         },
         getSentAlerts: function(){
-            var promise = $http.get('/sentalerts').then(function(response){
-                return response.data;
-            });
-            return promise;
-            }
+            return $http.get('/sentalerts');
         }
+    }
     return alertsGetter;
 }]);
 
 alertModule
-    .controller('authController', ['$scope', '$http',
-        function($scope, $http){
-
-            $http.get('/currentuser').success(function(data, status, headers, config) {
-                $scope.user = data;
+    .controller('authController', ['$scope', '$http', 'userGetter',
+        function($scope, $http, userGetter){
+            userGetter.currentUser().then(function(response){
+                $scope.user = response.data;
             })
 
             $scope.isSignedIn = function(){
@@ -105,17 +96,13 @@ alertModule
         }])
 
 alertModule
-    .controller('listController', ['$scope', '$http', '$location', 'alertsGetter', 
+    .controller('listController', ['$scope', '$http', '$location', 'alertsGetter',
         function ($scope, $http, $location, alertsGetter) {
 
-        if (!$scope.user) {
-            $location.path('/login');
-        }
-
-        alertsGetter.getActiveAlerts().then(function(alerts){
-            $scope.alerts = alerts;
+        alertsGetter.getActiveAlerts().then(function(response){
+            $scope.alerts = response.data;
         })
-  
+
         $scope.removeAlert = function(alert){
             $scope.alerts.forEach(function (item, i) {
                     if (alert.id === item.id && $scope.alerts.length > 0) {
@@ -138,13 +125,8 @@ alertModule
 alertModule
     .controller('sentAlertsController', ['$scope', 'alertsGetter', '$location', 
         function ($scope, alertsGetter, $location, $rootScope) {
-        
-            if (!$scope.user) {
-                $location.path('/login');
-            }
-
-            alertsGetter.getSentAlerts().then(function(alerts){
-                $scope.alerts = alerts;
+            alertsGetter.getSentAlerts().then(function(response){
+                $scope.alerts = response.data;
             })
         }])
 
@@ -154,10 +136,6 @@ alertModule
         function($scope, $http, $rootScope){
 
             $scope.message = "";
-
-            if (!$scope.user) {
-                $location.path('/login');
-            }
 
             $scope.location = $scope.user.location;
             $scope.addAlert = function () {
@@ -182,10 +160,6 @@ alertModule
         function ($scope, $http, $routeParams) {
             
             $scope.message = "";
-
-            if (!$scope.user) {
-                $location.path('/login');
-            }
             
             $http.get('/alerts/' + $routeParams.id).success(function(data){
                 $scope.alert = data;
@@ -205,14 +179,11 @@ alertModule
         }])
 
 alertModule
-    .controller('editAccountController', ['$scope', '$http', 
-        function ($scope, $http) {
+    .controller('editAccountController', ['$scope', '$http', 'user',
+        function ($scope, $http, user) {
       
             $scope.message = "";
-
-            if (!$scope.user) {
-                $location.path('/login');
-            }
+            $scope.user = user.data;
 
             $scope.location = $scope.user.location;
 
@@ -226,7 +197,7 @@ alertModule
                     
                 });
               $scope.message = "Account updated";  
-            }
+    }
 }])
 
 
