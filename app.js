@@ -19,13 +19,6 @@ var express = require('express')
 
 mongoose.connect('mongodb://' + db.details.user + ':' + db.details.pass + '@' + db.details.host + ':' + db.details.port + '/' + db.details.name );
 
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { 
-    return next(); 
-  }
-  res.redirect('/#/login')
-}
-
 passport.serializeUser(function(user, done) {
   done(null, user._id);
 });
@@ -37,7 +30,6 @@ passport.deserializeUser(function(id, done) {
 });
 
 passport.use(new LocalStrategy(
-  
   function(username, password, done) {
     process.nextTick(function () {
       User.findOne({_id: username}, function(err, user) {
@@ -114,17 +106,17 @@ app.get('/currentuser', function(req, res){
      res.json(req.user);
   }
 })
-
+/*
 var options = {
   key: fs.readFileSync('./config/domain.pem'),
   cert: fs.readFileSync('./config/main.pem'),
   ca: [fs.readFileSync('./config/intermediate.pem')]
 };
-
+*/
 
 
 // Create an HTTP service.
 http.createServer(app).listen(5000);
 // Create an HTTPS service identical to the HTTP service.
-https.createServer(options, app).listen(5001);
+//https.createServer(options, app).listen(5001);
 

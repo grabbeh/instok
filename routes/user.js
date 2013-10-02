@@ -10,7 +10,6 @@ exports.logout = function(req, res){
   res.redirect('/');
 };
 
-
 exports.updateaccount = function(req, res){
   console.log(req.body.location);
    User.findOneAndUpdate({_id: req.user._id}, {location: req.body.location}, function(err){

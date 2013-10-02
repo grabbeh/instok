@@ -7,27 +7,50 @@ alertModule.config(['$routeProvider', function($routeProvider){
         }).
         when('/account', {
             controller: 'listController',
-            templateUrl: '/partials/account.html'
+            templateUrl: '/partials/account.html',
+            resolve: {
+                user: function(userGetter){
+                    return userGetter.currentUser();
+            },
+                alerts: function(alertsGetter){
+                    return alertsGetter.getActiveAlerts();
+                }
+            }
         }).
         when('/account/add', {
             controller: 'addController',
-            templateUrl: '/partials/add.html'
+            templateUrl: '/partials/add.html',
+            resolve: {user: function(userGetter){
+                return userGetter.currentUser();
+            }}
         }).
         when('/account/edit', {
             controller: 'editAccountController',
-            templateUrl: '/partials/edit.html'
+            templateUrl: '/partials/edit.html',
+            resolve: {user: function(userGetter){
+                return userGetter.currentUser();
+            }}
         }).
         when('/account/sent', {
             controller: 'sentAlertsController',
-            templateUrl: '/partials/sent.html'
+            templateUrl: '/partials/sent.html',
+            resolve: {user: function(userGetter){
+                return userGetter.currentUser();
+            }}
         }).
         when('/account/sent/:id',{
             controller: 'sentAlertController',
-            templateUrl: '/partials/sentalert.html'
+            templateUrl: '/partials/sentalert.html',
+            resolve: {user: function(userGetter){
+                return userGetter.currentUser();
+            }}
         }).
         when('/account/:id', {
             controller: 'viewController',
-            templateUrl: '/partials/view.html'
+            templateUrl: '/partials/view.html',
+            resolve: {user: function(userGetter){
+                return userGetter.currentUser();
+            }}
         }).
         when('/login/', {
              templateUrl:'/partials/login.html'
@@ -37,8 +60,21 @@ alertModule.config(['$routeProvider', function($routeProvider){
     });
 }]);
 
-alertModule.factory('AlertGetter', ['$http', '$location', function ($http, $location) {
-    var AlertGetter = {
+alertModule.factory('userGetter', ['$http', '$location', function ($http, $location) {
+    var userGetter = {
+        currentUser: function(){
+            var promise = $http.get('/currentuser').then(function(user) {
+                console.log(user);
+                return user.data;
+            });
+            return promise;
+        }
+        }
+    return userGetter
+}]);
+
+alertModule.factory('alertsGetter', ['$http', '$location', function ($http, $location) {
+    var alertsGetter = {
         getActiveAlerts: function(){
             var promise = $http.get('/alerts').then(function(response) {
                 return response.data;
@@ -52,50 +88,44 @@ alertModule.factory('AlertGetter', ['$http', '$location', function ($http, $loca
             return promise;
             }
         }
-    return AlertGetter
+    return alertsGetter;
 }]);
 
 alertModule
-    .controller('authController', ['$http', '$rootScope', '$location',
-        function($http, $rootScope, $location){
-            
-                $http.get('/currentuser').
-                    success(function(response){
-                        $rootScope.user = response;
-                        }).
-                        error(function(){
-                            $rootScope.user = undefined;
-                        })
-                    
-                $rootScope.isSignedIn = function(){
-                    return !!$rootScope.user;
-                }
-            }])
+    .controller('authController', ['$scope', '$http',
+        function($scope, $http){
+
+            $http.get('/currentuser').success(function(data, status, headers, config) {
+                $scope.user = data;
+            })
+
+            $scope.isSignedIn = function(){
+                return !!$scope.user;
+            }
+        }])
 
 alertModule
-    .controller('listController', ['$scope', '$http', '$location', 'AlertGetter', '$rootScope',
-        function ($scope, $http, $location, AlertGetter, $rootScope) {
+    .controller('listController', ['$scope', '$http', '$location', 'alertsGetter', 
+        function ($scope, $http, $location, alertsGetter) {
 
-        if (!$rootScope.isSignedIn()){
+        if (!$scope.user) {
             $location.path('/login');
         }
 
-        AlertGetter.getActiveAlerts().then(function(alerts){
+        alertsGetter.getActiveAlerts().then(function(alerts){
             $scope.alerts = alerts;
         })
   
         $scope.removeAlert = function(alert){
-
             $scope.alerts.forEach(function (item, i) {
                     if (alert.id === item.id && $scope.alerts.length > 0) {
                         $http.delete('/alerts/' + item.id);
                         $scope.alerts.splice(i, 1);
                     }
                 })
-        }
+            }
 
         $scope.sendAlert = function(alert){
-
             $scope.alerts.forEach(function (item, i) {
                     if (alert.id === item.id && $scope.alerts.length > 0) {
                         $http.post('sendalert/' + alert.id)
@@ -106,31 +136,30 @@ alertModule
         }])
 
 alertModule
-    .controller('sentAlertsController', ['$scope', 'AlertGetter', '$location', '$rootScope',
-        function ($scope, AlertGetter, $location, $rootScope) {
+    .controller('sentAlertsController', ['$scope', 'alertsGetter', '$location', 
+        function ($scope, alertsGetter, $location, $rootScope) {
         
-            if (!$rootScope.isSignedIn()){
-            $location.path('/login')
+            if (!$scope.user) {
+                $location.path('/login');
             }
 
-
-            AlertGetter.getSentAlerts().then(function(alerts){
+            alertsGetter.getSentAlerts().then(function(alerts){
                 $scope.alerts = alerts;
             })
         }])
 
 
 alertModule
-    .controller('addController', ['$scope', '$http', '$rootScope',
+    .controller('addController', ['$scope', '$http', 
         function($scope, $http, $rootScope){
 
             $scope.message = "";
 
-            if (!$rootScope.isSignedIn()){
-                $location.path('/login')
+            if (!$scope.user) {
+                $location.path('/login');
             }
 
-            $scope.location = $rootScope.user.location;
+            $scope.location = $scope.user.location;
             $scope.addAlert = function () {
                 
                 var postData = {
@@ -142,7 +171,6 @@ alertModule
                 $http.post('/alerts/' + postData.id, postData)
                 $scope.message = "Alert added"
                 $scope.item = "";
-                
                 $scope.number = "";
             }
 
@@ -150,13 +178,13 @@ alertModule
 
 
 alertModule
-    .controller('viewController', ['$scope', '$http', '$routeParams', '$rootScope',
-        function ($scope, $http, $routeParams, $rootScope) {
+    .controller('viewController', ['$scope', '$http', '$routeParams', 
+        function ($scope, $http, $routeParams) {
             
             $scope.message = "";
 
-            if (!$rootScope.isSignedIn()){
-                $location.path('/login')
+            if (!$scope.user) {
+                $location.path('/login');
             }
             
             $http.get('/alerts/' + $routeParams.id).success(function(data){
@@ -177,22 +205,22 @@ alertModule
         }])
 
 alertModule
-    .controller('editAccountController', ['$scope', '$http', '$rootScope',
-        function ($scope, $http, $rootScope) {
+    .controller('editAccountController', ['$scope', '$http', 
+        function ($scope, $http) {
       
             $scope.message = "";
 
-            if (!$rootScope.isSignedIn()){
-                 $location.path('/login')
+            if (!$scope.user) {
+                $location.path('/login');
             }
 
-            $scope.location = $rootScope.user.location;
+            $scope.location = $scope.user.location;
 
             $scope.editAccount = function(){
                 var putData = {
                     location: $scope.location
                 };
-                $rootScope.user.location = $scope.location;
+                $scope.user.location = $scope.location;
                 
                 $http.put('/user', putData).then(function(){
                     
@@ -203,12 +231,12 @@ alertModule
 
 
     alertModule
-    .controller('sentAlertController', ['$scope', '$http', '$routeParams', '$rootScope',
-        function ($scope, $http, $routeParams, $rootScope) {
+    .controller('sentAlertController', ['$scope', '$http', '$routeParams', 
+        function ($scope, $http, $routeParams) {
             
             $scope.message = "";
 
-            if (!$rootScope.isSignedIn()){
+            if (!$scope.user){
                 $location.path('/login')
             }
             
