@@ -65,7 +65,7 @@ alertModule.config(['$routeProvider', function($routeProvider){
 alertModule.factory('userGetter', ['$http', '$location', function ($http, $location) {
     var userGetter = {
         currentUser: function(){
-            return $http.get('/currentuser');
+            return $http.get('/currentuser')
         }
     }
     return userGetter
@@ -84,11 +84,15 @@ alertModule.factory('alertsGetter', ['$http', function ($http) {
 }]);
 
 alertModule
-    .controller('authController', ['$scope', '$http', 'userGetter',
-        function($scope, $http, userGetter){
+    .controller('authController', ['$scope', '$rootScope', '$location', 'userGetter',
+        function($scope, $rootScope, $location, userGetter){
             userGetter.currentUser().then(function(response){
                 $scope.user = response.data;
             })
+
+             $rootScope.$on('$routeChangeError', function(){
+                $location.path('/login')
+            });
 
             $scope.isSignedIn = function(){
                 return !!$scope.user;

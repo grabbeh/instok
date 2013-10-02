@@ -103,7 +103,11 @@ app.put('/user', user.updateaccount);
 
 app.get('/currentuser', function(req, res){
   if (req.user) {
-     res.json(req.user);
+      res.json(req.user);
+  }
+  else {
+    res.status(401);
+    res.send();
   }
 })
 
