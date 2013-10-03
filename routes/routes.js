@@ -60,14 +60,12 @@ exports.editAlert = function (req, res) {
 
 exports.deleteAlert = function (req, res) {
     Alert.findOne({ id: req.params.id }, function (err, alert) {
-        User.update({_id: req.user._id}, {$addToSet: {abortedalerts: alert._id}}, function(err, numberAffected, raw){
-            if (err){ console.log(err)}
-            User.update({_id: req.user._id}, {$pull: {alerts: alert._id}}, function(err, numberAffected, raw){
-                if (err) { console.log(err) }
+        User.findOne({_id: req.user._id}) 
+            .update({$addToSet: {abortedalerts: alert._id}})
+            .update({$pull: {alerts: alert._id}})
+            .exec();               
         })
-      })
-    })
-};
+    };
 
 exports.sendAlert = function(req, res){
     Alert.findOne({id: req.params.id}, function(err, alert){      
@@ -81,11 +79,14 @@ exports.sendAlert = function(req, res){
             body: 'Hello there, ' + alert.item + ' is now available at ' + alert.location + ". Feel free to stop by!"
             }, function(err, message) { 
                 if (!err) {
-                    User.update({_id: req.user._id}, {$addToSet: {sentalerts: alert._id}}, function(err, user){
-                        User.update({_id: req.user._id}, {$pull: {alerts: alert._id}}, function(err, user) {                        
+                    console.log(message.status)
+                    User.findOne({_id: req.user._id})
+                        .update({$addToSet: {sentalerts: alert._id}})
+                        .update({$pull: {alerts: alert._id}})
+                        .exec(function(err){
+                            if (err){console.log(err)}
                         })
-                    })
-                }
-        });
-    })
-}
+                    }
+                });
+            })
+        }
