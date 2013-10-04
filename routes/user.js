@@ -39,7 +39,8 @@ User.findOne({username: newuser.toUpperCase()}, function(err, user) {
                     hash: hash,
                     alerts: [],
                     sentalerts: [],
-                    abortedalerts: []
+                    abortedalerts: [],
+                    templates: []
                     }).save(function(err) {
                         res.redirect("/");
                     })

@@ -9,7 +9,8 @@ var alertSchema = new Schema({
     id: String,
     item: String,
     location: String,
-    number: String
+    number: String,
+    template: [{ type: Schema.Types.ObjectId, ref: 'Template' }]
 });
 
 module.exports = mongoose.model('Alert', alertSchema);

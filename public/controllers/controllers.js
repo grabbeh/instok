@@ -1,4 +1,4 @@
-var alertModule = angular.module('alertModule', []);
+var alertModule = angular.module('alertModule', ['ngSanitize']);
 
 alertModule.config(['$routeProvider', function($routeProvider){
     $routeProvider.
@@ -49,6 +49,14 @@ alertModule.config(['$routeProvider', function($routeProvider){
         when('/account/:id', {
             controller: 'viewController',
             templateUrl: '/partials/view.html',
+            resolve: {
+                user: function(userGetter){
+                    return userGetter.currentUser();
+            }}
+        }).
+        when('/account/template/add', {
+            controller: 'templateAddController',
+            templateUrl: '/partials/templateadd.html',
             resolve: {
                 user: function(userGetter){
                     return userGetter.currentUser();
@@ -140,6 +148,16 @@ alertModule
         function($scope, $http, $rootScope){
 
             $scope.message = "";
+            $scope.template = "Hello there, {{ item }} is now available at {{ location }}. Please feel free to stop by."
+              
+            $http.get('/templates').success(function(data){
+                $scope.templates = data.templates;
+                $scope.activetemplate = data.templates[0]
+            })
+
+            $scope.changeActiveTemplate = function(template){
+                $scope.activetemplate = template;
+            }
 
             $scope.location = $scope.user.location;
             $scope.addAlert = function () {
@@ -148,7 +166,8 @@ alertModule
                     item: $scope.item,
                     location: $scope.location,
                     number: $scope.number,
-                    id: Math.guid()
+                    id: Math.guid(),
+                    template: $scope.activetemplate._id
                 }
                 $http.post('/alerts/' + postData.id, postData)
                 $scope.message = "Alert added"
@@ -175,9 +194,7 @@ alertModule
                     location: alert.location,
                     number: alert.number
                 }
-                $http.put('/alerts/' + alert.id, putData).then(function() {
-                    
-                })
+                $http.put('/alerts/' + alert.id, putData);
                 $scope.message ="Alert updated";
             }
         }])
@@ -188,7 +205,6 @@ alertModule
       
             $scope.message = "";
             $scope.user = user.data;
-
             $scope.location = $scope.user.location;
 
             $scope.editAccount = function(){
@@ -196,13 +212,10 @@ alertModule
                     location: $scope.location
                 };
                 $scope.user.location = $scope.location;
-                
-                $http.put('/user', putData).then(function(){
-                    
-                });
-              $scope.message = "Account updated";  
-    }
-}])
+                $http.put('/user', putData);
+                $scope.message = "Account updated";  
+            }
+        }])
 
 
     alertModule
@@ -210,11 +223,7 @@ alertModule
         function ($scope, $http, $routeParams) {
             
             $scope.message = "";
-
-            if (!$scope.user){
-                $location.path('/login')
-            }
-            
+          
             $http.get('/alerts/' + $routeParams.id).success(function(data){
                 $scope.alert = data;
             })
@@ -232,6 +241,28 @@ alertModule
                 })
                 $scope.message ="Alert saved";
             }
+        }])
+
+    alertModule
+    .controller('templateAddController', ['$scope', '$http', 
+        function($scope, $http){
+
+            $scope.message = "";
+            $scope.title = "";
+            $scope.template = "";
+            
+            $scope.addTemplate = function () {
+                
+                var postData = {
+                    title: $scope.title,
+                    content: $scope.content,
+                    id: Math.guid()
+                }
+                $http.post('/templates', postData)
+                $scope.message = "Template added"
+                $scope.template = "";
+            }
+
         }])
 
 Math.guid = function () {

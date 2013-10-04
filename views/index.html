@@ -2,8 +2,7 @@
 <html ng-app='alertModule' ng-controller='authController'>
   <head>
   <meta charset="utf-8"/>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
-  <script type="text/javascript" src="/controllers/controllers.js"></script>
+
   <link rel="stylesheet" href="/css/base.css">
 
   <title>Instok</title>
@@ -14,6 +13,9 @@
           <span ng-hide="isSignedIn()" id="loginbox"><a ng-href="#/login"> login | signup </a></span>
           <span ng-show="isSignedIn()" id="loginbox"><a ng-href="#/account">{{ user._id }}</a><a ng-href="/logout"> | logout</a></span>
       </div>
-      <div class="view-container" ng-view ng-animate="{enter: 'view-enter', leave: 'view-leave'}"></div>
+      <div class="view-container" ng-view></div>
   </body>
 </html>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular-sanitize.js"></script>
+  <script type="text/javascript" src="/controllers/controllers.js"></script>

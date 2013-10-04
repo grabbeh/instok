@@ -1,0 +1,20 @@
+<div id="add-body">
+    <div id="add-container">
+        <div>
+          <div class="add-title">Add template</div>
+          
+          <form ng-submit="addTemplate()">
+            <div class="add-alert">
+             
+              <div>Title <input class="clear-input" name="title" placeholder="Title"  ng-model="title"></div>
+              <div>
+                <textarea class="template-add" ng-model="content" placeholder="Add your template here including tags { item }  and { location }" name="content"></textarea>
+              </div>
+              <div><input type="submit" class="add-button" value="Submit"></div>
+
+            </div>
+          </form>
+         </div>
+       <div><h2><p>{{message}}</p></h2></div>
+    </div>
+</div>

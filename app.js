@@ -12,6 +12,7 @@ var express = require('express')
 , User = require('./models/user.js')
 , db = require('./config/db.js')
 , user = require('./routes/user')
+, template = require('./routes/template')
 , login = require('connect-ensure-login')
 , https = require('https')
 , http = require('http')
@@ -84,6 +85,12 @@ app.put('/alerts/:id', route.editAlert);
 
 app.post('/sendalert/:id', route.sendAlert);
 
+// Templates
+
+app.post('/templates', template.addTemplate)
+
+app.get('/templates', template.getTemplates)
+
 // Authentication
 
 app.post('/signup', user.createaccount);
@@ -111,15 +118,15 @@ app.get('/currentuser', function(req, res){
   }
 })
 
-var options = {
+/*var options = {
   key: fs.readFileSync('./config/domain.pem'),
   cert: fs.readFileSync('./config/main.pem'),
   ca: [fs.readFileSync('./config/intermediate.pem')]
 };
-
+*/
 
 // Create an HTTP service.
 http.createServer(app).listen(5000);
 // Create an HTTPS service identical to the HTTP service.
-https.createServer(options, app).listen(5001);
+//https.createServer(options, app).listen(5001);
 

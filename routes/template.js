@@ -1,0 +1,32 @@
+
+var User = require('../models/user.js')
+, Template = require('../models/template.js')
+, Alert = require('../models/alert.js')
+
+
+exports.addTemplate = function(req,res){
+   new Template({
+	   	title: req.body.title,
+	   	content: req.body.content,
+	   	id: req.body.id
+   		}).save(function(err, template){
+			User.findOne({_id: req.user._id})
+		       .update({$addToSet: {templates: template._id}})
+		       .exec()
+			})
+   		}
+
+exports.getTemplates = function(req, res){
+	User.findOne({_id: req.user._id})
+		.select('templates')
+        .populate('templates')
+        .exec(function(err, templates){
+        	res.json(templates);
+        })
+}
+
+
+
+
+   
+

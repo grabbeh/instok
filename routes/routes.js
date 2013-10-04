@@ -37,14 +37,13 @@ exports.postAlert = function (req, res) {
         item: req.body.item,
         location: req.body.location,
         number: req.body.number,
-        id: req.params.id
+        id: req.params.id,
+        template: req.body.template
     }).save(function(err, alert){
-        User.findOne({_id: req.user._id}, function(err, user){
-            user.update({$addToSet: {alerts: alert._id}}, function(err, number, raw) {
-                if (err) { console.log(err)}
-            
-                })
-            })
+        console.log(alert)
+        User.findOne({_id: req.user._id})
+            .update({$addToSet: {alerts: alert._id}})
+            .exec()          
         })
     };
 
@@ -68,25 +67,23 @@ exports.deleteAlert = function (req, res) {
     };
 
 exports.sendAlert = function(req, res){
-    Alert.findOne({id: req.params.id}, function(err, alert){      
-        twilio.sendSms({
-            // test
-            to: '+447842768246',
-            //to: alert.number, 
-            // test
-            //from: '+15005550006',
-            from: '+442033221672', 
-            body: 'Hello there, ' + alert.item + ' is now available at ' + alert.location + ". Feel free to stop by!"
-            }, function(err, message) { 
-                if (!err) {
-                    console.log(message.status)
-                    User.findOne({_id: req.user._id})
-                        .update({$addToSet: {sentalerts: alert._id}})
-                        .update({$pull: {alerts: alert._id}})
-                        .exec(function(err){
-                            if (err){console.log(err)}
-                        })
-                    }
-                });
-            })
-        }
+    Alert.findOne({id: req.params.id})
+        .populate('template')
+        .exec(function(err, alert){   
+            twilio.sendSms({
+                // test
+                to: '+447842768246',
+                //to: alert.number, 
+                // test
+                //from: '+15005550006',
+                from: '+442033221672', 
+                body: 'Hello there, ' + alert.item + ' is now available at ' + alert.location + ". Feel free to stop by!"
+                }, function (err, message) { 
+                        User.findOne({_id: req.user._id})
+                            .update({$addToSet: {sentalerts: alert._id}})
+                            .update({$pull: {alerts: alert._id}})
+                            .exec()
+                    })
+                })
+            }
+

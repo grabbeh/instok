@@ -6,15 +6,28 @@
           <form ng-submit="addAlert()">
             <div class="add-alert">
               <div class="add-space">Send:</div>
-              <div>Hello there, <input class="clear-input" name="item" placeholder="Item"  ng-model="item"> is now 
-              available at 
-              <input class="clear-input" name="location" placeholder="Location" ng-model="location"></div>
-              <div>to <input class="clear-input" placeholder="Number" name="number" ng-model="number"></div>
+              <div>{{ activetemplate.content }}</div>
+              <div><input class="clear-input" name="item" placeholder="Item"  ng-model="item"></div>
+              <div><input class="clear-input" name="location" placeholder="Location" ng-model="location"></div>
+              <div><input class="clear-input" placeholder="Number" name="number" ng-model="number"></div>
               <div><input type="submit" class="add-button" value="Submit"></div>
 
             </div>
           </form>
          </div>
+
+         <div class="add-title">Templates</div>
+         <ul id="alert-list">
+          <li ng-repeat="template in templates">
+            <div>
+              <label class="alert-name" title="Change template" ng-click="changeActiveTemplate(template)">
+                {{template.title}}
+              </label>
+                            
+            </div>
+          </li>
+        </ul>
+
        <div><p><h2>{{ message }} </h2></p></div>
     </div>
 </div>
