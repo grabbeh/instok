@@ -1,4 +1,4 @@
-var alertModule = angular.module('alertModule', ['ngSanitize']);
+var alertModule = angular.module('alertModule', []);
 
 alertModule.config(['$routeProvider', function($routeProvider){
     $routeProvider.
