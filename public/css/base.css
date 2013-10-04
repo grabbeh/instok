@@ -336,6 +336,10 @@ ul {
 	color: black;
 }
 
+#add-body a {
+	color: black;
+}
+
 .add-space {
 	padding: 15px 0 15px 0;
 }
