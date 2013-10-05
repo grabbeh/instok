@@ -69,21 +69,26 @@ exports.deleteAlert = function (req, res) {
 exports.sendAlert = function(req, res){
     Alert.findOne({id: req.params.id})
         .populate('template')
-        .exec(function(err, alert){   
+        .exec(function(err, alert){ 
+            var template = alert.template[0] 
+            console.log(template) 
+            var body = replaceStringsWithValues(template.content, alert);
+            console.log(body)
             twilio.sendSms({
-                // test
                 to: '+447842768246',
                 //to: alert.number, 
                 // test
-                //from: '+15005550006',
                 from: '+442033221672', 
-                body: 'Hello there, ' + alert.item + ' is now available at ' + alert.location + ". Feel free to stop by!"
+                body: body
                 }, function (err, message) { 
                         User.findOne({_id: req.user._id})
                             .update({$addToSet: {sentalerts: alert._id}})
                             .update({$pull: {alerts: alert._id}})
                             .exec()
+                        })
                     })
-                })
-            }
+                }
 
+function replaceStringsWithValues(str, object) {
+    return str.replace("{ item }", object.item).replace("{ location }", object.location);
+}
