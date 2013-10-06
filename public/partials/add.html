@@ -3,22 +3,22 @@
         <div>
           <form ng-submit="addAlert()">
             <div class="add-alert">
-              <div ng-hide=activetemplate.content>Before adding an alert you should set up some template text by adding a template <a ng-href="/#/account/template/add">here</a></div>
-              <div ng-show=activetemplate.content>
+
               <div class="add-space">Alert details:</div>
               
               <div><input class="clear-input" name="item" placeholder="Item"  ng-model="item"></div>
               <div><input class="clear-input" placeholder="Number" name="number" ng-model="number"></div>
               <div><input class="clear-input" name="location" placeholder="Location" ng-model="location"></div>
-              <p>Using this template:</p>
-              <div><p>{{ activetemplate.content }}</p></div>
+              
+              <div><p><textarea class="template-add" ng-model="content" name="content" Placeholder="Insert body of text here using { item } and { location }">{{ content }}</textarea></p></div>
+
               <div><input type="submit" class="add-button" value="Submit"></div>
-            </div>
+
             </div>
           </form>
          </div>
-        <div><p><h2>{{ message }} </h2></p></div>
-         <div ng-show=activetemplate.content class="add-title">Templates</div>
+        <div><p>{{ message }}</p></div>
+         <div class="add-title">Templates</div>
          <ul id="alert-list">
           <li ng-repeat="template in templates">
             <div>

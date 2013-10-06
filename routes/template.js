@@ -46,7 +46,6 @@ exports.deleteTemplate = function(req, res){
 			  .update({pull: {templates: template._id}})
 			  .exec(function(){
 			  	template.remove();
-
 			  })
 	 		})
 		}

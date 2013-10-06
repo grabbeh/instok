@@ -156,26 +156,26 @@ alertModule
         function($scope, $http, $rootScope){
 
             $scope.message = "";
-                          
+
             $http.get('/templates').success(function(data){
-                $scope.templates = data.templates;
-                $scope.activetemplate = data.templates[0]
+                $scope.templates = data.templates;  
             })
 
             $scope.changeActiveTemplate = function(template){
-                $scope.activetemplate = template;
+               $scope.content = template.content;
             }
 
             $scope.location = $scope.user.location;
             $scope.addAlert = function () {
-                
+
                 var postData = {
                     item: $scope.item,
                     location: $scope.location,
                     number: $scope.number,
                     id: Math.guid(),
-                    template: $scope.activetemplate._id
+                    content: $scope.content
                 }
+
                 $http.post('/alerts/' + postData.id, postData)
                 $scope.message = "Alert added"
                 $scope.item = "";
@@ -193,7 +193,6 @@ alertModule
             
             $http.get('/alerts/' + $routeParams.id).success(function(data){
                 $scope.alert = data;
-                $scope.activetemplate = data.template[0];
             })
 
             $http.get('/templates').success(function(data){
@@ -201,7 +200,7 @@ alertModule
             })
 
             $scope.changeActiveTemplate = function(template){
-                $scope.activetemplate = template;
+                $scope.alert.content = template.content;
             }
 
             $scope.editAlert = function (alert) {
@@ -209,7 +208,7 @@ alertModule
                     item: alert.item,
                     location: alert.location,
                     number: alert.number,
-                    template: $scope.activetemplate._id
+                    content: alert.content
                 }
                 $http.put('/alerts/' + alert.id, putData);
                 $scope.message ="Alert updated";

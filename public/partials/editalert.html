@@ -1,19 +1,19 @@
 <div id="view-body">
     <div id="add-container">
         <div>
-          <form ng-submit="addAlert(alert)">
+          <form ng-submit="editAlert(alert)">
             <div class="add-alert">
-              <div ng-hide=activetemplate.content>Before adding an alert you should set up some template text by adding a template <a ng-href="/#/account/template/add">here</a></div>
-              <div ng-show=activetemplate.content>
+              
               <div class="add-space">Alert details:</div>
               
               <div><input class="clear-input" name="item" placeholder="Item"  ng-model="alert.item" value="{{alert.item}}"></div>
               <div><input class="clear-input" placeholder="Number" name="number" ng-model="alert.number" value="{{alert.number}}"></div>
               <div><input class="clear-input" name="location" placeholder="Location" ng-model="alert.location" value="{{alert.location}}"></div>
-              <p>Using this template:</p>
-              <div><p>{{ activetemplate.content }}</p></div>
+
+               <div><p><textarea class="template-add" ng-model="alert.content" name="alert.content" Placeholder="Insert body of text here using { item } and { location }">{{ alert.content }}</textarea></p></div>
+
               <div><input type="submit" class="add-button" value="Submit"></div>
-            </div>
+
             </div>
           </form>
          </div>
