@@ -441,6 +441,6 @@ textarea {
 }
 
 .alert-input {
-	width: 80%;
+	min-width: 80%;
 }
 }
