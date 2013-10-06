@@ -1,5 +1,5 @@
-<div id="view-body">
-    <div id="add-container">
+<div class="view-background main-body">
+    <div class="main-container">
         <div>
           <form ng-submit="editAlert(alert)">
             <div class="add-alert">
@@ -17,7 +17,7 @@
             </div>
           </form>
          </div>
-        <div><p><h2>{{ message }} </h2></p></div>
+        <div><p>{{ message }} <p></div>
          <div ng-show=activetemplate.content class="add-title">Templates</div>
          <ul id="alert-list">
           <li ng-repeat="template in templates">

@@ -253,8 +253,6 @@ ul {
 	background: #FF6161;
 }
 
-
-
 #view-sent-alerts-button {
 	background: #FFA500;
 }
@@ -305,39 +303,39 @@ ul {
 	font-size: 25px;
 }
 
-#add-container {
+.main-container {
 	background: white;
  	margin: 0 auto;
  	padding: 25px;
  	width: 50%;
  	border-style: none solid solid solid;
  	border-width: 2px;
+ 	font-size: 25px;
 }
 
-#add-body {
+.main-container a {
+	color: black;
+}
+
+.main-body {
+	min-height: 100%;
+	height: auto !important;
+}
+
+.add-background {
 	background: #FF6161;
-	min-height: 100%;
-	height: auto !important;
 }
 
-#view-body {
+.view-background {
 	background: #7bffbd;
-	min-height: 100%;
-	height: auto !important;
 }
 
-#edit-body {
+.edit-background {
 	background:  #ffff76;
-	min-height: 100%;
-	height: auto !important;
 }
 
-#edit-body a {
-	color: black;
-}
-
-#add-body a {
-	color: black;
+.sent-background {
+	background: #FFA500;
 }
 
 .add-space {
@@ -429,4 +427,16 @@ ul {
 textarea {
 	font-family: 'Montserrat';
 	font-size: 25px;
+}
+
+/* RESPONSIVE */
+
+@media handheld, only screen and (max-width: 720px) {
+.main-container {
+ 	width: 90%;
+}
+
+#account-container {
+	width: 90%;
+}
 }
