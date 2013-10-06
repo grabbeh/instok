@@ -439,4 +439,8 @@ textarea {
 #account-container {
 	width: 80%;
 }
+
+.alert-input {
+	width: 80%;
+}
 }
