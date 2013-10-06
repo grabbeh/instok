@@ -22,14 +22,12 @@ exports.getSentAlerts = function(req, res){
 }
 
 exports.getAlert = function (req, res) {
-    Alert.findOne({
-        id: req.params.id
-    }, function (err, alert) {
-        if (!err) {
+    Alert.findOne({id: req.params.id})
+        .populate('template')
+        .exec(function (err, alert) {
             res.json(alert);
-        }
-    })
-};
+        })
+    };
 
 exports.postAlert = function (req, res) {
     new Alert({
@@ -40,7 +38,6 @@ exports.postAlert = function (req, res) {
         id: req.params.id,
         template: req.body.template
     }).save(function(err, alert){
-        console.log(alert)
         User.findOne({_id: req.user._id})
             .update({$addToSet: {alerts: alert._id}})
             .exec()          
@@ -51,7 +48,8 @@ exports.editAlert = function (req, res) {
     Alert.update({id: req.params.id}, { 
         location: req.body.location, 
         number: req.body.number,
-        item: req.body.item
+        item: req.body.item,
+        template: req.body.template
     }, function(err, user){
           res.json("Alert updated");
     })
@@ -71,9 +69,7 @@ exports.sendAlert = function(req, res){
         .populate('template')
         .exec(function(err, alert){ 
             var template = alert.template[0] 
-            console.log(template) 
             var body = replaceStringsWithValues(template.content, alert);
-            console.log(body)
             twilio.sendSms({
                 to: '+447842768246',
                 //to: alert.number, 

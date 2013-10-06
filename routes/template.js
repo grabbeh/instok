@@ -25,8 +25,31 @@ exports.getTemplates = function(req, res){
         })
 }
 
+exports.getTemplate = function(req, res){
+	Template.findOne({id: req.params.id}, function(err, template){
+		res.json(template);
+	})
+}
 
+exports.editTemplate = function(req, res){
+	Template.update({id: req.params.id},
+		{ title: req.body.title,
+		  content: req.body.content
+		}, function(err, template){
+			res.json("Template updated");
+		})
+}
 
+exports.deleteTemplate = function(req, res){
+	Template.findOne({id: req.params.id}, function(err, template){
+		User.findOne({_id: req.user._id})
+			  .update({pull: {templates: template._id}})
+			  .exec(function(){
+			  	template.remove();
+
+			  })
+	 		})
+		}
 
    
 

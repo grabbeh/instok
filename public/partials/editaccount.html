@@ -1,0 +1,29 @@
+<div id="edit-body">
+    <div id="add-container">
+        <div>
+          <div class="add-title">Account details </div>
+          
+          <form ng-submit="editAccount()">
+            <div class="add-alert">
+              <div class="add-space">Location: <input class="clear-input" name="item" placeholder="Location" ng-model="user.location" value="{{ user.location }}"></div>
+              <div><input type="submit" class="add-button" value="Submit"></div>
+            </div>
+          </form>
+         </div>
+       <div><p>{{ message }} </p></div>
+       <div><p>Templates</p></div>
+       <ul id="alert-list">
+          <li ng-repeat="template in templates">
+            <div>
+              <label class="alert-name">
+                {{template.title}}
+              </label>
+              <span ng-click="removeTemplate(template)" class="remove-alert" title="Remove template"></span>
+              <span title="Edit template" class="info-alert"><a ng-href='/#/account/template/{{template.id}}'><img src="../images/info.png"</a></span>        
+            </div>
+          </li>
+        </ul>
+
+       <div><p><a ng-href="#/account/template/add">Add template</a></p></div>
+    </div>
+</div>

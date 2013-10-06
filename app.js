@@ -87,9 +87,15 @@ app.post('/sendalert/:id', route.sendAlert);
 
 // Templates
 
-app.post('/templates', template.addTemplate)
+app.post('/templates', template.addTemplate);
 
-app.get('/templates', template.getTemplates)
+app.get('/templates', template.getTemplates);
+
+app.put('/templates/:id', template.editTemplate);
+
+app.delete('/templates/:id', template.deleteTemplate);
+
+app.get('/templates/:id', template.getTemplate);
 
 // Authentication
 

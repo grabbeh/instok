@@ -24,7 +24,7 @@ alertModule.config(['$routeProvider', function($routeProvider){
         }).
         when('/account/edit', {
             controller: 'editAccountController',
-            templateUrl: '/partials/edit.html',
+            templateUrl: '/partials/editaccount.html',
             resolve: {
                 user: function(userGetter){
                     return userGetter.currentUser();
@@ -47,8 +47,8 @@ alertModule.config(['$routeProvider', function($routeProvider){
             }}
         }).
         when('/account/:id', {
-            controller: 'viewController',
-            templateUrl: '/partials/view.html',
+            controller: 'editAlertController',
+            templateUrl: '/partials/editalert.html',
             resolve: {
                 user: function(userGetter){
                     return userGetter.currentUser();
@@ -57,6 +57,14 @@ alertModule.config(['$routeProvider', function($routeProvider){
         when('/account/template/add', {
             controller: 'templateAddController',
             templateUrl: '/partials/templateadd.html',
+            resolve: {
+                user: function(userGetter){
+                    return userGetter.currentUser();
+            }}
+        }).
+        when('/account/template/:id', {
+            controller: 'templateEditController',
+            templateUrl: '/partials/templateedit.html',
             resolve: {
                 user: function(userGetter){
                     return userGetter.currentUser();
@@ -148,8 +156,7 @@ alertModule
         function($scope, $http, $rootScope){
 
             $scope.message = "";
-            $scope.template = "Hello there, {{ item }} is now available at {{ location }}. Please feel free to stop by."
-              
+                          
             $http.get('/templates').success(function(data){
                 $scope.templates = data.templates;
                 $scope.activetemplate = data.templates[0]
@@ -179,20 +186,30 @@ alertModule
 
 
 alertModule
-    .controller('viewController', ['$scope', '$http', '$routeParams', 
+    .controller('editAlertController', ['$scope', '$http', '$routeParams', 
         function ($scope, $http, $routeParams) {
             
             $scope.message = "";
             
             $http.get('/alerts/' + $routeParams.id).success(function(data){
                 $scope.alert = data;
+                $scope.activetemplate = data.template[0];
             })
+
+            $http.get('/templates').success(function(data){
+                $scope.templates = data.templates;
+            })
+
+            $scope.changeActiveTemplate = function(template){
+                $scope.activetemplate = template;
+            }
 
             $scope.editAlert = function (alert) {
                 var putData = {
                     item: alert.item,
                     location: alert.location,
-                    number: alert.number
+                    number: alert.number,
+                    template: $scope.activetemplate._id
                 }
                 $http.put('/alerts/' + alert.id, putData);
                 $scope.message ="Alert updated";
@@ -202,18 +219,29 @@ alertModule
 alertModule
     .controller('editAccountController', ['$scope', '$http', 'user',
         function ($scope, $http, user) {
-      
+            
+            $http.get('/templates').success(function(data){
+                $scope.templates = data.templates;
+            })
+
             $scope.message = "";
             $scope.user = user.data;
-            $scope.location = $scope.user.location;
 
             $scope.editAccount = function(){
                 var putData = {
-                    location: $scope.location
+                    location: $scope.user.location
                 };
-                $scope.user.location = $scope.location;
                 $http.put('/user', putData);
                 $scope.message = "Account updated";  
+            }
+
+            $scope.removeTemplate = function(template){
+                $scope.templates.forEach(function (item, i) {
+                        if (template.id === item.id && $scope.templates.length > 0) {
+                            $http.delete('/templates/' + template.id);
+                            $scope.templates.splice(i, 1);
+                        }
+                    })
             }
         }])
 
@@ -223,22 +251,18 @@ alertModule
         function ($scope, $http, $routeParams) {
             
             $scope.message = "";
-          
             $http.get('/alerts/' + $routeParams.id).success(function(data){
                 $scope.alert = data;
             })
 
             $scope.addAlert = function (alert) {
-                
                 var postData = {
                     item: alert.item,
                     location: alert.location,
                     number: alert.number,
                     id: Math.guid()
                 }
-                $http.post('/alerts/' + postData.id, postData).then(function() {
-                    
-                })
+                $http.post('/alerts/' + postData.id, postData);
                 $scope.message ="Alert saved";
             }
         }])
@@ -262,7 +286,25 @@ alertModule
                 $scope.message = "Template added"
                 $scope.template = "";
             }
+        }])
 
+    alertModule
+    .controller('templateEditController', ['$scope', '$http', '$routeParams',
+        function($scope, $http, $routeParams){
+            $scope.message = "";
+
+            $http.get('/templates/' + $routeParams.id).success(function(template){
+                $scope.template = template;
+            })
+
+            $scope.editTemplate = function () {
+                var putData = {
+                    title: $scope.template.title,
+                    content: $scope.template.content
+                }
+                $http.put('/templates/' + $routeParams.id, putData);
+                $scope.message = "Template updated";
+            }
         }])
 
 Math.guid = function () {

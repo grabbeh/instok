@@ -6,7 +6,7 @@ var templateSchema = new Schema({
     template: ObjectId,
     content: String,
     id: String,
-    title: String,
+    title: String
 });
 
 module.exports = mongoose.model('Template', templateSchema);
