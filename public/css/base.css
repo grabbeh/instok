@@ -432,11 +432,11 @@ textarea {
 
 @media handheld, only screen and (max-width: 720px) {
 .main-container {
- 	width: 80%;
+ 	width: 90%;
 }
 
 #account-container {
-	width: 80%;
+	width: 90%;
 }
 
 
