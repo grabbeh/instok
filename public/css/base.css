@@ -280,7 +280,7 @@ ul {
 	line-height: 1.2em;
 	padding: 10px 0 10px 10px;
 	border: 0;
-	min-width: 99%;
+	width: 99%;
 }
 
 .clear-input {
@@ -439,7 +439,5 @@ textarea {
 	width: 80%;
 }
 
-.alert-input {
-	min-width: 80%;
-}
+
 }
