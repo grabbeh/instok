@@ -64,10 +64,14 @@ body a {
 	color: white;
 }
 
-.home-image {
+.centre-image {
 	margin: 0 auto;
+	width: 70%;
+}
+.home-image {
 	padding: 25px 0 25px 0;
 	max-width: 550px;
+	width: 100%;
 
 }
 
@@ -455,5 +459,8 @@ textarea {
 	padding: 25px 0 25px 0;
 }
 
+.home-container {
+	width: 90%;
+}
 
 }
