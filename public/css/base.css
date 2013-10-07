@@ -1,5 +1,4 @@
 
-
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
 .view-enter, .view-leave {
@@ -13,6 +12,10 @@
 position: absolute;
   width: 100%;
   left:100%;
+}
+
+a img {
+  border: 0;
 }
 
 .view-enter.view-enter-active {
