@@ -1,8 +1,8 @@
 <div class="view-background main-body">
     <div class="main-container">
-        <div>
+        <div class="content-container">
           <form ng-submit="editAlert(alert)">
-            <div class="add-alert">
+
               
               <div class="add-space">Alert details:</div>
               
@@ -14,9 +14,9 @@
 
               <div><input type="submit" class="add-button" value="Submit"></div>
 
-            </div>
+
           </form>
-         </div>
+
         <div><p>{{ message }} <p></div>
          <div ng-show=activetemplate.content class="add-title">Templates</div>
          <ul id="alert-list">
@@ -28,5 +28,6 @@
             </div>
           </li>
         </ul>
+      </div>
     </div>
 </div>

@@ -1,10 +1,9 @@
 <div class="add-background main-body">
     <div class="main-container">
-        <div>
-          <div class="add-title">Add template</div>
+        <div class="content-container">
+          <div class="add-space">Add template</div>
           
           <form ng-submit="addTemplate()">
-            <div class="add-alert">
              
               <div>Title <input class="clear-input" name="title" placeholder="Title"  ng-model="title"></div>
               <div>
@@ -12,9 +11,10 @@
               </div>
               <div><input type="submit" class="add-button" value="Submit"></div>
 
-            </div>
+
           </form>
-         </div>
-       <div><p>{{message}}</p></div>
+
+       <div class="add-space">{{message}}</div>
+     </div>
     </div>
 </div>
