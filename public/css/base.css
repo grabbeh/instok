@@ -319,6 +319,8 @@ ul {
 .main-body {
 	min-height: 100%;
 	height: auto !important;
+	margin: 0;
+	padding: 0;
 }
 
 .add-background {
