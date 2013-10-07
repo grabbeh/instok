@@ -228,11 +228,6 @@ ul {
 	cursor: pointer;
 }
 
-
-#alert-header {
-	padding: 0 0 25px 0;
-}
-
 #account-buttons-list {
 	list-style: none;
 }
@@ -373,7 +368,6 @@ ul {
 
 #account-container {
  	margin: 0 auto;
- 	padding: 25px;
  	width: 50%;
 }
 
