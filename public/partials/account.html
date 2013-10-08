@@ -13,11 +13,11 @@
       <div class="content-container">
         <div class="add-space">Active alerts</div>
             <div>
-              <input class="alert-input" placeholder="Search" ng-model="name">
+              <input class="alert-input" placeholder="Search" ng-model="alert.item">
             </div>
         <div>
         <ul id="alert-list">
-          <li ng-repeat="alert in alerts | filter:name">
+          <li ng-repeat="alert in alerts | filter:alert.item">
             <div>
               <label class="alert-name" title="Send alert" ng-click="sendAlert(alert)">
                 {{alert.item}}

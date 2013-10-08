@@ -1,35 +1,6 @@
 
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
-.view-enter, .view-leave {
-    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
-  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
-  -ms-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
-  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
-  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
-}
-.view-enter {
-position: absolute;
-  width: 100%;
-  left:100%;
-}
-
-a img {
-  border: 0;
-}
-
-.view-enter.view-enter-active {
-  left:0;
-}
-
-.view-leave {
-  display: none; 
-}
-
-.view-leave.view-leave-active {
-  
-}
-
 html, body {
     padding: 0;
     margin: 0;
@@ -39,10 +10,6 @@ html, body {
 
 input {
 	font-family: 'Montserrat';
-}
-
-p {
-	font-size: 25px;
 }
 
 .view-container {
@@ -68,16 +35,12 @@ body a {
 	margin: 0 auto;
 	width: 70%;
 }
+
 .home-image {
 	padding: 25px 0 25px 0;
 	max-width: 550px;
 	width: 100%;
 
-}
-
-.image-text {
-	font-size: 25px;
-	padding: 0 0 50px 50px;
 }
 
 #header a {
@@ -172,7 +135,6 @@ ul {
 .homelist li {
     padding: 10px 10px 10px 10px;
     color: white;
-    font-size: 25px;
 }
 
 #login-body {
@@ -215,9 +177,9 @@ ul {
 
 #alert-list li {
 	position: relative;
-	font-size: 25px;
+	font-size: 20px;
 	padding: 10px;
-	line-height: 1.2;
+	line-height: 1.4;
 	color: white;
 	margin: 15px 0 15px 0;
 	background: #06406C;
@@ -278,7 +240,7 @@ ul {
 .alert-input {
 	position: relative;
 	margin: 0;
-	font-size: 25px;
+	font-size: 20px;
 	line-height: 1.2em;
 	padding: 10px 0 10px 10px;
 	border: 0;
@@ -290,20 +252,14 @@ ul {
     border: 0;
     position: relative;
 	margin: 0;
-	font-size: 24px;
+	font-size: 20px;
 	padding: 10px 0 10px 0;
 	max-width: 250px;
 	width: 100%;
 }
 
-.add-title {
-	font-size: 25px;
-	
-}
-
 .content-container {
 	margin: 0 auto;
-	font-size: 25px;
 	width: 90%;
 }
 
@@ -313,7 +269,7 @@ ul {
  	width: 50%;
  	border-style: none solid solid solid;
  	border-width: 2px;
- 	font-size: 25px;
+ 	font-size: 20px;
 }
 
 .main-container a {
@@ -349,7 +305,7 @@ ul {
 
 .add-button {
     height: 40px;
-    font-size: 24px;
+    font-size: 20px;
     margin: 10px 0 10px 0;
     padding: 0 10px 0 10px;
 
@@ -358,7 +314,7 @@ ul {
 .form-input {
 	position: relative;
 	margin: 10px 10px 10px 0;
-	font-size: 24px;
+	font-size: 20px;
 	line-height: 1.2em;
 	border: 0;
 	padding: 10px;
@@ -375,7 +331,7 @@ ul {
 	background: #4679bd;
 	min-height: 100%;
 	height: auto !important;
-	font-size: 25px;
+	font-size: 20px;
 	color: white;
 }
 
@@ -396,7 +352,6 @@ ul {
 }
 
 .sent-alerts-text {
-	font-size: 25px;
 	padding: 10px 0 5px 0;
 }
 
@@ -432,7 +387,7 @@ textarea {
 	width: 100%;
 	max-width: 100%;
 	font-family: 'Montserrat';
-	font-size: 25px;
+	font-size: 20px;
 	padding: 10px;
 	margin: 0;
 	-webkit-box-sizing: border-box;
