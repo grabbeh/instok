@@ -43,9 +43,8 @@ User.findOne({username: newuser.toUpperCase()}, function(err, user) {
                     abortedalerts: [],
                     templates: []
                     }).save(function(err) {
-                         passport.authenticate('local')(req, res, function () {
-                          res.redirect('/#/account');
-                        })
+                         req.login();
+                         res.redirect('/#/account')
                     })
                });
             });
