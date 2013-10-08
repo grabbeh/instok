@@ -2,6 +2,7 @@
 
 var User = require('../models/user.js');
 var bcrypt = require("bcrypt");
+var passport = require("passport");
 
 // passport introduction
 
@@ -42,7 +43,9 @@ User.findOne({username: newuser.toUpperCase()}, function(err, user) {
                     abortedalerts: [],
                     templates: []
                     }).save(function(err) {
-                        res.redirect("/");
+                         passport.authenticate('local')(req, res, function () {
+                          res.redirect('/#/account');
+                        })
                     })
                });
             });
