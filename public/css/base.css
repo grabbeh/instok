@@ -135,6 +135,7 @@ ul {
 .homelist li {
     padding: 10px 10px 10px 10px;
     color: white;
+    font-size: 25px;
 }
 
 #login-body {
