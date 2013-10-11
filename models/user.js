@@ -8,6 +8,7 @@ var userSchema = new Schema({
     username: String,
     location: String,
     hash: String,
+    credits: Number,
     templates: [{ type: Schema.Types.ObjectId, ref: 'Template' }],
     alerts: [{ type: Schema.Types.ObjectId, ref: 'Alert' }],
     sentalerts: [{ type: Schema.Types.ObjectId, ref: 'Alert' }],
