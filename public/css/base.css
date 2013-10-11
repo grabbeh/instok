@@ -1,4 +1,3 @@
-
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
 html, body {
@@ -107,6 +106,10 @@ body a {
 .box-five-text {
 	font-size: 35px;
 	padding: 50px 25px 50px 25px;
+}
+
+#box-two-five {
+    background: #81d777;
 }
 
 #box-three {
