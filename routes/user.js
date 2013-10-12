@@ -38,7 +38,7 @@ User.findOne({username: newuser.toUpperCase()}, function(err, user) {
                     location: req.body.location,
                     username: req.body.username.toUpperCase(),
                     hash: hash,
-                    credits: 5,
+                    credits: 10,
                     alerts: [],
                     sentalerts: [],
                     abortedalerts: [],
