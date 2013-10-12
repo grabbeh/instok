@@ -72,8 +72,7 @@ exports.sendAlert = function(req, res){
         .exec(function(err, alert){ 
             var body = replaceStringsWithValues(alert.content, alert);
             twilio.sendSms({
-                to: '+447842768246',
-                //to: alert.number, 
+                to: alert.number, 
                 // test
                 from: '+442033221672', 
                 body: body
