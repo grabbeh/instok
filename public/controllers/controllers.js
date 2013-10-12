@@ -349,6 +349,11 @@ alertModule
 
             $scope.message = "";
             $scope.handleStripe = function(status, response){
+
+                if ($scope.alerts < 10){
+                    $scope.message = "We're afraid the minimum purchase is 10 alerts";
+                    return;
+                }
                 $scope.message = "Payment process started";
                 $scope.hidebutton = true;
                 console.log("Response received")
