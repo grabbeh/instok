@@ -9,6 +9,7 @@ var express = require('express')
 , app = express()
 , Alert = require('./models/alert.js')
 , route = require('./routes/routes.js')
+, payment = require('./routes/payment.js')
 , User = require('./models/user.js')
 , db = require('./config/db.js')
 , user = require('./routes/user')
@@ -97,6 +98,10 @@ app.delete('/templates/:id', template.deleteTemplate);
 
 app.get('/templates/:id', template.getTemplate);
 
+// Stripe payment
+
+app.post('/addcredit', payment.createCharge);
+
 // Authentication
 
 app.post('/signup', user.createaccount);
@@ -123,15 +128,15 @@ app.get('/currentuser', function(req, res){
     res.send();
   }
 })
-
+/*
 var options = {
   key: fs.readFileSync('./config/domain.pem'),
   cert: fs.readFileSync('./config/main.pem'),
   ca: [fs.readFileSync('./config/intermediate.pem')]
-};
+};*/
 
 // Create an HTTP service.
 http.createServer(app).listen(5000);
 // Create an HTTPS service identical to the HTTP service.
-https.createServer(options, app).listen(5001);
+//https.createServer(options, app).listen(5001);
 

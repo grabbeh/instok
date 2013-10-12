@@ -109,7 +109,11 @@ body a {
 }
 
 #box-two-five {
-    background: #81d777;
+    background: black;
+}
+
+.home-sign-in {
+	padding: 25px;
 }
 
 #box-three {
@@ -190,10 +194,31 @@ ul {
 	width:100%;
 }
 
+#response-message {
+	margin: 0 15px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+#response-message li {
+	position: relative;
+	font-size: 20px;
+	padding: 10px;
+	line-height: 1.4;
+	color: white;
+	margin: 15px 0 15px 0;
+	background: green;
+	width:100%;
+}
+
 .alert-name:hover {
 	cursor: pointer;
 }
 
+.credits-remaining {
+	padding: 0 0 10px 0;
+
+}
 #account-buttons-list {
 	list-style: none;
 }
@@ -224,13 +249,21 @@ ul {
 	background: #FFA500;
 }
 
-
 .remove-alert {
 	background-image: url('../images/cross.png');
 	float: right;
 	cursor: pointer;
 	width: 30px;
 	height: 30px;
+}
+
+.remove-message {
+	background-image: url('../images/greencross.png');
+    float: right;
+	cursor: pointer;
+	width: 30px;
+	height: 30px;
+
 }
 
 .info-alert {

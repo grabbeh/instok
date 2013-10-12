@@ -1,0 +1,38 @@
+<div class="add-background main-body">
+    <div class="main-container">
+        <div class="content-container">
+            <div class="add-space">Add credit</div>
+
+            <div>1. How many alerts do you want to add? (Minimum of 10)</div>
+            <div><input type="text" class="form-input" placeholder="Alerts" ng-model="alerts">
+            <div class="add-space">Amount to charge card: {{ GBP | currency:"GBP£" }} </div>
+
+
+            <div>2. Please provide your card details</div>
+           <form stripe-form="handleStripe"> 
+
+            <div>
+                <input type="text" class="form-input" placeholder="Card Number" ng-model="number" payments-validate="card" payments-format="card" />
+              </div>
+              
+              <div>
+                <input type="text" class="form-input" placeholder="Expiry" ng-model="expiry" payments-validate="expiry" payments-format="expiry" />
+              </div>
+              
+              <div>
+                
+                <input type="text" placeholder="Name on Card" class="form-input">
+              </div>
+              
+              <div>
+                <input type="text" class="form-input" placeholder="CVC" ng-model="cvc" payments-validate="cvc" payments-format="cvc" />
+              </div>
+              
+              <div>
+                <input ng-hide="hidebutton" type="submit" value="Submit" class="add-button">
+              </div>
+            </form>
+            <div class="add-space">{{message}}</div>
+      </div>
+    </div>
+</div>

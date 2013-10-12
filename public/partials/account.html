@@ -3,7 +3,7 @@
 <div>
   <ul id="account-buttons-list">
    <li id="edit-account-button"><a ng-href="/#/account/edit">Edit account</a></li>
-   <li id="view-sent-alerts-button"><a ng-href="/#/account/sent">Sent alerts</a></li>
+   <li id="view-sent-alerts-button"><a ng-href="/#/account/credit/add">Add credit</a></li>
    <li id="add-alert-button"><a ng-href="/#/account/add">Add alert</a></li>
   </ul>
 </div>
@@ -12,6 +12,7 @@
     <div id="account-container">
       <div class="content-container">
         <div class="add-space">Active alerts</div>
+        <div class="credits-remaining">{{ user.credits }} remaining</div>
             <div>
               <input class="alert-input" placeholder="Search" ng-model="alert.item">
             </div>
@@ -23,9 +24,14 @@
                 {{alert.item}}
               </label>
               <span ng-click="removeAlert(alert)" class="remove-alert" title="Remove alert"></span>
-              <span title="View alert" class="info-alert"><a ng-href='/#/account/{{alert.id}}'><img src="../images/info.png"</a></span>
+              <span title="View alert" class="info-alert"><a ng-href='/#/account/{{alert.id}}'><img src='../images/info.png'></a></span>
               
             </div>
+          </li>
+        </ul>
+        <ul ng-show="message" id="response-message">
+          <li><span>{{ message }} </span>
+              <span ng-click="removeMessage()" class="remove-message" title="Remove message"></span>  
           </li>
         </ul>
       </div>

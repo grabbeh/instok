@@ -30,7 +30,7 @@ exports.getAlert = function (req, res) {
     };
 
 exports.postAlert = function (req, res) {
-    console.log(req.body)
+
     new Alert({
         user: req.user._id,
         item: req.body.item,
@@ -66,6 +66,7 @@ exports.deleteAlert = function (req, res) {
     };
 
 exports.sendAlert = function(req, res){
+   
     Alert.findOne({id: req.params.id})
         .populate('template')
         .exec(function(err, alert){ 
@@ -77,10 +78,18 @@ exports.sendAlert = function(req, res){
                 from: '+442033221672', 
                 body: body
                 }, function (err, message) { 
+
+                        if (err) { res.send("Alert failed to send") }
+
+                        else { 
+                        
+                        res.json({message: "Alert sent", creditsremaining: req.body.creditsremaining});
                         User.findOne({_id: req.user._id})
                             .update({$addToSet: {sentalerts: alert._id}})
                             .update({$pull: {alerts: alert._id}})
+                            .update({credits: req.body.creditsremaining})
                             .exec()
+                            }
                         })
                     })
                 }

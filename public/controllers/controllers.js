@@ -1,4 +1,4 @@
-var alertModule = angular.module('alertModule', []);
+var alertModule = angular.module('alertModule', ['angularPayments']);
 
 alertModule.config(['$routeProvider', function($routeProvider){
     $routeProvider.
@@ -6,7 +6,7 @@ alertModule.config(['$routeProvider', function($routeProvider){
             templateUrl: '/partials/home.html'
         }).
         when('/account', {
-            controller: 'listController',
+            controller: 'accountController',
             templateUrl: '/partials/account.html',
             resolve: {
                 user: function(userGetter){
@@ -70,6 +70,14 @@ alertModule.config(['$routeProvider', function($routeProvider){
                     return userGetter.currentUser();
             }}
         }).
+        when('/account/credit/add', {
+            controller: 'creditAddController',
+            templateUrl: '/partials/addcredit.html',
+            resolve: {
+                user: function(userGetter){
+                    return userGetter.currentUser();
+            }}
+        }).
         when('/login/', {
              templateUrl:'/partials/login.html'
         }).
@@ -119,8 +127,10 @@ alertModule
         }])
 
 alertModule
-    .controller('listController', ['$scope', '$http', '$location', 'alertsGetter',
+    .controller('accountController', ['$scope', '$http', '$location', 'alertsGetter',
         function ($scope, $http, $location, alertsGetter) {
+
+        $scope.message = false;
 
         alertsGetter.getActiveAlerts().then(function(response){
             $scope.alerts = response.data;
@@ -136,18 +146,32 @@ alertModule
             }
 
         $scope.sendAlert = function(alert){
+
+            if ($scope.user.credits === 0){
+                $scope.message = "You'll need to add credits to send any alerts";
+                return;
+            }
             $scope.alerts.forEach(function (item, i) {
+                $scope.message = false;
                     if (alert.id === item.id && $scope.alerts.length > 0) {
-                        $http.post('sendalert/' + alert.id)
+                        var postData = { creditsremaining: $scope.user.credits - 1 };
+                        $http.post('sendalert/' + alert.id, postData).success(function(data){
+                            $scope.message = data.message;
+                            $scope.user.credits = data.creditsremaining;
+                        })
                         $scope.alerts.splice(i, 1);
                     }
                 })
             }
+
+        $scope.removeMessage = function(){
+            $scope.message = false;
+        }
         }])
 
 alertModule
     .controller('sentAlertsController', ['$scope', 'alertsGetter', '$location', 
-        function ($scope, alertsGetter, $location, $rootScope) {
+        function ($scope, alertsGetter, $location) {
             alertsGetter.getSentAlerts().then(function(response){
                 $scope.alerts = response.data;
             })
@@ -306,6 +330,44 @@ alertModule
                 }
                 $http.put('/templates/' + $routeParams.id, putData);
                 $scope.message = "Template updated";
+            }
+        }])
+
+    alertModule
+    .controller('creditAddController', ['$scope', '$http',
+        function($scope, $http){
+            $scope.alerts = 0;
+            $scope.$watch('alerts', function(){
+                $scope.GBP = $scope.alerts * 0.2;
+            })
+
+            $scope.message = "";
+            $scope.handleStripe = function(status, response){
+                $scope.message = "Payment process started";
+                $scope.hidebutton = true;
+                console.log("Response received")
+                console.log(status + " " + response.id)
+                if(response.error) {
+                    $scope.message = response.error.message;
+
+                } else {
+                  $scope.number = "";
+                  $scope.expiry = "";
+                  $scope.cvc = "";
+
+                  // got stripe token, now charge it or smt
+                  var token = response.id;
+                  var amount = $scope.GBP * 100;
+
+                  var postData = {
+                      token: token,
+                      amount: amount,
+                      credits: $scope.alerts
+                  }
+                  $http.post('/addcredit', postData).success(function(data){
+                        $scope.message = data;
+                  })
+                }
             }
         }])
 

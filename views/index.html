@@ -2,16 +2,22 @@
 <html ng-app='alertModule' ng-controller='authController'>
   <head>
   <meta charset="utf-8"/>
-
   <link rel="stylesheet" href="/css/base.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+  <script type="text/javascript">
+  // This identifies your website in the createToken call below
+  Stripe.setPublishableKey('pk_test_wnHBEkDxj2Xqy8dR404WQ90R');
+  // ...
+</script>
+  
 
   <title>Instok</title>
   </head>
   <body>
       <div id="header">
           <span id="header-text"><a href="/#/">Instok</a></span>                                   
-          <span ng-hide="isSignedIn()" id="loginbox"><a ng-href="#/login"> login</a><a ng-href="#/signup">| Signup </a></span>
+          <span ng-hide="isSignedIn()" id="loginbox"><a ng-href="#/login"> login</a><a ng-href="#/signup"> | signup </a></span>
           <span ng-show="isSignedIn()" id="loginbox"><a ng-href="#/account">{{ user._id }}</a><a ng-href="/logout"> | logout</a></span>
       </div>
       <div class="view-container" ng-view></div>
@@ -19,3 +25,4 @@
 </html>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
   <script type="text/javascript" src="/controllers/controllers.js"></script>
+  <script type="text/javascript" src="/javascript/angular-payments.js"></script>
