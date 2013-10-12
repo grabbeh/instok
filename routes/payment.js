@@ -1,5 +1,6 @@
 var User = require('../models/user.js');
-var api_key = "sk_test_hA3QKqSmm09FvKcpgc7pPbkv";
+var stripeauth = require('../config/stripeapi.js')
+var api_key = stripeauth.api_key;
 var Stripe = require('stripe')(api_key);
 
 exports.createCharge = function(req, res){
