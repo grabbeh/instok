@@ -342,16 +342,16 @@ alertModule
     alertModule
     .controller('creditAddController', ['$scope', '$http',
         function($scope, $http){
-            $scope.alerts = 0;
+            $scope.credits = 0;
             $scope.$watch('alerts', function(){
-                $scope.GBP = $scope.alerts * 0.2;
+                $scope.GBP = $scope.credits * 0.2;
             })
 
             $scope.message = "";
             $scope.handleStripe = function(status, response){
 
-                if ($scope.alerts < 10){
-                    $scope.message = "We're afraid the minimum purchase is 10 alerts";
+                if ($scope.credits < 10){
+                    $scope.message = "We're afraid the minimum purchase is 10 credits";
                     return;
                 }
                 $scope.message = "Payment process started";
@@ -373,7 +373,7 @@ alertModule
                   var postData = {
                       token: token,
                       amount: amount,
-                      credits: $scope.alerts
+                      credits: $scope.credits
                   }
                   $http.post('/addcredit', postData).success(function(data){
                         $scope.message = data;

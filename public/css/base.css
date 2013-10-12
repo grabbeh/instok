@@ -246,7 +246,7 @@ ul {
 }
 
 #view-sent-alerts-button {
-	background: #FFA500;
+	background: green;
 }
 
 .remove-alert {
@@ -322,6 +322,10 @@ ul {
 
 .add-background {
 	background: #FF6161;
+}
+
+.credit-background {
+	background: green;
 }
 
 .view-background {
