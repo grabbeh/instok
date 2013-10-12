@@ -343,7 +343,7 @@ alertModule
     .controller('creditAddController', ['$scope', '$http',
         function($scope, $http){
             $scope.credits = 10;
-            $scope.$watch('alerts', function(){
+            $scope.$watch('credits', function(){
                 $scope.GBP = $scope.credits * 0.2;
             })
 
