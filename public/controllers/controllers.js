@@ -194,7 +194,10 @@ alertModule
 
             $scope.location = $scope.user.location;
             $scope.addAlert = function () {
-
+                if (!$scope.item || !$scope.location || !$scope.number || !$scope.content){
+                    $scope.message = "Please complete all fields";
+                    return;
+                }
                 var postData = {
                     item: $scope.item,
                     location: $scope.location,
@@ -302,7 +305,10 @@ alertModule
             $scope.template = "";
             
             $scope.addTemplate = function () {
-                
+                if (!$scope.title || !$scope.content){
+                    $scope.message = "Please complete all fields";
+                    return;
+                }
                 var postData = {
                     title: $scope.title,
                     content: $scope.content,
