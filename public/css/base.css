@@ -331,6 +331,10 @@ ul {
 	color: black;
 }
 
+.terms-header {
+	padding-top: 10px;
+}
+
 .main-container a {
 	color: black;
 }
