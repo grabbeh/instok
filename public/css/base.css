@@ -186,6 +186,10 @@ ul {
 
 /* ACCOUNT PAGE */
 
+#account-title {
+	font-size: 25px;
+}
+
 #alert-list {
 	margin: 0 15px 0 0;
 	padding: 0;
