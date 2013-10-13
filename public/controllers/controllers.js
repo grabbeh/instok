@@ -84,6 +84,9 @@ alertModule.config(['$routeProvider', function($routeProvider){
         when('/signup/', {
             templateUrl:'/partials/signup.html'
         }).
+        when('/terms', {
+            templateUrl:'/partials/terms.html'
+        }).
         otherwise({
             redirectTo: '/'
     });

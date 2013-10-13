@@ -128,6 +128,11 @@ body a {
  	background: #7e00fb;
  }
 
+.footer-text {
+	font-size: 25px;
+	color: black;
+}
+
 ul {
     padding: 0;
     margin: 0;
@@ -309,6 +314,19 @@ ul {
  	font-size: 20px;
 }
 
+.terms-container {
+	background: white;
+ 	margin: 0 auto;
+ 	width: 80%;
+ 	border-style: none solid solid solid;
+ 	border-width: 2px;
+ 	font-size: 20px;
+}
+
+.terms-container a {
+	color: black;
+}
+
 .main-container a {
 	color: black;
 }
@@ -326,6 +344,10 @@ ul {
 
 .credit-background {
 	background: green;
+}
+
+.terms-background {
+	background: black;
 }
 
 .view-background {
