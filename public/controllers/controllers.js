@@ -120,7 +120,7 @@ alertModule
     .controller('authController', ['$scope', '$rootScope', '$location', 'userGetter',
         function($scope, $rootScope, $location, userGetter){
             userGetter.currentUser().then(function(response){
-                $scope.user = response.data;
+                $rootScope.user = response.data;
             })
 
              $rootScope.$on('$routeChangeError', function(){
@@ -252,15 +252,15 @@ alertModule
         }])
 
 alertModule
-    .controller('editAccountController', ['$scope', '$http', 'user',
-        function ($scope, $http, user) {
+    .controller('editAccountController', ['$scope', '$http', '$rootScope',
+        function ($scope, $http, $rootScope) {
             
             $http.get('/templates').success(function(data){
                 $scope.templates = data.templates;
             })
 
             $scope.message = "";
-            $scope.user = user.data;
+            $scope.user = $rootScope.user;
 
             $scope.editAccount = function(){
                 var putData = {
