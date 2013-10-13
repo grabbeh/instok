@@ -16,7 +16,7 @@
   </head>
   <body>
       <div id="header">
-          <span id="header-text"><a href="/#/">Instok</a></span>                                   
+          <span id="header-text"><a href="/#/">Instok</a></span>                                  
           <span ng-hide="isSignedIn()" id="loginbox"><a ng-href="#/login"> login</a><a ng-href="#/signup"> | signup </a></span>
           <span ng-show="isSignedIn()" id="loginbox"><a ng-href="#/account">{{ user._id }}</a><a ng-href="/logout"> | logout</a></span>
       </div>

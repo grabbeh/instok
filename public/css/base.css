@@ -493,6 +493,12 @@ textarea {
 
 #account-buttons-list li {
 	float: none;
+	width: 80%;
+	margin-left: 0;
+}
+
+#header-text {
+	display: none;
 }
 
 }
