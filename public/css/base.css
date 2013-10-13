@@ -109,7 +109,7 @@ body a {
 }
 
 #box-two-five {
-    background: black;
+    background: #3f3f3f;
 }
 
 .home-sign-in {
@@ -125,11 +125,15 @@ body a {
 }
 
 #box-five { 
- 	background: #7e00fb;
+ 	background: #00e171;
  }
 
 .footer-text {
-	font-size: 25px;
+	font-size: 20px;
+	padding: 30px;
+}
+
+.footer-text a {
 	color: black;
 }
 
@@ -251,7 +255,7 @@ ul {
 }
 
 #credit-button {
-	background: green;
+	background: #00e171;
 }
 
 .remove-alert {
@@ -343,7 +347,7 @@ ul {
 }
 
 .credit-background {
-	background: green;
+	background: #00e171;
 }
 
 .terms-background {

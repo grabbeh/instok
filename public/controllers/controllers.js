@@ -345,22 +345,21 @@ alertModule
     alertModule
     .controller('creditAddController', ['$scope', '$http',
         function($scope, $http){
-            $scope.credits = 10;
+            $scope.credits = 20;
             $scope.$watch('credits', function(){
-                $scope.GBP = $scope.credits * 0.2;
+                $scope.GBP = $scope.credits * 0.1;
             })
 
             $scope.message = "";
             $scope.handleStripe = function(status, response){
 
-                if ($scope.credits < 10){
-                    $scope.message = "We're afraid the minimum purchase is 10 credits";
+                if ($scope.credits < 20){
+                    $scope.message = "We're afraid the minimum purchase is 20 credits";
                     return;
                 }
                 $scope.message = "Payment process started";
                 $scope.hidebutton = true;
-                console.log("Response received")
-                console.log(status + " " + response.id)
+
                 if(response.error) {
                     $scope.message = response.error.message;
 
@@ -369,7 +368,6 @@ alertModule
                   $scope.expiry = "";
                   $scope.cvc = "";
 
-                  // got stripe token, now charge it or smt
                   var token = response.id;
                   var amount = $scope.GBP * 100;
 

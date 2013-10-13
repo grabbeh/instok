@@ -4,8 +4,6 @@ var api_key = stripeauth.api_key;
 var Stripe = require('stripe')(api_key);
 
 exports.createCharge = function(req, res){
-	console.log(req.body)
-
 	Stripe.charges.create({
 		amount: req.body.amount,
 		card: req.body.token,
