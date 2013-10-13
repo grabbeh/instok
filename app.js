@@ -112,7 +112,6 @@ app.post('/login',
       if (req.user){
       res.redirect('/#/account');
     }
-    else { res.redirect('/#/login')}
   })
 
 app.get('/logout', user.logout);
