@@ -120,7 +120,6 @@ app.put('/user', user.updateaccount);
 
 app.get('/currentuser', function(req, res){
   if (req.user) {
-
      var userdetails = {
         _id: req.user._id,
         credits: req.user.credits,
@@ -140,7 +139,6 @@ app.get('/signedin', function(req, res){
     res.send()
   }
   else {
-
     res.status(401);
     res.send()
   }
