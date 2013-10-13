@@ -483,4 +483,12 @@ textarea {
 	width: 90%;
 }
 
+.info-alert {
+	display: none;
+}
+
+.remove-alert {
+	display: none;
+}
+
 }
