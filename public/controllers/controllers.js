@@ -120,7 +120,7 @@ alertModule
     .controller('authController', ['$scope', '$rootScope', '$location', 'userGetter',
         function($scope, $rootScope, $location, userGetter){
             userGetter.currentUser().then(function(response){
-                $rootScope.user = response.data;
+                $scope.user = response.data;
             })
 
              $rootScope.$on('$routeChangeError', function(){
