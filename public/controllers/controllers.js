@@ -185,7 +185,7 @@ alertModule
 
 
 alertModule
-    .controller('addController', ['$scope', '$http', 
+    .controller('addController', ['$scope', '$http', '$rootScope',
         function($scope, $http, $rootScope){
 
             $scope.message = "";
@@ -198,7 +198,8 @@ alertModule
                $scope.content = template.content;
             }
 
-            $scope.location = $scope.user.location;
+            $scope.location = $rootScope.user.location;
+            
             $scope.addAlert = function () {
                 if (!$scope.item || !$scope.location || !$scope.number || !$scope.content){
                     $scope.message = "Please complete all fields";
