@@ -491,7 +491,7 @@ textarea {
 	display: none;
 }
 
-#account-buttons-list {
+#account-buttons-list li {
 	float: none;
 }
 
