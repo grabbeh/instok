@@ -121,27 +121,40 @@ app.put('/user', user.updateaccount);
 
 app.get('/currentuser', function(req, res){
   if (req.user) {
-      res.json(req.user);
+
+     var userdetails = {
+        _id: req.user._id,
+        credits: req.user.credits,
+        location: req.user.location
+     }
+      res.json(userdetails);
+  }
+})
+
+app.get('/signedin', function(req, res){
+  if (req.user){
+    res.status(200);
+    res.send()
   }
   else {
+
     res.status(401);
-    res.send();
+    res.send()
   }
 })
 
 app.get('*', function(req, res){
   res.send('404, page not found', 404);
 });
-
-
+/*
 var options = {
   key: fs.readFileSync('./config/domain.pem'),
   cert: fs.readFileSync('./config/main.pem'),
   ca: [fs.readFileSync('./config/intermediate.pem')]
-};
+};*/
 
 // Create an HTTP service.
 http.createServer(app).listen(5000);
 // Create an HTTPS service identical to the HTTP service.
-https.createServer(options, app).listen(5001);
+//https.createServer(options, app).listen(5001);
 
