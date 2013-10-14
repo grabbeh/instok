@@ -10,7 +10,7 @@ alertModule.config(['$routeProvider', function($routeProvider){
             templateUrl: '/partials/account.html',
             resolve: {
                 user: function(userGetter){
-                    return userGetter.signedIn();
+                    return userGetter.currentUser();
                 }
             }
         }).
@@ -19,7 +19,7 @@ alertModule.config(['$routeProvider', function($routeProvider){
             templateUrl: '/partials/add.html',
             resolve: {
                 user: function(userGetter){
-                    return userGetter.signedIn();
+                    return userGetter.currentUser();
             }}
         }).
         when('/account/edit', {
@@ -27,7 +27,7 @@ alertModule.config(['$routeProvider', function($routeProvider){
             templateUrl: '/partials/editaccount.html',
             resolve: {
                 user: function(userGetter){
-                    return userGetter.signedIn();
+                    return userGetter.currentUser();
             }}
         }).
         when('/account/sent', {
@@ -35,7 +35,7 @@ alertModule.config(['$routeProvider', function($routeProvider){
             templateUrl: '/partials/sent.html',
             resolve: {
                 user: function(userGetter){
-                    return userGetter.signedIn();
+                    return userGetter.currentUser();
             }}
         }).
         when('/account/sent/:id',{
@@ -43,7 +43,7 @@ alertModule.config(['$routeProvider', function($routeProvider){
             templateUrl: '/partials/sentalert.html',
             resolve: {
                 user: function(userGetter){
-                    return userGetter.signedIn();
+                    return userGetter.currentUser();
             }}
         }).
         when('/account/:id', {
@@ -51,7 +51,7 @@ alertModule.config(['$routeProvider', function($routeProvider){
             templateUrl: '/partials/editalert.html',
             resolve: {
                 user: function(userGetter){
-                    return userGetter.signedIn();
+                    return userGetter.currentUser();
             }}
         }).
         when('/account/template/add', {
@@ -59,7 +59,7 @@ alertModule.config(['$routeProvider', function($routeProvider){
             templateUrl: '/partials/templateadd.html',
             resolve: {
                 user: function(userGetter){
-                    return userGetter.signedIn();
+                    return userGetter.currentUser();
             }}
         }).
         when('/account/template/:id', {
@@ -67,7 +67,7 @@ alertModule.config(['$routeProvider', function($routeProvider){
             templateUrl: '/partials/templateedit.html',
             resolve: {
                 user: function(userGetter){
-                    return userGetter.signedIn();
+                    return userGetter.currentUser();
             }}
         }).
         when('/account/credit/add', {
@@ -75,7 +75,7 @@ alertModule.config(['$routeProvider', function($routeProvider){
             templateUrl: '/partials/addcredit.html',
             resolve: {
                 user: function(userGetter){
-                    return userGetter.signedIn();
+                    return userGetter.currentUser();
             }}
         }).
         when('/login/', {
