@@ -1,3 +1,4 @@
+
 var express = require('express')
 , bcrypt = require("bcrypt")
 , MongoStore = require("connect-mongo")(express)
@@ -51,25 +52,24 @@ app.configure(function(){
   app.set('views', __dirname + '/views');
   app.engine('html', require('ejs').renderFile);
   app.use(express.bodyParser());
+  app.use(express.cookieParser());
   app.use(express.methodOverride());
+  app.use(express.session({ secret: 'keyboard cat'}));    
   app.use(flash());          
   app.use(passport.initialize());
+  app.use(passport.session({ secret: 'keyboard cat', 
+  store: new MongoStore({url: 'mongodb://' + db.details.user + ':' + db.details.pass + '@' + db.details.host + ':' + db.details.port + '/' + db.details.name
+  })
+  }));  
   app.use(express.static(__dirname + '/public'));
   app.use(app.router);
-  app.use(errorHandler);
-  
+  app.user(errorHandler);
+
 });
 
-function logErrors(err, req, res, next) {
-  console.error(err.stack);
-  next(err);
+function errorHandler(err, req, res, next){
+  res.send(err.stack)
 }
-
-
-function errorHandler(err, req, res, next) {
-  res.send(err.stack);
-}
-
 // Routes
 
 app.get('/', function(req, res){
@@ -111,10 +111,11 @@ app.post('/addcredit', payment.createCharge);
 app.post('/signup', user.createaccount);
 
 app.post('/login', 
-  passport.authenticate('local',
-  { successRedirect: '/',
-    failureRedirect: '/login' }
-    )
+  passport.authenticate('local'), 
+    function(req, res){
+      if (req.user){
+      res.redirect('/#/account');
+    }
   })
 
 app.get('/logout', user.logout);
@@ -161,4 +162,3 @@ var options = {
 http.createServer(app).listen(5000);
 // Create an HTTPS service identical to the HTTP service.
 https.createServer(options, app).listen(5001);
-
