@@ -1,4 +1,3 @@
-
 var express = require('express')
 , bcrypt = require("bcrypt")
 , MongoStore = require("connect-mongo")(express)
@@ -52,19 +51,17 @@ app.configure(function(){
   app.set('views', __dirname + '/views');
   app.engine('html', require('ejs').renderFile);
   app.use(express.bodyParser());
-  app.use(express.cookieParser());
   app.use(express.methodOverride());
-  app.use(express.session({ secret: 'keyboard cat'}));		
   app.use(flash());          
   app.use(passport.initialize());
-  app.use(passport.session({ secret: 'keyboard cat', 
-	store: new MongoStore({url: 'mongodb://' + db.details.user + ':' + db.details.pass + '@' + db.details.host + ':' + db.details.port + '/' + db.details.name
-	})
-	}));  
   app.use(express.static(__dirname + '/public'));
   app.use(app.router);
-
+  app.use(errorHandler);
 });
+
+function errorHandler(err, req, res, next) {
+  res.send(err);
+}
 
 // Routes
 
