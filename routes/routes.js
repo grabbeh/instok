@@ -4,7 +4,7 @@ var twilioauth = require('../config/twilio.js')
 var twilio = require('twilio')(twilioauth.sid, twilioauth.token);
 
 exports.getAlerts = function (req, res) {
-    User.findOne({_id: req.user._id})
+    User.findOne({_id: req.session.user._id})
         .select('alerts')
         .populate('alerts')
         .exec(function(err, user){
@@ -13,7 +13,7 @@ exports.getAlerts = function (req, res) {
 }
 
 exports.getSentAlerts = function(req, res){
-    User.findOne({_id: req.user._id})
+    User.findOne({_id: req.session.user._id})
         .select('sentalerts')
         .populate('sentalerts')
         .exec(function(err, user){
@@ -32,16 +32,19 @@ exports.getAlert = function (req, res) {
 exports.postAlert = function (req, res) {
 
     new Alert({
-        user: req.user._id,
+        user: req.session.user._id,
         item: req.body.item,
         location: req.body.location,
         number: req.body.number,
         id: req.params.id,
         content: req.body.content
     }).save(function(err, alert){
-        User.findOne({_id: req.user._id})
+        User.findOne({_id: req.session.user._id})
             .update({$addToSet: {alerts: alert._id}})
-            .exec()          
+            .exec(function(){
+                res.status(200);
+                res.send();
+            })          
         })
     };
 
@@ -58,10 +61,13 @@ exports.editAlert = function (req, res) {
 
 exports.deleteAlert = function (req, res) {
     Alert.findOne({ id: req.params.id }, function (err, alert) {
-        User.findOne({_id: req.user._id}) 
+        User.findOne({_id: req.session.user._id}) 
             .update({$addToSet: {abortedalerts: alert._id}})
             .update({$pull: {alerts: alert._id}})
-            .exec();               
+            .exec(function(){
+                res.status(200);
+                res.send();
+            });               
         })
     };
 
@@ -83,7 +89,7 @@ exports.sendAlert = function(req, res){
                         else { 
                         
                         res.json({message: "Alert sent", creditsremaining: req.body.creditsremaining});
-                        User.findOne({_id: req.user._id})
+                        User.findOne({_id: req.session.user._id})
                             .update({$addToSet: {sentalerts: alert._id}})
                             .update({$pull: {alerts: alert._id}})
                             .update({credits: req.body.creditsremaining})

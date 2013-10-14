@@ -10,14 +10,14 @@ exports.addTemplate = function(req,res){
 	   	content: req.body.content,
 	   	id: req.body.id
    		}).save(function(err, template){
-			User.findOne({_id: req.user._id})
+			User.findOne({_id: req.session.user._id})
 		       .update({$addToSet: {templates: template._id}})
 		       .exec()
 			})
    		}
 
 exports.getTemplates = function(req, res){
-	User.findOne({_id: req.user._id})
+	User.findOne({_id: req.session.user._id})
 		.select('templates')
         .populate('templates')
         .exec(function(err, templates){
@@ -42,7 +42,7 @@ exports.editTemplate = function(req, res){
 
 exports.deleteTemplate = function(req, res){
 	Template.findOne({id: req.params.id}, function(err, template){
-		User.findOne({_id: req.user._id})
+		User.findOne({_id: req.session.user._id})
 			  .update({pull: {templates: template._id}})
 			  .exec(function(){
 			  	template.remove();

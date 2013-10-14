@@ -13,9 +13,9 @@ exports.createCharge = function(req, res){
 			res.send(error.message);
 		}
 		else {
-			var newcredits = Number(req.user.credits) + Number(req.body.credits);
+			var newcredits = Number(req.session.user.credits) + Number(req.body.credits);
 
-			User.update({_id: req.user._id}, ({credits: newcredits}), function(err){
+			User.update({_id: req.session.user._id}, ({credits: newcredits}), function(err){
 			});
 			res.send("Payment completed successfully. " + req.body.credits + " credits added to your account")
 		}

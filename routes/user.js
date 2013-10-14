@@ -2,18 +2,12 @@
 
 var User = require('../models/user.js');
 var bcrypt = require("bcrypt");
-var passport = require("passport");
 
 // passport introduction
 
-exports.logout = function(req, res){
-  req.logout();
-  res.redirect('/');
-};
-
 exports.updateaccount = function(req, res){
   console.log(req.body.location);
-   User.findOneAndUpdate({_id: req.user._id}, {location: req.body.location}, function(err){
+   User.findOneAndUpdate({_id: req.session.user._id}, {location: req.body.location}, function(err){
     if (err) { console.log(err) }
       
    })

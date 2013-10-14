@@ -1,8 +1,6 @@
 
 var express = require('express')
 , bcrypt = require("bcrypt")
-, MongoStore = require("connect-mongo")(express)
-, passport = require('passport')
 , flash = require('connect-flash')
 , LocalStrategy = require('passport-local').Strategy
 , mongoose = require('mongoose')
@@ -21,31 +19,18 @@ var express = require('express')
 
 mongoose.connect('mongodb://' + db.details.user + ':' + db.details.pass + '@' + db.details.host + ':' + db.details.port + '/' + db.details.name );
 
-passport.serializeUser(function(user, done) {
-  done(null, user._id);
-});
+function authenticate(name, pass, fn) {
 
-passport.deserializeUser(function(id, done) {
-  User.findOne({_id: id}, function (err, user) {
-    done(err, user);
-  });
-});
+   User.findOne({_id: name}, function(err, user) {
+       if (!user) {  return fn(new Error("Cannot find user"))}; 
 
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    process.nextTick(function () {
-      User.findOne({_id: username}, function(err, user) {
-       if (!user) { 
-          return done(null, false); 
-      }
-      bcrypt.compare(password, user.hash, function(err, res){
-         if (res){ return done(null, user)}
-         else return done(null, false)
-            })
+       bcrypt.compare(pass, user.hash, function(err, res){
+         if (err) return fn(err);
+         if (res){ return fn(null, user)}
+         fn(new Error('Invalid password'));
         })
     })
-  }
-));
+ }
 
 app.configure(function(){
   app.enable('trust proxy')
@@ -56,11 +41,6 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(express.session({ secret: 'keyboard cat'}));    
   app.use(flash());          
-  app.use(passport.initialize());
-  app.use(passport.session({ secret: 'keyboard cat', 
-  store: new MongoStore({url: 'mongodb://' + db.details.user + ':' + db.details.pass + '@' + db.details.host + ':' + db.details.port + '/' + db.details.name
-  })
-  }));  
   app.use(express.static(__dirname + '/public'));
   app.use(app.router);
   app.use(errorHandler);
@@ -110,24 +90,38 @@ app.post('/addcredit', payment.createCharge);
 
 app.post('/signup', user.createaccount);
 
-app.post('/login', 
-  passport.authenticate('local'), 
-    function(req, res){
-      if (req.user){
-      res.redirect('/#/account');
+app.post('/login', function(req, res){
+  
+  authenticate(req.body.username, req.body.password, function(err, user){
+    if (user) {
+        req.session.regenerate(function(){
+        req.session.user = user;
+        res.status(200);
+        res.send()
+      });
+    } 
+    if (err) {
+      res.status(401);
+      res.send({message: "Error with username or password - please try again"})
     }
-  })
+  });
+});
+  
 
-app.get('/logout', user.logout);
+app.get('/logout', function(req, res){
+  req.session.destroy(function(){
+    res.redirect('/');
+  });
+});
 
 app.put('/user', user.updateaccount);
 
 app.get('/currentuser', function(req, res){
-  if (req.user) {
+  if (req.session.user) {
      var userdetails = {
-        _id: req.user._id,
-        credits: req.user.credits,
-        location: req.user.location
+        _id: req.session.user._id,
+        credits: req.session.user.credits,
+        location: req.session.user.location
      }
       res.json(userdetails);
   }
@@ -138,7 +132,7 @@ app.get('/currentuser', function(req, res){
 })
 
 app.get('/signedin', function(req, res){
-  if (req.user){
+  if (req.session.user){
     res.status(200);
     res.send()
   }

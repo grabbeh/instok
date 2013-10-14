@@ -1,11 +1,12 @@
 <div id="login-body">
      <div class="logincontainer">
           <div class="form">Login</div>
-           <form class="loginform" method=post action="/login">
-              <div><input class="form-input" type=text name="username" size=20 placeholder="Username"></div>
-              <div><input class="form-input" type=password name="password" placeholder="Password" ></div>
+           <form class="loginform" ng-submit="login()">
+              <div><input class="form-input" ng-model="username" type=text name="username" size=20 placeholder="Username"></div>
+              <div><input class="form-input" ng-model="password" type=password name="password" placeholder="Password" ></div>
               <div><input class="add-button" type=submit value="Submit"></div>
             </form>
+            <div>{{ message }}</div>
       </div> 
  </div>
      

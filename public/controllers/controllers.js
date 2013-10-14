@@ -79,7 +79,8 @@ alertModule.config(['$routeProvider', function($routeProvider){
             }}
         }).
         when('/login/', {
-             templateUrl:'/partials/login.html'
+             templateUrl:'/partials/login.html',
+             controller: 'loginController'
         }).
         when('/signup/', {
             templateUrl:'/partials/signup.html'
@@ -130,6 +131,31 @@ alertModule
             $scope.isSignedIn = function(){
                 return !!$scope.user;
             }
+        }])
+
+alertModule
+    .controller('loginController', ['$scope', '$http', '$location', '$rootScope', 'userGetter',
+        function($scope, $http, $location, $rootScope, userGetter){
+            $scope.message = "";
+
+            $scope.login = function(){
+                var postData = {
+                    username: $scope.username,
+                    password: $scope.password
+                }
+
+                $http.post('/login', postData)
+                .success(function(){
+                    userGetter.currentUser().then(function(response){
+                        $rootScope.user = response.data;
+                        $location.path('/account');
+                    })
+                })
+                .error(function(data){
+                    $scope.message = data.message;
+                });
+            }
+
         }])
 
 alertModule
