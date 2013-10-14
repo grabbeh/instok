@@ -56,7 +56,6 @@ app.configure(function(){
   app.use(passport.initialize());
   app.use(express.static(__dirname + '/public'));
   app.use(app.router);
-  app.use(logErrors);
   app.use(errorHandler);
   
 });
