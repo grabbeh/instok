@@ -3,7 +3,8 @@ var alertModule = angular.module('alertModule', ['angularPayments']);
 alertModule.config(['$routeProvider', function($routeProvider){
     $routeProvider.
         when('/', {
-            templateUrl: '/partials/home.html'
+            templateUrl: '/partials/home.html',
+            controller: 'signupController'
         }).
         when('/account', {
             controller: 'accountController',
@@ -83,7 +84,8 @@ alertModule.config(['$routeProvider', function($routeProvider){
              controller: 'loginController'
         }).
         when('/signup/', {
-            templateUrl:'/partials/signup.html'
+            templateUrl:'/partials/signup.html',
+            controller: 'signupController'
         }).
         when('/terms', {
             templateUrl:'/partials/terms.html'
@@ -157,6 +159,34 @@ alertModule
             }
 
         }])
+
+alertModule
+    .controller('signupController', ['$scope', '$http', '$location', '$rootScope', 'userGetter',
+        function($scope, $http, $location, $rootScope, userGetter){
+            $scope.message = "";
+
+            $scope.signup = function(){
+                var postData = {
+                    username: $scope.username,
+                    password: $scope.password,
+                    location: $scope.location
+                }
+
+                $http.post('/signup', postData)
+                .success(function(){
+                    userGetter.currentUser().then(function(response){
+                        $rootScope.user = response.data;
+                        $location.path('/account');
+                    })
+                })
+                .error(function(data){
+                    $scope.message = data.message;
+                });
+            }
+
+        }])
+
+
 
 alertModule
     .controller('accountController', ['$scope', '$http', '$location', 'alertsGetter',

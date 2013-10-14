@@ -1,12 +1,13 @@
 <div id="login-body">
      <div class="logincontainer">     
            <div class="form">Create Account</div>
-           <form class="loginform" method=post action="/signup">
-                 <div><input class="form-input" type=text name="username" placeholder="Username" size=20></div>
-                 <div><input class="form-input" type=password name="password" placeholder="Password" size=20></div>
-                 <div><input class="form-input" type=text name="location" placeholder="Location" size=20></div>
+           <form class="loginform" ng-submit="signup()">
+                 <div><input class="form-input" ng-model="username" type=text name="username" placeholder="Username" size=20></div>
+                 <div><input class="form-input" ng-model="password" type=password name="password" placeholder="Password" size=20></div>
+                 <div><input class="form-input" ng-model="location" type=text name="location" placeholder="Location" size=20></div>
                  <div><input class="add-button" type=submit value="Submit"></div>
-            <br><br>
+            
             </form>
+            <div>{{ message }}
       </div>
 </div>

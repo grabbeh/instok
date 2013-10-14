@@ -28,6 +28,11 @@ body a {
 
 /* HOME PAGE */
 
+.home-error-text {
+	font-size: 20px;
+	padding: 0 0 25px 25px;
+}
+
 .home-container {
 	margin: 0 auto;
 	width: 70%;
