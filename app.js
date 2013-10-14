@@ -67,7 +67,7 @@ function logErrors(err, req, res, next) {
 
 
 function errorHandler(err, req, res, next) {
-  res.send(err);
+  res.send(err.stack);
 }
 
 // Routes
