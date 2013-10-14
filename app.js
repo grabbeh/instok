@@ -111,11 +111,10 @@ app.post('/addcredit', payment.createCharge);
 app.post('/signup', user.createaccount);
 
 app.post('/login', 
-  passport.authenticate('local'), 
-    function(req, res){
-      if (req.user){
-      res.redirect('/#/account');
-    }
+  passport.authenticate('local',
+  { successRedirect: '/',
+    failureRedirect: '/login' }
+    )
   })
 
 app.get('/logout', user.logout);
