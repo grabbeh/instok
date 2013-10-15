@@ -7,8 +7,10 @@ var bcrypt = require("bcrypt");
 
 exports.updateaccount = function(req, res){
    User.findOneAndUpdate({_id: req.session.user._id}, {location: req.body.location}, function(err){
-    if (err) { console.log(err) }
-      
+    if (!err) { 
+        res.status(200);
+        res.send({message: "Account updated"})
+        }  
    })
 }
 

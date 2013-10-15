@@ -12,7 +12,10 @@ exports.addTemplate = function(req,res){
    		}).save(function(err, template){
 			User.findOne({_id: req.session.user._id})
 		       .update({$addToSet: {templates: template._id}})
-		       .exec()
+		       .exec(function(){
+		       	  res.status(200);
+		       	  res.send({message: "Alert addeed"})
+		       })
 			})
    		}
 
@@ -36,7 +39,8 @@ exports.editTemplate = function(req, res){
 		{ title: req.body.title,
 		  content: req.body.content
 		}, function(err, template){
-			res.json("Template updated");
+			res.status(200);
+			res.send({message: "Template updated"})
 		})
 }
 

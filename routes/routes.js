@@ -43,7 +43,7 @@ exports.postAlert = function (req, res) {
             .update({$addToSet: {alerts: alert._id}})
             .exec(function(){
                 res.status(200);
-                res.send();
+                res.send({message: "Alert added"});
             })          
         })
     };
@@ -55,7 +55,8 @@ exports.editAlert = function (req, res) {
         item: req.body.item,
         content: req.body.content
     }, function(err, user){
-          res.json("Alert updated");
+            res.status(200);
+            res.send({message: "Alert updated"});         
     })
 }
 

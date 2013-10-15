@@ -269,10 +269,11 @@ alertModule
                     content: $scope.content
                 }
 
-                $http.post('/alerts/' + postData.id, postData)
-                $scope.message = "Alert added"
-                $scope.item = "";
-                $scope.number = "";
+                $http.post('/alerts/' + postData.id, postData).success(function(data){
+                    $scope.message = data.message;
+                    $scope.item = "";
+                    $scope.number = "";
+                })
             }
 
         }])
@@ -303,8 +304,9 @@ alertModule
                     number: alert.number,
                     content: alert.content
                 }
-                $http.put('/alerts/' + alert.id, putData);
-                $scope.message ="Alert updated";
+                $http.put('/alerts/' + alert.id, putData).success(function(data){
+                    $scope.message = data.message;
+                });
             }
         }])
 
@@ -323,8 +325,9 @@ alertModule
                 var putData = {
                     location: $scope.user.location
                 };
-                $http.put('/user', putData);
-                $scope.message = "Account updated";  
+                $http.put('/user', putData).success(function(data){
+                    $scope.message = data.message; 
+                });
             }
 
             $scope.removeTemplate = function(template){
@@ -354,8 +357,9 @@ alertModule
                     number: alert.number,
                     id: Math.guid()
                 }
-                $http.post('/alerts/' + postData.id, postData);
-                $scope.message ="Alert saved";
+                $http.post('/alerts/' + postData.id, postData).success(function(data){
+                    $scope.message = data.message;
+                });
             }
         }])
 
@@ -377,9 +381,10 @@ alertModule
                     content: $scope.content,
                     id: Math.guid()
                 }
-                $http.post('/templates', postData)
-                $scope.message = "Template added"
-                $scope.template = "";
+                $http.post('/templates', postData).success(function(data){
+                    $scope.message = data.message;
+                    $scope.template = "";
+                })
             }
         }])
 
@@ -397,8 +402,9 @@ alertModule
                     title: $scope.template.title,
                     content: $scope.template.content
                 }
-                $http.put('/templates/' + $routeParams.id, putData);
-                $scope.message = "Template updated";
+                $http.put('/templates/' + $routeParams.id, putData).success(function(data){
+                    $scope.message = data.message;
+                });
             }
         }])
 
