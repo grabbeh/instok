@@ -110,7 +110,8 @@ app.post('/login', function(req, res){
 
 app.get('/logout', function(req, res){
   req.session.destroy(function(){
-    res.redirect('/');
+    res.status(200);
+    res.send();
   });
 });
 

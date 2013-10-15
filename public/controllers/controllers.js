@@ -133,6 +133,13 @@ alertModule
             $scope.isSignedIn = function(){
                 return !!$scope.user;
             }
+
+            $scope.logout = function(){
+                $http.get('/logout').success(function(){
+                    $rootScope.user = null;
+                    $location.path('/');
+                })
+                }
         }])
 
 alertModule
@@ -186,15 +193,6 @@ alertModule
 
         }])
 
-alertModule
-    .controller('signupController', ['$scope', '$http', '$location', '$rootScope', 
-        function($scope, $http, $location, $rootScope){
-            $scope.logout = function(){
-                $http.get('/logout').success(function(){
-                    $rootScope.user = null;
-                })
-                }
-        }])
 
 alertModule
     .controller('accountController', ['$scope', '$http', '$location', 'alertsGetter',
