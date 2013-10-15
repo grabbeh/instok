@@ -10,6 +10,10 @@ var express = require('express')
 , https = require('https')
 , http = require('http')
 , fs = require('fs')
+, winston = require('winston');
+
+winston.add(winston.transports.File, { filename: 'logfile.log' });
+winston.remove(winston.transports.Console);
 
 mongoose.connect('mongodb://' 
   + db.details.user + ':' 
@@ -24,16 +28,10 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.cookieParser());
   app.use(express.methodOverride());
-  app.use(express.session({ secret: 'keyboard cat'}));
-  app.use(express.staticCache())           
+  app.use(express.session({ secret: 'keyboard cat'}));        
   app.use(express.static(__dirname + '/public'));
   app.use(app.router);
-  app.use(errorHandler);
 });
-
-function errorHandler(err, req, res, next){
-  res.send(err.stack)
-}
 
 // Routes
 
