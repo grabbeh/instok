@@ -111,7 +111,7 @@ app.post('/login', function(req, res){
 app.get('/logout', function(req, res){
   req.session.destroy(function(){
     res.status(200);
-    res.send();
+    res.send({message: "Logged out"});
   });
 });
 

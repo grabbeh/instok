@@ -190,7 +190,8 @@ alertModule
     .controller('signupController', ['$scope', '$http', '$location', '$rootScope', 
         function($scope, $http, $location, $rootScope){
             $scope.logout = function(){
-                $http.get('/logout').success(function(){
+                $http.get('/logout').success(function(data){
+                    console.log(data)
                     $rootScope.user = false;
                     $location.path('/');
                     })
