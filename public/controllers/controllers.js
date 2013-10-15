@@ -191,7 +191,7 @@ alertModule
         function($scope, $http, $location, $rootScope){
             $scope.logout = function(){
                 $http.get('/logout').success(){
-                    $rootScope.user = null;
+                    $rootScope.user = false;
                     $location.path('/');
                 }
             }
