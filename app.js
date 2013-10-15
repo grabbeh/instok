@@ -124,7 +124,7 @@ app.get('/currentuser', function(req, res){
         credits: req.session.user.credits,
         location: req.session.user.location
      }
-      res.set({Cache-Control: ‘no-cache, no-store’});
+      res.set(‘Cache-Control’, ‘no-cache, no-store’);
       res.json(userdetails);
   }
   else {

@@ -24,14 +24,14 @@ exports.getTemplates = function(req, res){
 		.select('templates')
         .populate('templates')
         .exec(function(err, templates){
-        	res.set({Cache-Control: ‘no-cache, no-store’});
+        	res.set(‘Cache-Control’, ‘no-cache, no-store’);
         	res.json(templates);
         })
 }
 
 exports.getTemplate = function(req, res){
 	Template.findOne({id: req.params.id}, function(err, template){
-		res.set({Cache-Control: ‘no-cache, no-store’});
+		res.set(‘Cache-Control’, ‘no-cache, no-store’);
 		res.json(template);
 	})
 }
