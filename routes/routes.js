@@ -8,7 +8,8 @@ exports.getAlerts = function (req, res) {
         .select('alerts')
         .populate('alerts')
         .exec(function(err, user){
-            res.json(user.alerts)
+            if (err) { res.status(401); res.send({message: "Error"})}
+            else { res.json(user.alerts)}
     })
 }
 

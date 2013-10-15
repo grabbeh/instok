@@ -196,6 +196,8 @@ alertModule
 
         alertsGetter.getActiveAlerts().then(function(response){
             $scope.alerts = response.data;
+        }, function(response){
+            console.log(response.data.message)
         })
 
         $scope.removeAlert = function(alert){
