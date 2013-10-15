@@ -195,8 +195,6 @@ alertModule
                     $location.path('/');
                     })
                 }
-            }
-
         }])
 
 alertModule
