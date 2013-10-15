@@ -203,7 +203,7 @@ alertModule
         alertsGetter.getActiveAlerts().then(function(response){
             $scope.alerts = response.data;
         }, function(response){
-            console.log(response.data.message)
+            $scope.message = response.data.message;
         })
 
         $scope.removeAlert = function(alert){
@@ -225,11 +225,16 @@ alertModule
                 $scope.message = false;
                     if (alert.id === item.id && $scope.alerts.length > 0) {
                         var postData = { creditsremaining: $scope.user.credits - 1 };
-                        $http.post('sendalert/' + alert.id, postData).success(function(data){
-                            $scope.message = data.message;
-                            $scope.user.credits = data.creditsremaining;
-                        })
-                        $scope.alerts.splice(i, 1);
+
+                        $http.post('sendalert/' + alert.id, postData)
+                            .success(function(data){
+                                $scope.message = data.message;
+                                $scope.user.credits = data.creditsremaining;
+                                $scope.alerts.splice(i, 1);
+                            })
+                            .error(function(data){
+                                $scope.message = data.error;
+                            })
                     }
                 })
             }

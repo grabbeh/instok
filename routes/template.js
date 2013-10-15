@@ -1,7 +1,7 @@
 
-var User = require('../models/user.js')
-, Template = require('../models/template.js')
-, Alert = require('../models/alert.js')
+var User = require('../models/user')
+, Template = require('../models/template')
+, Alert = require('../models/alert')
 
 
 exports.addTemplate = function(req,res){

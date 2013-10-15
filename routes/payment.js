@@ -1,5 +1,5 @@
-var User = require('../models/user.js');
-var stripeauth = require('../config/stripeapi.js')
+var User = require('../models/user');
+var stripeauth = require('../config/stripeapi')
 var api_key = stripeauth.api_key;
 var Stripe = require('stripe')(api_key);
 
@@ -10,7 +10,7 @@ exports.createCharge = function(req, res){
 		currency: "gbp"
 	}, function(error, charge){
 		if (error) {
-			res.send(error.message);
+			res.send({error: error.message});
 		}
 		else {
 			var newcredits = Number(req.session.user.credits) + Number(req.body.credits);
