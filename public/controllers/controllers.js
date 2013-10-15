@@ -120,8 +120,8 @@ alertModule.factory('alertsGetter', ['$http', function ($http) {
 }]);
 
 alertModule
-    .controller('authController', ['$scope', '$rootScope', '$location', 'userGetter',
-        function($scope, $rootScope, $location, userGetter){
+    .controller('authController', ['$scope', '$rootScope', '$http', '$location', 'userGetter',
+        function($scope, $rootScope, $http, $location, userGetter){
             userGetter.currentUser().then(function(response){
                 $rootScope.user = response.data;
             })
