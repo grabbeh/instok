@@ -92,17 +92,18 @@ exports.sendAlert = function(req, res){
                 body: body
                 }, function (err, message) { 
 
-                        if (err) { res.send("Alert failed to send - please check number") }
+                        if (err) { 
+                            res.status(401).send(
+                                {message: "Alert failed to send - please check number", 
+                                creditsremaining: req.body.creditsremaining + 1}) 
+                            }
 
-                        else { 
-                        
                         res.json({message: "Alert sent", creditsremaining: req.body.creditsremaining});
                         User.findOne({_id: req.session.user._id})
                             .update({$addToSet: {sentalerts: alert._id}})
                             .update({$pull: {alerts: alert._id}})
                             .update({credits: req.body.creditsremaining})
                             .exec()
-                            }
                         })
                     })
                 }

@@ -234,6 +234,7 @@ alertModule
                             })
                             .error(function(data){
                                 $scope.message = data.error;
+                                $scope.user.credits = data.creditsremaining;
                             })
                     }
                 })
