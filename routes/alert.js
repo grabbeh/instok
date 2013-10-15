@@ -93,7 +93,7 @@ exports.sendAlert = function(req, res){
                 }, function (err, message) { 
 
                         if (err) { 
-                            res.status(401).send(
+                            res.send(
                                 {message: "Alert failed to send - please check number", 
                                 creditsremaining: req.body.creditsremaining + 1}) 
                             }
