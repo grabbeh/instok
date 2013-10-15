@@ -55,9 +55,11 @@ exports.editAlert = function (req, res) {
         number: req.body.number,
         item: req.body.item,
         content: req.body.content
-    }, function(err, user){
+    }, function(err){
+            if (!err){
             res.status(200);
-            res.send({message: "Alert updated"});         
+            res.send({message: "Alert updated"}); 
+        }        
     })
 }
 
