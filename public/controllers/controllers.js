@@ -186,7 +186,17 @@ alertModule
 
         }])
 
+alertModule
+    .controller('signupController', ['$scope', '$http', '$location', '$rootScope', 
+        function($scope, $http, $location, $rootScope){
+            $scope.logout = function(){
+                $http.get('/logout').success(){
+                    $rootScope.user = null;
+                    $location.path('/');
+                }
+            }
 
+        }])
 
 alertModule
     .controller('accountController', ['$scope', '$http', '$location', 'alertsGetter',
