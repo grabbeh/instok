@@ -9,7 +9,10 @@ exports.getAlerts = function (req, res) {
         .populate('alerts')
         .exec(function(err, user){
             if (err) { res.status(401); res.send({message: "Error"})}
-            else { res.json(user.alerts)}
+            else { 
+                res.set({Cache-Control: ‘no-cache, no-store’});
+                res.json(user.alerts)
+            }
     })
 }
 
@@ -18,6 +21,7 @@ exports.getSentAlerts = function(req, res){
         .select('sentalerts')
         .populate('sentalerts')
         .exec(function(err, user){
+            res.set({Cache-Control: ‘no-cache, no-store’});
             res.json(user.sentalerts)
     })
 }
@@ -26,6 +30,7 @@ exports.getAlert = function (req, res) {
     Alert.findOne({id: req.params.id})
         .populate('template')
         .exec(function (err, alert) {
+            res.set({Cache-Control: ‘no-cache, no-store’});
             res.json(alert);
         })
     };
