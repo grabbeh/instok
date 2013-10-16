@@ -14,7 +14,7 @@ exports.addTemplate = function(req,res){
 		       .update({$addToSet: {templates: template._id}})
 		       .exec(function(){
 		       	  res.status(200);
-		       	  res.send({message: "Alert addeed"})
+		       	  res.send({message: "Alert added"})
 		       })
 			})
    		}

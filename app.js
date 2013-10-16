@@ -33,43 +33,53 @@ app.configure(function(){
   app.use(app.router);
 });
 
+// Middleware
+
+function restrict(req, res, next) {
+  if (req.session.user) {
+    next();
+  } else {
+    res.redirect('/#/login');
+  }
+}
+
 // Routes
 
 app.get('/', function(req, res){
   res.sendfile(__dirname + '/public/views/index.html')
 });
 
-// Alerts
+// Alerts API
 
-app.get('/alerts', alert.getAlerts);
+app.get('/alerts', restrict, alert.getAlerts);
 
-app.get('/sentalerts', alert.getSentAlerts);
+app.get('/sentalerts', restrict, alert.getSentAlerts);
 
-app.get('/alerts/:id', alert.getAlert);
+app.get('/alerts/:id', restrict, alert.getAlert);
 
-app.post('/alerts/:id', alert.postAlert);
+app.post('/alerts/:id', restrict, alert.postAlert);
 
-app.delete('/alerts/:id', alert.deleteAlert);
+app.delete('/alerts/:id', restrict, alert.deleteAlert);
 
-app.put('/alerts/:id', alert.editAlert);
+app.put('/alerts/:id', restrict, alert.editAlert);
 
-app.post('/sendalert/:id', alert.sendAlert);
+app.post('/sendalert/:id', restrict, alert.sendAlert);
 
-// Templates
+// Templates API
 
-app.post('/templates', template.addTemplate);
+app.post('/templates', restrict, template.addTemplate);
 
-app.get('/templates', template.getTemplates);
+app.get('/templates', restrict, template.getTemplates);
 
-app.put('/templates/:id', template.editTemplate);
+app.put('/templates/:id', restrict, template.editTemplate);
 
-app.delete('/templates/:id', template.deleteTemplate);
+app.delete('/templates/:id', restrict, template.deleteTemplate);
 
-app.get('/templates/:id', template.getTemplate);
+app.get('/templates/:id', restrict, template.getTemplate);
 
 // Stripe payment
 
-app.post('/addcredit', payment.createCharge);
+app.post('/addcredit', restrict, payment.createCharge);
 
 // Authentication
 
