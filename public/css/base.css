@@ -239,6 +239,10 @@ ul {
 	width:100%;
 }
 
+#template-list:last-of-type{
+	margin: 0 15px 0 0;
+}
+
 #response-message {
 	margin: 0 15px 0 0;
 	padding: 0;
@@ -498,7 +502,7 @@ textarea {
 
 /* RESPONSIVE */
 
-@media handheld, only screen and (max-width: 500px) {
+@media handheld, only screen and (max-width: 720px) {
 .main-container {
  	width: 100%;
  	border-style: none;
