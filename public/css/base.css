@@ -278,8 +278,6 @@ ul {
 #account-buttons-list li {
 	float: left;
 	color: black;
-	border-style: none solid solid solid;
-	border-width: 2px;
 	margin-left: 15px;
 	padding: 10px;
 	font-size: 18px;
