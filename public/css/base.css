@@ -62,9 +62,6 @@ body a {
 
 #header {
     height: 45px;
-    border-bottom-style: solid;
-    border-width: 2px;
-    border-color: black;
 }
 
 #header-text {
