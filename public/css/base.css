@@ -224,6 +224,23 @@ ul {
 	margin: 15px 0 0 0;
 }
 
+#template-list {
+	margin: 0 15px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+#template-list li {
+	position: relative;
+	font-size: 20px;
+	padding: 10px;
+	line-height: 1.4;
+	color: white;
+	margin: 15px 0 15px 0;
+	background: #06406C;
+	width:100%;
+}
+
 #response-message {
 	margin: 0 15px 0 0;
 	padding: 0;
