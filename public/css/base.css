@@ -437,6 +437,7 @@ ul {
 }
 
 #account-body {
+	background: #F0F0F0;
 	min-height: 100%;
 	height: auto !important;
 	font-size: 20px;
