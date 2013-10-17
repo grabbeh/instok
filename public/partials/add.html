@@ -14,7 +14,9 @@
           </form>
 
         <div><p>{{ message }}</p></div>
+         
          <div ng-show="templates">Templates</div>
+         <div ng-hide="templates">Add some reusable templates <a href="/#/account/template/add">here</a></div>
          <ul id="template-list">
           <li ng-repeat="template in templates">
             <div>
