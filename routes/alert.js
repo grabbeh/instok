@@ -94,11 +94,12 @@ exports.sendAlert = function(req, res){
 
                         if (err) { 
                             res.send(
-                                {message: "Alert failed to send - please check number", 
-                                creditsremaining: req.body.creditsremaining + 1}) 
+                                {message: "The number you want to text does not appear to be valid", 
+                                creditsremaining: req.body.creditsremaining + 1});
+                                return;
                             }
 
-                        res.json({message: "Alert sent", creditsremaining: req.body.creditsremaining});
+                        res.json({message: message.status, creditsremaining: req.body.creditsremaining});
                         User.findOne({_id: req.session.user._id})
                             .update({$addToSet: {sentalerts: alert._id}})
                             .update({$pull: {alerts: alert._id}})
