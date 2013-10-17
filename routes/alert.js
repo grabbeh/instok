@@ -87,24 +87,25 @@ exports.sendAlert = function(req, res){
             var body = replaceStringsWithValues(alert.content, alert);
             twilio.sendSms({
                 to: alert.number, 
-                // test
                 from: '+442033221672', 
                 body: body
                 }, function (err, message) { 
 
-                        if (err) { 
-                            res.send(
-                                {message: "The number you want to text does not appear to be valid", 
-                                creditsremaining: req.body.creditsremaining + 1});
-                                return;
-                            }
+                    if (err) { 
+                        res.send(
+                            {message: "The number you want to text does not appear to be valid", 
+                            creditsremaining: req.body.creditsremaining + 1});
+                            return;
+                        }
 
-                        res.json({message: message.status, creditsremaining: req.body.creditsremaining});
                         User.findOne({_id: req.session.user._id})
                             .update({$addToSet: {sentalerts: alert._id}})
                             .update({$pull: {alerts: alert._id}})
                             .update({credits: req.body.creditsremaining})
-                            .exec()
+                            .exec(function(){
+                                res.json({message: message.status, 
+                                          creditsremaining: req.body.creditsremaining});
+                            })
                         })
                     })
                 }

@@ -221,6 +221,7 @@ alertModule
                 $scope.message = "You'll need to add credits to send any alerts";
                 return;
             }
+            
             $scope.alerts.forEach(function (item, i) {
                 $scope.message = false;
                     if (alert.id === item.id && $scope.alerts.length > 0) {
@@ -236,9 +237,9 @@ alertModule
                                 $scope.message = data.error;
                                 $scope.user.credits = data.creditsremaining;
                             })
-                    }
-                })
-            }
+                        }
+                    })
+                }
 
         $scope.removeMessage = function(){
             $scope.message = false;
