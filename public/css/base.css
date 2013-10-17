@@ -11,6 +11,21 @@ a img {
     border: none;
 }
 
+.black-link {
+	color: black;
+	text-decoration: underline;
+}
+
+.float-right {
+	float: right;
+}
+
+.button {
+	padding: 10px;
+	border-style: solid;
+	border-width: 2px;
+}
+
 input {
 	font-family: 'Montserrat';
 }
@@ -196,6 +211,45 @@ ul {
 
 /* ACCOUNT PAGE */
 
+.small-text {
+	font-size: 16px;
+}
+.tutorial-text {
+	font-size: 16px;
+}
+.subtitles {
+	font-size: 12px;
+	text-decoration: underline;
+}
+
+.subtitle {
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+.subtitle a {
+	color: white;
+}
+
+.subtitles {
+	font-size: 12px;
+	text-decoration: underline;
+}
+
+.subtitle {
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+.black-subtitle {
+	cursor: pointer;
+	font-size: 15px;
+}
+
+.black-subtitle a {
+	color: black;
+}
+
 #account-title {
 	font-size: 25px;
 	padding: 15px 0 10px 0;
@@ -333,8 +387,8 @@ ul {
 
 .clear-input {
 	outline: 0;
-        border: 0;
-        position: relative;
+    border: 0;
+    position: relative;
 	margin: 0;
 	font-size: 20px;
 	padding: 10px 0 10px 0;
@@ -367,10 +421,6 @@ ul {
 
 .terms-header {
 	padding-top: 10px;
-}
-
-.main-container a {
-	color: black;
 }
 
 .main-body {
@@ -481,10 +531,23 @@ ul {
 	 padding: 10px 10px 10px 0;
 }
 
+.stripe-footer {
+	font-size: 16px;
+}
+
 /* TEMPLATES */
 
+.add-template-symbol {
+	font-size: 25px;
+	border-style: solid;
+	border-width: 2px;
+	color:black;
+	margin-left: 10px;
+	padding: 5px;
+
+}
+
 .template-add {
-	
 	height: 250px;
 }
 
@@ -534,5 +597,7 @@ textarea {
 #header-text {
 	display: none;
 }
+
+
 
 }

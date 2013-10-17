@@ -6,25 +6,27 @@
           <form ng-submit="editAccount()">
 
               <div>Business name: <input class="clear-input" name="item" placeholder="Business name" ng-model="user.location" value="{{ user.location }}"></div>
-              <div><input type="submit" class="add-button" value="Submit"></div>
+              <div><input type="submit" class="add-button" value="Update"></div>
 
           </form>
 
        <div><p>{{ message }} </p></div>
-       <div ng-show="templates"><p>Templates</p></div>
+       <div class="small-text" ng-hide="templates">Add a template <a class="black-link" href="/#/account/template/add">here</a></div>
+       <div ng-show="templates">Templates<div class="black-subtitle"><a href="/#/account/template/add">Add template</a></div></div>
        <ul id="template-list">
           <li ng-repeat="template in templates">
             <div>
               <label class="alert-name">
                 {{template.title}}
               </label>
-              <span ng-click="removeTemplate(template)" class="remove-alert" title="Remove template"></span>
-              <span title="Edit template" class="info-alert"><a ng-href='/#/account/template/{{template.id}}'><img src="../images/info.png"></a></span>        
+                    
             </div>
+
+            <div class="subtitles"><span title="Edit alert" class="subtitle"><a ng-href="/#/account/template/{{template.id}}">Edit</a></span><span title="Remove alert" class="subtitle" ng-click="removeTemplate(template)">Remove</span></div>
           </li>
         </ul>
+        <br>
 
-       <div class="add-space"><a ng-href="#/account/template/add">Add template</a></div>
      </div>
     </div>
 </div>

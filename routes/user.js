@@ -32,10 +32,9 @@ exports.logIn = function(req, res){
         req.session.regenerate(function(){
           req.session.user = user;
           res.status(200).send();
-
       });
     } 
-    if (err) {
+    else {
       res.status(401).send({message: "Error with username or password - please try again"})
     }
   });
@@ -68,7 +67,6 @@ User.findOne({username: req.body.username.toUpperCase()}, function(err, user) {
         });
     })
 }
-
 
 function bcryptCreateHash(req, res, fn){
     bcrypt.genSalt(10, function(err, salt) {

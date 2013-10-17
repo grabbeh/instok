@@ -13,20 +13,20 @@
       <div class="content-container">
         <div id="account-title" class="add-space">Alerts</div>
         <div class="credits-remaining">{{ user.credits }} credits remaining</div>
-            <div>
+            <div ng-show="alerts">
               <input class="alert-input" placeholder="Search" ng-model="alert.item">
             </div>
+            <div class="tutorial-text" ng-hide="alerts">Go <a title="Add an alert" class="black-link" href="/#/account/add">here</a> to add an alert or maybe <a title="Add a template" class="black-link" href="/#/account/templates/add">here</a> to add a reusable template for future use.</div>
         <div>
         <ul id="alert-list">
           <li ng-repeat="alert in alerts | filter:alert.item">
             <div>
-              <label class="alert-name" title="Send alert" ng-click="sendAlert(alert)">
+              <span><label class="alert-name" title="Send alert" ng-click="sendAlert(alert)">
                 {{alert.item}}
-              </label>
-              <span ng-click="removeAlert(alert)" class="remove-alert" title="Remove alert"></span>
-              <span title="View alert" class="info-alert"><a ng-href='/#/account/{{alert.id}}'><img src='../images/info.png'></a></span>
-              
+              </label></span>
+
             </div>
+            <div class="subtitles"><span title="Send alert" class="subtitle" ng-click="sendAlert(alert)">Send</span><span title="Edit alert" class="subtitle"><a ng-href="/#/account/{{alert.id}}">Edit</a></span><span title="Remove alert" class="subtitle" ng-click="removeAlert(alert)">Remove</span></div>
           </li>
         </ul>
         <ul ng-show="message" id="response-message">
@@ -34,6 +34,7 @@
               <span ng-click="removeMessage()" class="remove-message" title="Remove message"></span>  
           </li>
         </ul>
+        <br>
       </div>
     </div>
     </div>
