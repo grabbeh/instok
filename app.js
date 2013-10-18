@@ -109,6 +109,13 @@ app.get('/currentuser', user.currentUser)
 
 app.get('/signedin', user.signedIn);
 
+// Intentional error
+
+app.get('/', function(req, res){
+  // Caught and passed down to the errorHandler middleware
+  throw new Error('something broke!');
+});
+
 // 404
 
 app.get('*', function(req, res){
