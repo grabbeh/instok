@@ -1,9 +1,9 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto);
+@import url(https://fonts.googleapis.com/css?family=Karla);
 
 html, body {
     padding: 0;
     margin: 0;
-    font-family:'Roboto', Arial;
+    font-family:'Karla', Arial;
     height: 100%;
 }
 
@@ -27,7 +27,7 @@ a img {
 }
 
 input {
-	font-family: 'Roboto';
+	font-family: 'Karla';
 }
 
 .view-container {
@@ -554,7 +554,7 @@ ul {
 textarea {
 	width: 100%;
 	max-width: 100%;
-	font-family: 'Roboto';
+	font-family: 'Karla';
 	font-size: 20px;
 	padding: 10px;
 	margin: 0;
