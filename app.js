@@ -29,7 +29,10 @@ app.configure(function(){
   app.use(express.cookieParser());
   app.use(express.methodOverride());
   app.use(express.session({ secret: 'keyboard cat',
-                            cookie: { httpOnly: false }
+                            key: 'Katie cookie',
+                            proxy: true,
+                            cookie: { httpOnly: false,
+                                      maxAge: 60000}
 }));        
   app.use(express.static(__dirname + '/public'));
   app.use(app.router);
@@ -103,14 +106,14 @@ app.get('*', function(req, res){
   res.send('404, page not found', 404);
 });
 
-
+/*
 var options = {
   key: fs.readFileSync('./config/domain.pem'),
   cert: fs.readFileSync('./config/main.pem'),
   ca: [fs.readFileSync('./config/intermediate.pem')]
-};
+};*/
 
 // Create an HTTP service.
 http.createServer(app).listen(5000);
 // Create an HTTPS service identical to the HTTP service.
-https.createServer(options, app).listen(5001);
+//https.createServer(options, app).listen(5001);
