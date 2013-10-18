@@ -1,9 +1,9 @@
-@import url(https://fonts.googleapis.com/css?family=Karla);
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
 
 html, body {
     padding: 0;
     margin: 0;
-    font-family:'Karla', Arial;
+    font-family:'Montserrat', Arial;
     height: 100%;
 }
 
@@ -27,7 +27,7 @@ a img {
 }
 
 input {
-	font-family: 'Karla';
+	font-family: 'Montserrat';
 }
 
 .view-container {
@@ -554,7 +554,7 @@ ul {
 textarea {
 	width: 100%;
 	max-width: 100%;
-	font-family: 'Karla';
+	font-family: 'Montserrat';
 	font-size: 20px;
 	padding: 10px;
 	margin: 0;
