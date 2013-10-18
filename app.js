@@ -111,7 +111,7 @@ app.get('/signedin', user.signedIn);
 
 // Intentional error
 
-app.get('/', function(req, res){
+app.get('/error', function(req, res){
   // Caught and passed down to the errorHandler middleware
   throw new Error('something broke!');
 });
