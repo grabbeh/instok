@@ -35,6 +35,7 @@ exports.logIn = function(req, res){
     }
         req.session.regenerate(function(){
           req.session.user = user;
+          //req.session.cookie.wang = true;
           //req.session.cookie.expires = false;
           //console.log("Cookie maxAge = " + req.session.cookie.maxAge);
           res.status(200).send();
