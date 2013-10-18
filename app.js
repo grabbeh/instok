@@ -12,9 +12,6 @@ var express = require('express')
 , fs = require('fs')
 , winston = require('winston');
 
-winston.add(winston.transports.File, { filename: 'logfile.log' });
-winston.remove(winston.transports.Console);
-
 mongoose.connect('mongodb://' 
   + db.details.user + ':' 
   + db.details.pass + '@' 
@@ -28,15 +25,27 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.cookieParser());
   app.use(express.methodOverride());
-  app.use(express.session({ secret: 'keyboard cat',
-                            key: 'Katie cookie',
-                            proxy: true,
-                            cookie: { httpOnly: false,
-                                      maxAge: 60000}
+  app.use(express.session({ secret: 'keyboard cat', key: 'Katie cookie', proxy: true, cookie: { httpOnly: false, maxAge: 60000}
 }));        
   app.use(express.static(__dirname + '/public'));
   app.use(app.router);
+  app.use(logErrors);
+  app.use(errorHandler);
 });
+
+winston.add(winston.transports.File, { filename: __dirname + '/logfile.log', json: true, colorize: true, timestamp: true });
+winston.remove(winston.transports.Console);
+// Error handling
+
+function logErrors(err, req, res, next) {
+  winston.info(err.stack);
+  next(err);
+}
+
+function errorHandler(err, req, res, next) {
+  res.status(500);
+  res.send({message: "Unfortunately there was an error - please refresh"})
+}
 
 // Middleware
 
