@@ -28,15 +28,14 @@ exports.currentUser = function(req, res){
 
 exports.logIn = function(req, res){
     authenticate(req.body.username, req.body.password, function(err, user){
-    if (user) {
+
+    if (!user || err){
+      res.status(401).send({message: "Error with username or password - please try again"})
+    }
         req.session.regenerate(function(){
           req.session.user = user;
           res.status(200).send();
       });
-    } 
-    else {
-      res.status(401).send({message: "Error with username or password - please try again"})
-    }
   });
 }
 
@@ -60,9 +59,9 @@ User.findOne({username: req.body.username.toUpperCase()}, function(err, user) {
 
     bcryptCreateHash(req, res, function(err,user){
         req.session.regenerate(function(){
-        req.session.user = user;
-        res.status(200);
-        res.send()
+          req.session.user = user;
+          res.status(200);
+          res.send()
             });
         });
     })
