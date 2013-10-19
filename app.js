@@ -19,6 +19,12 @@ mongoose.connect('mongodb://'
   + db.details.port + '/' 
   + db.details.name );
 
+var winstonStream = {
+    write: function(message, encoding){
+        winston.info(message);
+    }
+};
+
 app.configure(function(){
   app.enable('trust proxy')
   app.set('views', __dirname + '/views');
@@ -28,6 +34,7 @@ app.configure(function(){
   app.use(express.session({ secret: 'keyboard cat', key: 'Katie cookie', proxy: true, cookie: { httpOnly: false, maxAge: 60000}
 }));        
   app.use(express.static(__dirname + '/public'));
+  app.use(express.logger({stream:winstonStream}));
   app.use(app.router);
   app.use(logErrors);
   app.use(errorHandler);
