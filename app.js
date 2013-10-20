@@ -31,7 +31,7 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.cookieParser());
   app.use(express.methodOverride());
-  app.use(express.session({ secret: 'keyboard cat', key: 'Katie cookie', proxy: true, cookie: { httpOnly: false, maxAge: 60000}
+  app.use(express.session({ secret: 'keyboard cat', key: 'Katie cookie', proxy: true, cookie: { httpOnly: false }
 }));        
   app.use(express.static(__dirname + '/public'));
   app.use(express.logger({stream:winstonStream}));
