@@ -28,14 +28,13 @@ exports.currentUser = function(req, res){
 }
 
 exports.logIn = function(req, res){
-    
+
     //console.log(req.cookies);
     authenticate(req.body.username, req.body.password, function(err, user){
 
       if (user){
           req.session.regenerate(function(){
             req.session.user = user;
-            //req.session.cookie.wang = true;
             //req.session.cookie.expires = false;
             //console.log("Cookie maxAge = " + req.session.cookie.maxAge);
             res.status(200).send();
@@ -100,9 +99,9 @@ function authenticate(name, pass, fn) {
        if (!user) {  return fn(new Error("Cannot find user"))}; 
 
        bcrypt.compare(pass, user.hash, function(err, res){
-         if (err) return fn(err);
-         if (res){ return fn(null, user)}
-         fn(new Error('Invalid password'));
+         if (err) { return fn(err) };
+         else { return fn(null, user)}
+
         })
     })
  }

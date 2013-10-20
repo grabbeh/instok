@@ -40,9 +40,9 @@ app.configure(function(){
   app.use(errorHandler);
 });
 
+// Error handling
 winston.add(winston.transports.File, { filename: __dirname + '/logfile.log', json: true, colorize: true, timestamp: true });
 winston.remove(winston.transports.Console);
-// Error handling
 
 function logErrors(err, req, res, next) {
   winston.info(err.stack);
