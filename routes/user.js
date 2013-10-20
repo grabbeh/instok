@@ -42,7 +42,7 @@ exports.logIn = function(req, res){
           //console.log(req.session);
       }
       else {
-        res.send({message: "Error with username or password - please try again"})
+        res.status(401).send({message: "Error with username or password - please try again"})
       }
       
   });
