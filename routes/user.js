@@ -100,8 +100,8 @@ function authenticate(name, pass, fn) {
 
        bcrypt.compare(pass, user.hash, function(err, res){
          if (err) { return fn(err) }
-          
-         else { return fn(null, user)}
+
+         return fn(null, user);
 
         })
     })
