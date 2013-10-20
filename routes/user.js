@@ -99,10 +99,11 @@ function authenticate(name, pass, fn) {
        if (!user) {  return fn(new Error("Cannot find user"))}; 
 
        bcrypt.compare(pass, user.hash, function(err, res){
-         if (err) { return fn(err) }
+         if (err || !res) { return fn(err) }
 
-         return fn(null, user);
-
+         else {
+            return fn(null, user);
+            }
         })
     })
  }
