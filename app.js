@@ -10,7 +10,10 @@ var express = require('express')
 , https = require('https')
 , http = require('http')
 , fs = require('fs')
-, winston = require('winston');
+, winston = require('winston')
+, logglyOptions = require('./config/loggly');
+
+require('winston-loggly');
 
 mongoose.connect('mongodb://' 
   + db.details.user + ':' 
@@ -41,6 +44,8 @@ app.configure(function(){
 });
 
 // Error handling
+
+winston.add(winston.transports.Loggly, logglyOptions)
 winston.add(winston.transports.File, { filename: __dirname + '/logfile.log', json: true, colorize: true, timestamp: true });
 winston.remove(winston.transports.Console);
 

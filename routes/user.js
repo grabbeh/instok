@@ -28,9 +28,7 @@ exports.currentUser = function(req, res){
 }
 
 exports.logIn = function(req, res){
-
     authenticate(req.body.username, req.body.password, function(err, user){
-
       if (user){
           req.session.regenerate(function(){
             req.session.user = user;
