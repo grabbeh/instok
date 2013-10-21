@@ -8,7 +8,7 @@ exports.getAlerts = function (req, res) {
         .select('alerts')
         .populate('alerts')
         .exec(function(err, user){
-            if (err) { res.status(401).send({message: "Error loading alerts - please refresh"})}
+            if (err) { res.status(500).send({message: "Error loading alerts - please refresh"})}
             else { 
                 res.set('Cache-Control', 'no-cache, no-store');
                 res.json(user.alerts)
