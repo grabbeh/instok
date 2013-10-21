@@ -29,20 +29,16 @@ exports.currentUser = function(req, res){
 
 exports.logIn = function(req, res){
 
-    //console.log(req.cookies);
     authenticate(req.body.username, req.body.password, function(err, user){
 
       if (user){
           req.session.regenerate(function(){
             req.session.user = user;
-            //req.session.cookie.expires = false;
-            //console.log("Cookie maxAge = " + req.session.cookie.maxAge);
             res.status(200).send();
           })
-          //console.log(req.session);
       }
       else {
-        res.status(401).send({message: "Error with username or password - please try again"})
+        res.status(500).send({message: "Error with username or password - please try again"})
       }
       
   });

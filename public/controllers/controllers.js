@@ -154,18 +154,17 @@ alertModule
                 }
 
                 $http.post('/login', postData)
-                .success(function(){
-                    userGetter.currentUser().then(function(response){
-                        $rootScope.user = response.data;
-                        $location.path('/account');
+                    .success(function(){
+                       userGetter.currentUser().then(function(response){
+                            $rootScope.user = response.data;
+                            $location.path('/account');
+                        })
                     })
-                })
-                .error(function(data){
-                    $scope.message = data.message;
-                });
-            }
-
-        }])
+                    .error(function(data){
+                        $scope.message = data.message;
+                    });
+                }
+            }])
 
 alertModule
     .controller('signupController', ['$scope', '$http', '$location', '$rootScope', 'userGetter',
