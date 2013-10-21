@@ -11,9 +11,8 @@ var express = require('express')
 , http = require('http')
 , fs = require('fs')
 , winston = require('winston')
+, loggly = require('loggly')
 , logglyOptions = require('./config/loggly');
-
-require('winston-loggly');
 
 mongoose.connect('mongodb://' 
   + db.details.user + ':' 
@@ -44,13 +43,16 @@ app.configure(function(){
 });
 
 // Error handling
-
-winston.add(winston.transports.Loggly, logglyOptions)
+var logglyclient = loggly.createClient(logglyOptions.config);
+console.log(logglyOptions.config);
+console.log(logglyOptions.authtoken);
+//winston.add(winston.transports.Loggly, logglyOptions)
 winston.add(winston.transports.File, { filename: __dirname + '/logfile.log', json: true, colorize: true, timestamp: true });
 winston.remove(winston.transports.Console);
 
 function logErrors(err, req, res, next) {
   winston.info(err.stack);
+  logglyclient.log(logglyOptions.authtoken, err.stack);
   next(err);
 }
 
