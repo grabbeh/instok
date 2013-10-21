@@ -51,7 +51,7 @@ winston.remove(winston.transports.Console);
 
 function logErrors(err, req, res, next) {
   winston.info(err.stack);
-  logglyclient.log(logglyOptions.authtoken, err.stack);
+  logglyclient.log(logglyOptions.authtoken, "Error");
   next(err);
 }
 
