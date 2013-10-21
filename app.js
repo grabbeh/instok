@@ -44,8 +44,7 @@ app.configure(function(){
 
 // Error handling
 var logglyclient = loggly.createClient(logglyOptions.config);
-console.log(logglyOptions.config);
-console.log(logglyOptions.authtoken);
+
 //winston.add(winston.transports.Loggly, logglyOptions)
 winston.add(winston.transports.File, { filename: __dirname + '/logfile.log', json: true, colorize: true, timestamp: true });
 winston.remove(winston.transports.Console);
