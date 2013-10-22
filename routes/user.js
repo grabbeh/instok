@@ -90,7 +90,7 @@ function bcryptCreateHash(req, res, fn){
 function authenticate(name, pass, fn) {
 
    User.findOne({_id: name}, function(err, user) {
-       if (!user) {  return fn(new Error("Cannot find user"))}; 
+       if (err || !user) {  return fn(err)}; 
 
        bcrypt.compare(pass, user.hash, function(err, res){
          if (err || !res) { return fn(err) }
