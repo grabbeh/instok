@@ -44,13 +44,15 @@ app.configure(function(){
 
 // Error handling
 
+
 var logglyclient = loggly.createClient(logglyOptions.config);
+
 /*
 logglyclient.log(logglyOptions.authtoken, "Error", function(err, result){
   if (err) { console.log(err)}
     else { console.log(result)}
-
 });*/
+
 //winston.add(winston.transports.Loggly, logglyOptions)
 winston.add(winston.transports.File, { filename: __dirname + '/logfile.log', json: true, colorize: true, timestamp: true });
 winston.remove(winston.transports.Console);
