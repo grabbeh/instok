@@ -24,6 +24,7 @@ mongoose.connect('mongodb://'
 var winstonStream = {
     write: function(message, encoding){
         winston.info(message);
+        logglyclient.log(message);
     }
 };
 
