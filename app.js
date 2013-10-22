@@ -48,18 +48,17 @@ app.configure(function(){
 var logglyclient = loggly.createClient(logglyOptions.config);
 
 /*
-logglyclient.log(logglyOptions.authtoken, "Error", function(err, result){
+logglyclient.log("Error", function(err, result){
   if (err) { console.log(err)}
     else { console.log(result)}
 });*/
 
-//winston.add(winston.transports.Loggly, logglyOptions)
 winston.add(winston.transports.File, { filename: __dirname + '/logfile.log', json: true, colorize: true, timestamp: true });
 winston.remove(winston.transports.Console);
 
 function logErrors(err, req, res, next) {
   winston.info(err.stack);
-  logglyclient.log(logglyOptions.authtoken, err.stack);
+  logglyclient.log(err.stack);
   next(err);
 }
 
