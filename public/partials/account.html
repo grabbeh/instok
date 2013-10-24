@@ -16,7 +16,7 @@
             <div ng-show="alerts">
               <input class="alert-input" placeholder="Search" ng-model="alert.item">
             </div>
-            <div class="tutorial-text" ng-hide="alerts">Go <a title="Add an alert" class="black-link" href="/#/account/add">here</a> to add an alert or maybe <a title="Add a template" class="black-link" href="/#/account/templates/add">here</a> to add a reusable template for future use.</div>
+            <div class="tutorial-text" ng-hide="alerts">Go <a title="Add an alert" class="black-link" href="/#/account/add">here</a> to add an alert or maybe <a title="Add a template" class="black-link" href="/#/account/template/add">here</a> to add a reusable template for future use.</div>
         <div>
         <ul id="alert-list">
           <li ng-repeat="alert in alerts | filter:alert.item">
