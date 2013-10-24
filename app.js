@@ -19,7 +19,10 @@ mongoose.connect('mongodb://'
   + db.details.pass + '@' 
   + db.details.host + ':' 
   + db.details.port + '/' 
-  + db.details.name );
+  + db.details.name,
+  function(err){
+    if (err) {throw new Error(err.stack);}
+  });
 
 var winstonStream = {
     write: function(message, encoding){

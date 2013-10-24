@@ -95,7 +95,7 @@ alertModule.config(['$routeProvider', function($routeProvider){
     });
 }]);
 
-alertModule.factory('userGetter', ['$http', '$location', function ($http, $location) {
+alertModule.factory('userGetter', ['$http', function ($http) {
     var userGetter = {
         currentUser: function(){
             return $http.get('/currentuser')
