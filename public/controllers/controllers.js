@@ -194,8 +194,8 @@ alertModule
 
 
 alertModule
-    .controller('accountController', ['$scope', '$http', '$location', 'alertsGetter',
-        function ($scope, $http, $location, alertsGetter) {
+    .controller('accountController', ['$scope', '$http', '$location', 'alertsGetter', '$rootScope',
+        function ($scope, $http, $location, alertsGetter, $rootScope) {
 
         $scope.message = false;
 
@@ -229,12 +229,12 @@ alertModule
                         $http.post('sendalert/' + alert.id, postData)
                             .success(function(data){
                                 $scope.message = data.message;
-                                $scope.user.credits = data.creditsremaining;
+                                $rootScope.user.credits = data.creditsremaining;
                                 $scope.alerts.splice(i, 1);
                             })
                             .error(function(data){
                                 $scope.message = data.error;
-                                $scope.user.credits = data.creditsremaining;
+                                $rootScope.user.credits = data.creditsremaining;
                             })
                         }
                     })
