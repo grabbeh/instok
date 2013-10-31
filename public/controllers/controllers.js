@@ -281,7 +281,7 @@ alertModule
 
             $scope.message = "";
   
-            $scope.templates = templates.data.templates;  
+            $scope.templates = templates.data;  
 
             $scope.changeActiveTemplate = function(template){
                $scope.content = template.content;
@@ -331,7 +331,7 @@ alertModule
                 $scope.alert = data;
             })
 
-            $scope.templates = templates.data.templates;
+            $scope.templates = templates.data
 
             $scope.changeActiveTemplate = function(template){
                 $scope.alert.content = template.content;
@@ -353,9 +353,8 @@ alertModule
 alertModule
     .controller('editAccountController', ['$scope', 'templates', '$http', '$rootScope',
         function ($scope, templates, $http, $rootScope) {
-            
-            $scope.templates = templates.data.templates;
 
+            $scope.templates = templates.data;
             $scope.message = "";
             $scope.user = $rootScope.user;
 

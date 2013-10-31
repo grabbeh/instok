@@ -23,9 +23,9 @@ exports.getTemplates = function(req, res){
 	User.findOne({_id: req.session.user._id})
 		.select('templates')
         .populate('templates')
-        .exec(function(err, templates){
+        .exec(function(err, user){
         	res.set('Cache-Control', 'no-cache, no-store');
-        	res.json(templates);
+        	res.json(user.templates);
         })
 }
 
