@@ -197,16 +197,12 @@ alertModule
 
 
 alertModule
-    .controller('accountController', ['$scope', '$http', '$location', 'alertsGetter', '$rootScope',
-        function ($scope, $http, $location, alertsGetter, $rootScope) {
+    .controller('accountController', ['$scope', '$http', '$location', 'alerts', '$rootScope',
+        function ($scope, $http, $location, alerts, $rootScope) {
 
         $scope.message = false;
-
-        alertsGetter.getActiveAlerts().then(function(response){
-            $scope.alerts = response.data;
-        }, function(response){
-            $scope.message = response.data.message;
-        })
+        console.log(alerts);
+        $scope.alerts = alerts.data;
 
         $scope.removeAlert = function(alert){
             $scope.alerts.forEach(function (item, i) {
