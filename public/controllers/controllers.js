@@ -12,6 +12,9 @@ alertModule.config(['$routeProvider', function($routeProvider){
             resolve: {
                 user: function(userGetter){
                     return userGetter.signedIn();
+                },
+                alerts: function(alertsGetter){
+                    return alertsGetter.getActiveAlerts();
                 }
             }
         }).

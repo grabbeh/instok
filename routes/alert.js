@@ -36,7 +36,6 @@ exports.getAlert = function (req, res) {
     };
 
 exports.postAlert = function (req, res) {
-
     new Alert({
         user: req.session.user._id,
         item: req.body.item,
@@ -48,8 +47,7 @@ exports.postAlert = function (req, res) {
         User.findOne({_id: req.session.user._id})
             .update({$addToSet: {alerts: alert._id}})
             .exec(function(){
-                res.status(200);
-                res.send({message: "Alert added"});
+                res.status(200).send({message: "Alert added"});
             })          
         })
     };

@@ -15,11 +15,11 @@ var express = require('express')
 , logglyOptions = require('./config/loggly');
 
 mongoose.connect('mongodb://' 
-  + db.details.user + ':' 
-  + db.details.pass + '@' 
-  + db.details.host + ':' 
-  + db.details.port + '/' 
-  + db.details.name,
+  + db.user + ':' 
+  + db.pass + '@' 
+  + db.host + ':' 
+  + db.port + '/' 
+  + db.name,
   function(err){
     if (err) {throw new Error(err.stack);}
   });
