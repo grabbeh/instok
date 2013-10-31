@@ -201,7 +201,6 @@ alertModule
         function ($scope, $http, $location, alerts, $rootScope) {
 
         $scope.message = false;
-        console.log(alerts);
         $scope.alerts = alerts.data;
 
         $scope.removeAlert = function(alert){
