@@ -199,6 +199,11 @@ alertModule
         function($scope, $http, $location, $rootScope, userGetter){
             $scope.message = "";
 
+            if (!$scope.username || !$scope.password ){
+                    $scope.message = "Please provide both a username and password";
+                    return;
+             }
+
             $scope.signup = function(){
                 var postData = {
                     username: $scope.username,
