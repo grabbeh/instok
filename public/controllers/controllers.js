@@ -24,7 +24,11 @@ alertModule.config(['$routeProvider', function($routeProvider){
             resolve: {
                 user: function(userGetter){
                     return userGetter.signedIn();
-            }}
+                },
+                templates: function(templatesGetter){
+                    return templatesGetter.getTemplates();
+                }
+         }
         }).
         when('/account/edit', {
             controller: 'editAccountController',
@@ -32,7 +36,11 @@ alertModule.config(['$routeProvider', function($routeProvider){
             resolve: {
                 user: function(userGetter){
                     return userGetter.signedIn();
-            }}
+                },
+                templates: function(templatesGetter){
+                    return templatesGetter.getTemplates();
+                }
+        }
         }).
         when('/account/sent', {
             controller: 'sentAlertsController',
@@ -40,7 +48,11 @@ alertModule.config(['$routeProvider', function($routeProvider){
             resolve: {
                 user: function(userGetter){
                     return userGetter.signedIn();
-            }}
+                },
+                alerts: function(alertsGetter){
+                    return alertsGetter.getSentAlerts();
+                }
+            },
         }).
         when('/account/sent/:id',{
             controller: 'sentAlertController',
@@ -56,7 +68,11 @@ alertModule.config(['$routeProvider', function($routeProvider){
             resolve: {
                 user: function(userGetter){
                     return userGetter.signedIn();
-            }}
+                },
+                templates: function(templatesGetter){
+                    return templatesGetter.getTemplates();
+                }
+         }
         }).
         when('/account/template/add', {
             controller: 'templateAddController',
@@ -120,6 +136,15 @@ alertModule.factory('alertsGetter', ['$http', function ($http) {
         }
     }
     return alertsGetter;
+}]);
+
+alertModule.factory('templatesGetter', ['$http', function ($http) {
+    var templatesGetter = {
+        getTemplates: function(){
+            return $http.get('/templates');
+        }
+    }
+    return templatesGetter;
 }]);
 
 alertModule
@@ -244,23 +269,19 @@ alertModule
         }])
 
 alertModule
-    .controller('sentAlertsController', ['$scope', 'alertsGetter', '$location', 
-        function ($scope, alertsGetter, $location) {
-            alertsGetter.getSentAlerts().then(function(response){
-                $scope.alerts = response.data;
-            })
+    .controller('sentAlertsController', ['$scope', 'alerts', '$location', 
+        function ($scope, alerts, $location) {
+          $scope.alerts = alerts.data;
         }])
 
 
 alertModule
-    .controller('addController', ['$scope', '$http', '$rootScope',
-        function($scope, $http, $rootScope){
+    .controller('addController', ['$scope', 'templates', '$http', '$rootScope',
+        function($scope, templates, $http, $rootScope){
 
             $scope.message = "";
-
-            $http.get('/templates').success(function(data){
-                $scope.templates = data.templates;  
-            })
+  
+            $scope.templates = templates.data.templates;  
 
             $scope.changeActiveTemplate = function(template){
                $scope.content = template.content;
@@ -301,8 +322,8 @@ alertModule
 
 
 alertModule
-    .controller('editAlertController', ['$scope', '$http', '$routeParams', 
-        function ($scope, $http, $routeParams) {
+    .controller('editAlertController', ['$scope', 'templates', '$http', '$routeParams', 
+        function ($scope, templates, $http, $routeParams) {
             
             $scope.message = "";
             
@@ -310,9 +331,7 @@ alertModule
                 $scope.alert = data;
             })
 
-            $http.get('/templates').success(function(data){
-                $scope.templates = data.templates;
-            })
+            $scope.templates = templates.data.templates;
 
             $scope.changeActiveTemplate = function(template){
                 $scope.alert.content = template.content;
@@ -332,12 +351,10 @@ alertModule
         }])
 
 alertModule
-    .controller('editAccountController', ['$scope', '$http', '$rootScope',
-        function ($scope, $http, $rootScope) {
+    .controller('editAccountController', ['$scope', 'templates', '$http', '$rootScope',
+        function ($scope, templates, $http, $rootScope) {
             
-            $http.get('/templates').success(function(data){
-                $scope.templates = data.templates;
-            })
+            $scope.templates = templates.data.templates;
 
             $scope.message = "";
             $scope.user = $rootScope.user;
