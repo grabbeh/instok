@@ -109,5 +109,5 @@ exports.sendAlert = function(req, res){
                 }
 
 function replaceStringsWithValues(str, object) {
-    return str.replace("{ item }", object.item).replace("{ business-name }", object.location);
+    return str.replace("{ item }", object.item).replace("{ business }", object.location);
 }
